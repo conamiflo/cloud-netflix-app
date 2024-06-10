@@ -10,6 +10,7 @@ from aws_cdk import (
     RemovalPolicy
 )
 from constructs import Construct
+from aws_cdk.aws_lambda_python_alpha import PythonLayerVersion
 import boto3
 
 class NetflixBackendStack(Stack):
@@ -42,6 +43,12 @@ class NetflixBackendStack(Stack):
         lambda_role.add_managed_policy(
             iam.ManagedPolicy.from_aws_managed_policy_name("service-role/AWSLambdaBasicExecutionRole")
         )
+        lambda_role.add_managed_policy(
+            iam.ManagedPolicy.from_aws_managed_policy_name("AmazonS3FullAccess")
+        )
+        lambda_role.add_managed_policy(
+            iam.ManagedPolicy.from_aws_managed_policy_name("AmazonDynamoDBFullAccess")
+        )
 
         lambda_role.add_to_policy(
             iam.PolicyStatement(
@@ -56,9 +63,11 @@ class NetflixBackendStack(Stack):
                     "dynamodb:DeleteItem",
                     "s3:PutObject",
                     "s3:GetObject",
+                    "s3:ListBucket",
                     "s3:PutObjectAcl"
                 ],
                 resources=[movie_table.table_arn,f"{s3_bucket.bucket_arn}/*"]
+                # resources=[movie_table.table_arn,"arn:aws:s3:::<movie-bucket>/*"]
             )
         )
         
@@ -96,11 +105,25 @@ class NetflixBackendStack(Stack):
                                     allow_headers=apigateway.Cors.DEFAULT_HEADERS
                                 ))
         
+        # util_layer = PythonLayerVersion(
+        #     self, 'UtilLambdaLayer',
+        #     entry='libs',
+        #     compatible_runtimes=[_lambda.Runtime.PYTHON_3_9]
+        # )
+
+        
         create_movie_lambda = create_lambda_function(
             "createMovie",
             "create_movie.post_movie",
             "movie_service",
             "POST",
+        )
+
+        download_movie_lambda = create_lambda_function(
+            "downloadMovie",
+            "download_movie.download_movie",
+            "movie_service",
+            "GET",
         )
 
         movie_table.grant_write_data(create_movie_lambda)
@@ -111,3 +134,8 @@ class NetflixBackendStack(Stack):
         movies_resource = api.root.add_resource("movies")
         create_movie_integration = apigateway.LambdaIntegration(create_movie_lambda)
         movies_resource.add_method("POST", create_movie_integration)
+
+
+        s3_bucket.grant_read(download_movie_lambda)
+        download_integration = apigateway.LambdaIntegration(download_movie_lambda)
+        movies_resource.add_method("GET", download_integration)
