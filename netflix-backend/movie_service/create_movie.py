@@ -5,15 +5,15 @@ from botocore import client
 
 dynamodb = boto3.resource('dynamodb')
 s3 = boto3.client('s3')
-movies_table = dynamodb.Table('movie-table2')
-s3_bucket = 'movie-bucket'
+movies_table = dynamodb.Table('movies-dbtable')
+s3_bucket = 'movie-bucket3'
 
 
 def post_movie(event, context):
     
     try:
         body = json.loads(event['body'])
-        movie_id = int(body['movie_id'])
+        movie_id = body['movie_id']
         title = body['title']
         genres = body['genres']
         actors = body['actors']
@@ -30,7 +30,20 @@ def post_movie(event, context):
             }
         )  
 
-        # try:
+        encoded_movie = base64.b64decode(movie)
+        s3.put_object(Bucket=s3_bucket, Key=movie_id, Body=encoded_movie, ContentType='video/mp4')
+
+        return {
+            'statusCode': 200,
+            'body': json.dumps({'message': "Successfully added movie!"})
+        }
+    except Exception as e:
+        return{
+            'statusCode': 500,
+            'body': json.dumps({'error': str(e)})
+        }
+    
+# try:
 
         #     presigned_url = s3.generate_presigned_url(
         #             'put_object',
@@ -53,17 +66,3 @@ def post_movie(event, context):
         #         'statusCode': 404,
         #         'body': json.dumps({'message': str(e)})
         #     }
-
-        encoded_movie = base64.b64decode(movie)
-        s3.put_object(Bucket=s3_bucket, Key=str(movie_id), Body=encoded_movie, ContentType='video/mp4')
-
-        return {
-            'statusCode': 200,
-            'body': json.dumps({'message': "Successfully added movie!"})
-        }
-    except Exception as e:
-        return{
-            'statusCode': 500,
-            'body': json.dumps({'error': str(e)})
-        }
-    

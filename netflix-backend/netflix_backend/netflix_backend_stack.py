@@ -19,21 +19,17 @@ class NetflixBackendStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         movie_table = dynamodb.Table(
-            self, "movie-table2",
-            table_name="movie-table2",
+            self, "movies-dbtable",
+            table_name="movies-dbtable",
             partition_key=dynamodb.Attribute(
                 name="movie_id",
-                type=dynamodb.AttributeType.NUMBER
-            ),
-            sort_key=dynamodb.Attribute(
-                name="title",
                 type=dynamodb.AttributeType.STRING
             ),
             read_capacity=1,
             write_capacity=1
         )
 
-        s3_bucket = s3.Bucket(self, "movie-bucket",removal_policy=RemovalPolicy.DESTROY)
+        s3_bucket = s3.Bucket(self,id="movie-bucket3",bucket_name="movie-bucket3")
 
         lambda_role = iam.Role(
             self, "LambdaRole",
@@ -62,9 +58,10 @@ class NetflixBackendStack(Stack):
                     "dynamodb:UpdateItem",
                     "dynamodb:DeleteItem",
                     "s3:PutObject",
+                    "s3:PutObjectAcl",
                     "s3:GetObject",
-                    "s3:ListBucket",
-                    "s3:PutObjectAcl"
+                    "s3:GetObjectAcl",
+                    "s3:DeleteObject"
                 ],
                 resources=[movie_table.table_arn,f"{s3_bucket.bucket_arn}/*"]
                 # resources=[movie_table.table_arn,"arn:aws:s3:::<movie-bucket>/*"]
@@ -105,13 +102,6 @@ class NetflixBackendStack(Stack):
                                     allow_headers=apigateway.Cors.DEFAULT_HEADERS
                                 ))
         
-        # util_layer = PythonLayerVersion(
-        #     self, 'UtilLambdaLayer',
-        #     entry='libs',
-        #     compatible_runtimes=[_lambda.Runtime.PYTHON_3_9]
-        # )
-
-        
         create_movie_lambda = create_lambda_function(
             "createMovie",
             "create_movie.post_movie",
@@ -126,16 +116,9 @@ class NetflixBackendStack(Stack):
             "GET",
         )
 
-        movie_table.grant_write_data(create_movie_lambda)
-        
-        s3_bucket.grant_put(create_movie_lambda)
-        s3_bucket.grant_put_acl(create_movie_lambda)
-        
         movies_resource = api.root.add_resource("movies")
         create_movie_integration = apigateway.LambdaIntegration(create_movie_lambda)
         movies_resource.add_method("POST", create_movie_integration)
 
-
-        s3_bucket.grant_read(download_movie_lambda)
         download_integration = apigateway.LambdaIntegration(download_movie_lambda)
         movies_resource.add_method("GET", download_integration)

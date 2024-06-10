@@ -1,24 +1,19 @@
 import base64
 import json
 import boto3
+from botocore import client
 
 dynamodb = boto3.resource('dynamodb')
-# s3 = boto3.client('s3')
-s3_client = boto3.client('s3', region_name='eu-central-1')
+s3_client = boto3.client('s3', region_name='eu-central-1', config=client.Config(signature_version='s3v4'))
 
 def download_movie(event, context):
-    movies_table = dynamodb.Table('movie-table2')
-    s3_bucket = 'movie-bucket'
+    movies_table = dynamodb.Table('movies-dbtable')
+    s3_bucket = 'movie-bucket3'
 
     try:
 
-        movie_id = int(event['queryStringParameters']['movie_id'])
-
-        response = movies_table.get_item(
-            Key={
-                'movie_id': movie_id
-            }
-        )
+        movie_id = event['queryStringParameters']['movie_id']
+        response = movies_table.get_item(Key={'movie_id': movie_id})
 
         if 'Item' in response:
 
