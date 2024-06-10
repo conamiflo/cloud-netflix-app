@@ -18,8 +18,8 @@ class NetflixBackendStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         movie_table = dynamodb.Table(
-            self, "movie-table",
-            table_name="movie-table",
+            self, "movie-table2",
+            table_name="movie-table2",
             partition_key=dynamodb.Attribute(
                 name="movie_id",
                 type=dynamodb.AttributeType.NUMBER
@@ -32,8 +32,7 @@ class NetflixBackendStack(Stack):
             write_capacity=1
         )
 
-        s3_bucket = s3.Bucket(self, "movie-bucket",
-                              removal_policy=RemovalPolicy.DESTROY)
+        s3_bucket = s3.Bucket(self, "movie-bucket",removal_policy=RemovalPolicy.DESTROY)
 
         lambda_role = iam.Role(
             self, "LambdaRole",
@@ -59,9 +58,10 @@ class NetflixBackendStack(Stack):
                     "s3:GetObject",
                     "s3:PutObjectAcl"
                 ],
-                resources=["arn:aws:s3:::movie-bucket/*",movie_table.table_arn]
+                resources=[movie_table.table_arn,f"{s3_bucket.bucket_arn}/*"]
             )
         )
+        
 
         def create_lambda_function(id, handler, include_dir, method):
             function = _lambda.Function(
@@ -100,7 +100,7 @@ class NetflixBackendStack(Stack):
             "createMovie",
             "create_movie.post_movie",
             "movie_service",
-            "POST"
+            "POST",
         )
 
         movie_table.grant_write_data(create_movie_lambda)
@@ -111,10 +111,3 @@ class NetflixBackendStack(Stack):
         movies_resource = api.root.add_resource("movies")
         create_movie_integration = apigateway.LambdaIntegration(create_movie_lambda)
         movies_resource.add_method("POST", create_movie_integration)
-         
-
-
-
-
-
-
