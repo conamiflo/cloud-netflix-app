@@ -5,7 +5,7 @@ from botocore import client
 
 dynamodb = boto3.resource('dynamodb')
 s3 = boto3.client('s3')
-movies_table = dynamodb.Table('movies-dbtable')
+movies_table = dynamodb.Table('movies-dbtable2')
 s3_bucket = 'movie-bucket3'
 
 
@@ -18,7 +18,17 @@ def post_movie(event, context):
         genres = body['genres']
         actors = body['actors']
         directors = body['directors']
+        description = body['description']
         movie = body['movie']
+        
+        encoded_movie = base64.b64decode(movie)
+        s3.put_object(Bucket=s3_bucket, Key=movie_id, Body=encoded_movie, ContentType='video/mp4')
+        
+        metadata = s3.head_object(Bucket=s3_bucket, Key=movie_id)
+        file_type = metadata['ContentType']
+        movie_size = metadata['ContentLength']
+        movie_modified = metadata['LastModified'].isoformat()
+        
 
         movies_table.put_item(
             Item={
@@ -27,11 +37,12 @@ def post_movie(event, context):
                 'genres': genres,
                 'actors': actors,
                 'directors': directors,
+                'description': description,
+                'file_type': file_type,
+                'movie_size': movie_size,
+                'movie_modified': movie_modified,
             }
         )  
-
-        encoded_movie = base64.b64decode(movie)
-        s3.put_object(Bucket=s3_bucket, Key=movie_id, Body=encoded_movie, ContentType='video/mp4')
 
         return {
             'statusCode': 200,

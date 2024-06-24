@@ -19,16 +19,20 @@ class NetflixBackendStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         movie_table = dynamodb.Table(
-            self, "movies-dbtable",
-            table_name="movies-dbtable",
+            self, "movies-dbtable2",
+            table_name="movies-dbtable2",
             partition_key=dynamodb.Attribute(
                 name="movie_id",
+                type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="title",
                 type=dynamodb.AttributeType.STRING
             ),
             read_capacity=1,
             write_capacity=1
         )
-
+        
         s3_bucket = s3.Bucket(self,id="movie-bucket3",bucket_name="movie-bucket3")
 
         lambda_role = iam.Role(
