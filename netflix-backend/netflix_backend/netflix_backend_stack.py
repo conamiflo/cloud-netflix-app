@@ -119,10 +119,20 @@ class NetflixBackendStack(Stack):
             "movie_service",
             "GET",
         )
-
+        
+        update_movie_lambda = create_lambda_function(
+            "updateMovie",
+            "update_movie.update_movie",
+            "movie_service",
+            "PUT",
+        )
+        
         movies_resource = api.root.add_resource("movies")
         create_movie_integration = apigateway.LambdaIntegration(create_movie_lambda)
         movies_resource.add_method("POST", create_movie_integration)
 
         download_integration = apigateway.LambdaIntegration(download_movie_lambda)
         movies_resource.add_method("GET", download_integration)
+        
+        update_integration = apigateway.LambdaIntegration(update_movie_lambda)
+        movies_resource.add_method("PUT", update_integration)
