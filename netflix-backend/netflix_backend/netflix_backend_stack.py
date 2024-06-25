@@ -220,3 +220,16 @@ class NetflixBackendStack(Stack):
         subscriptions_resource.add_method("POST", apigateway.LambdaIntegration(subscribe_lambda))
         subscriptions_resource.add_method("DELETE", apigateway.LambdaIntegration(unsubscribe_lambda))
         subscriptions_resource.add_method("GET", apigateway.LambdaIntegration(get_subscriptions_lambda))
+
+        review_lambda = create_lambda_function(
+            "review",
+            "review.review",
+            "review_service",
+            "POST",
+            {
+                'TABLE_NAME': review_table.table_name
+            }
+        )
+
+        review_resource = api.root.add_resource("reviews")
+        review_resource.add_method("POST", apigateway.LambdaIntegration(review_lambda))
