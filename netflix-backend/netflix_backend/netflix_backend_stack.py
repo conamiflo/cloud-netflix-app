@@ -32,7 +32,52 @@ class NetflixBackendStack(Stack):
             read_capacity=1,
             write_capacity=1
         )
-        
+
+        subscription_table = dynamodb.Table(
+            self, "subscription-table",
+            table_name="subscription-table",
+            partition_key=dynamodb.Attribute(
+                name="subscription_id",
+                type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="username",
+                type=dynamodb.AttributeType.STRING
+            ),
+            read_capacity=1,
+            write_capacity=1
+        )
+
+        review_table = dynamodb.Table(
+            self, "review-table",
+            table_name="review-table",
+            partition_key=dynamodb.Attribute(
+                name="review_id",
+                type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="username",
+                type=dynamodb.AttributeType.STRING
+            ),
+            read_capacity=1,
+            write_capacity=1
+        )
+
+        download_history_table = dynamodb.Table(
+            self, "download-history-table",
+            table_name="download-history-table",
+            partition_key=dynamodb.Attribute(
+                name="download_id",
+                type=dynamodb.AttributeType.STRING
+            ),
+            sort_key=dynamodb.Attribute(
+                name="username",
+                type=dynamodb.AttributeType.STRING
+            ),
+            read_capacity=1,
+            write_capacity=1
+        )
+
         s3_bucket = s3.Bucket(self,id="movie-bucket3",bucket_name="movie-bucket3")
 
         lambda_role = iam.Role(
@@ -71,9 +116,9 @@ class NetflixBackendStack(Stack):
                 # resources=[movie_table.table_arn,"arn:aws:s3:::<movie-bucket>/*"]
             )
         )
-        
 
-        def create_lambda_function(id, handler, include_dir, method):
+
+        def create_lambda_function(id, handler, include_dir, method, environment):
             function = _lambda.Function(
                 self, id,
                 runtime=_lambda.Runtime.PYTHON_3_11,
@@ -81,10 +126,7 @@ class NetflixBackendStack(Stack):
                 code=_lambda.Code.from_asset(include_dir),
                 memory_size=128,
                 timeout=Duration.seconds(10),
-                environment={
-                    'TABLE_NAME': movie_table.table_name,
-                    'BUCKET_NAME': s3_bucket.bucket_name
-                },
+                environment=environment,
                 role=lambda_role
             )
             fn_url = function.add_function_url(
@@ -93,11 +135,11 @@ class NetflixBackendStack(Stack):
                     allowed_origins=["*"]
                 )
             )
-            
+
             return function
 
 
-        api = apigateway.RestApi(self, "netflix-api", 
+        api = apigateway.RestApi(self, "netflix-api",
                                 rest_api_name="netflix-api",
                                 endpoint_types=[apigateway.EndpointType.REGIONAL],
                                 default_cors_preflight_options=apigateway.CorsOptions(
@@ -105,12 +147,16 @@ class NetflixBackendStack(Stack):
                                     allow_methods=apigateway.Cors.ALL_METHODS,
                                     allow_headers=apigateway.Cors.DEFAULT_HEADERS
                                 ))
-        
+
         create_movie_lambda = create_lambda_function(
             "createMovie",
             "create_movie.post_movie",
             "movie_service",
             "POST",
+            {
+                'TABLE_NAME': movie_table.table_name,
+                'BUCKET_NAME': s3_bucket.bucket_name
+            },
         )
 
         download_movie_lambda = create_lambda_function(
@@ -118,21 +164,59 @@ class NetflixBackendStack(Stack):
             "download_movie.download_movie",
             "movie_service",
             "GET",
+            {
+                'TABLE_NAME': movie_table.table_name,
+                'BUCKET_NAME': s3_bucket.bucket_name
+            },
         )
-        
+
         update_movie_lambda = create_lambda_function(
             "updateMovie",
             "update_movie.update_movie",
             "movie_service",
             "PUT",
+            {
+                'TABLE_NAME': movie_table.table_name,
+                'BUCKET_NAME': s3_bucket.bucket_name
+            },
         )
-        
-        movies_resource = api.root.add_resource("movies")
-        create_movie_integration = apigateway.LambdaIntegration(create_movie_lambda)
-        movies_resource.add_method("POST", create_movie_integration)
 
-        download_integration = apigateway.LambdaIntegration(download_movie_lambda)
-        movies_resource.add_method("GET", download_integration)
-        
-        update_integration = apigateway.LambdaIntegration(update_movie_lambda)
-        movies_resource.add_method("PUT", update_integration)
+        movies_resource = api.root.add_resource("movies")
+        movies_resource.add_method("POST", apigateway.LambdaIntegration(create_movie_lambda))
+        movies_resource.add_method("GET", apigateway.LambdaIntegration(download_movie_lambda))
+        movies_resource.add_method("PUT", apigateway.LambdaIntegration(update_movie_lambda))
+
+        subscribe_lambda = create_lambda_function(
+            "subscribe",
+            "subscribe.subscribe",
+            "subscription_service",
+            "POST",
+            {
+                'TABLE_NAME': subscription_table.table_name
+            }
+        )
+
+        unsubscribe_lambda = create_lambda_function(
+            "unsubscribe",
+            "unsubscribe.unsubscribe",
+            "subscription_service",
+            "DELETE",
+            {
+                'TABLE_NAME': subscription_table.table_name
+            }
+        )
+
+        get_subscriptions_lambda = create_lambda_function(
+            "getSubscriptions",
+            "get_subscriptions.get_subscriptions",
+            "subscription_service",
+            "GET",
+            {
+                'TABLE_NAME': subscription_table.table_name
+            }
+        )
+
+        subscriptions_resource = api.root.add_resource("subscriptions")
+        subscriptions_resource.add_method("POST", apigateway.LambdaIntegration(subscribe_lambda))
+        subscriptions_resource.add_method("DELETE", apigateway.LambdaIntegration(unsubscribe_lambda))
+        subscriptions_resource.add_method("GET", apigateway.LambdaIntegration(get_subscriptions_lambda))
