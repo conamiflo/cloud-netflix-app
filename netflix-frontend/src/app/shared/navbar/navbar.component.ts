@@ -1,6 +1,6 @@
 import {Component, EventEmitter, HostListener, Output} from '@angular/core';
-import {themeColors} from '../constants/theme-colors';
-import {Color} from '../enums/colors.enum';
+import {themeColors} from '../../constants/theme-colors';
+import {Color} from '../../core/enums/colors.enum';
 import {MatMenuModule} from "@angular/material/menu";
 import {RouterLink, RouterLinkActive} from "@angular/router";
 import {NgForOf, NgOptimizedImage} from "@angular/common";

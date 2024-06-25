@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import {environment} from "../../../../environments/environment";
 import {UserDTO} from "../../models/UserDTO";
 import {Router} from "@angular/router";
 import { Amplify, Auth } from 'aws-amplify';
-// @ts-ignore
-import awsconfig from '../../../../../src/aws-exports.js';
 import {angularJitApplicationTransform} from "@angular/compiler-cli";
-Amplify.configure(awsconfig);
+// @ts-ignore
+import awsconfigure from '../../../../aws-exports.js'
+Amplify.configure(awsconfigure)
 
 //@angularJitApplicationTransform(mod16)
 

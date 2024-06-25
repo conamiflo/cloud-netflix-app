@@ -1,0 +1,61 @@
+<div id="Register">
+  <div class="opacity_controller">
+    <header>
+      <img src="./assets/logo.png" alt="logo" />
+    </header>
+
+    <div class="content">
+      <div>
+        <h1>Register</h1>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <input type="text" placeholder="Name" formControlName="name" class="form-control"[ngClass]="{ 'is-invalid': submitted && form.get('name')?.errors }"/>
+          <input type="text" placeholder="Surname" formControlName="family_name" [ngClass]="{ 'is-invalid': submitted && form.get('family_name')?.errors }"/>
+          <input type="text" placeholder="Phone number" formControlName="phone_number"  [ngClass]="{ 'is-invalid': submitted && form.get('phone_number')?.errors }"/>
+          <input type="email" placeholder="Email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && form.get('email')?.errors }"/>
+          <input type="text" placeholder="Username" formControlName="username" [ngClass]="{ 'is-invalid': submitted && form.get('username')?.errors }" />
+
+          <input type="password" placeholder="Password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && form.get('password')?.errors }" />
+
+          <div *ngIf="submitted&&form.get('password')?.errors" style="color: #D5011D">
+
+            <p>At least one uppercase basic Latin letter</p>
+            <p> At least one lowercase basic Latin letter </p>
+            <p> At least one Arabic numeral 1 </p>
+            <p style="max-width: 300px"> At least one of: ^ $ * . [ ] ( ) ? " ! # % & / \ , > < ' : ; | _ ~ ` = + -</p>
+            <p> 8-256 characters</p>
+
+          </div>
+          <button type="submit">Register</button>
+        </form>
+        <button>
+          <img src="./assets/vectors/facebook.svg" alt="facebook" /> Connect with Facebook
+        </button>
+        <h6>Already have an account? <span><a href="/login">Login now</a></span></h6>
+        <span>
+          This page is protected by Google reCAPTCHA
+          <br />
+          to ensure you are not a robot. <a href="">Learn more.</a>
+        </span>
+      </div>
+    </div>
+
+    <footer>
+      <p>Questions? Call <a>0800-761-4631</a></p>
+
+      <ul>
+        <li>Prepaid Card Terms</li>
+        <li>Terms of Use</li>
+        <li>Privacy Statement</li>
+      </ul>
+
+      <div>
+        <img src="./assets/vectors/globe.svg" alt="globe" />
+        <select name="select" id="select">
+          <option value="a">Portuguese</option>
+          <option value="b">English</option>
+        </select>
+      </div>
+    </footer>
+  </div>
+</div>

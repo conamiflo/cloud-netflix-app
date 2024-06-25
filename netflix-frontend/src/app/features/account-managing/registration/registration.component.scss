@@ -1,7 +1,7 @@
 div#Register {
   width: 100%;
   min-height: 100vh;
-  background-image: url("/assets/login_background.jpg");
+  background-image: url('/assets/login_background.jpg');
   @media (max-width: 425px) {
     background-image: none;
     background-color: #000;
@@ -52,12 +52,8 @@ div#Register {
         }
 
         > h1 {
-          color: #fff;
+          color: #aaa;
           margin-bottom: 28px;
-          @media (max-width: 425px) {
-            text-align: left;
-            font-size: 32px;
-          }
         }
 
         > form {
@@ -66,7 +62,7 @@ div#Register {
           width: 100%;
           margin-bottom: 48px;
 
-          > input {
+          > input:valid {
             font-size: 16px;
             margin-bottom: 16px;
             background-color: var(--dark-gray);
@@ -76,6 +72,36 @@ div#Register {
               color: var(--text-gray);
             }
           }
+
+          input:invalid {
+            font-size: 16px;
+            margin-bottom: 16px;
+            border-color: #D5011D;
+            border-style: solid;
+            border-width: 1px;
+            color: #fff;
+            background-color: var(--dark-gray);
+
+            &::placeholder {
+              color: var(--text-gray);
+            }
+          }
+
+          input.is-invalid {
+            font-size: 16px;
+            margin-bottom: 16px;
+            border-color: #D5011D;
+            border-style: solid;
+            border-width: 1px;
+            color: #fff;
+            background-color: var(--dark-gray);
+
+            &::placeholder {
+              color: var(--text-gray);
+            }
+          }
+
+
 
           > button {
             background-color: var(--primary);
@@ -208,6 +234,8 @@ div#Register {
     }
   }
 }
+
+
 
 @media (max-width: 425px) {
   div#Register {

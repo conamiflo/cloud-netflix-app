@@ -1,4 +1,4 @@
-import {Color} from '../enums/colors.enum';
+import {Color} from '../core/enums/colors.enum';
 
 export const themeColors = [
   {color: Color.RED, name: 'Red'},
