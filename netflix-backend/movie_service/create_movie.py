@@ -13,13 +13,14 @@ def post_movie(event, context):
     
     try:
         body = json.loads(event['body'])
-        movie_id = body['movie_id']
         title = body['title']
         genres = body['genres']
         actors = body['actors']
         directors = body['directors']
         description = body['description']
         movie = body['movie']
+        
+        movie_id = str(get_last_movie_id() + 1)
         
         encoded_movie = base64.b64decode(movie)
         s3.put_object(Bucket=s3_bucket, Key=movie_id, Body=encoded_movie, ContentType='video/mp4')
@@ -46,34 +47,24 @@ def post_movie(event, context):
 
         return {
             'statusCode': 200,
-            'body': json.dumps({'message': "Successfully added movie!"})
+            'body': json.dumps({'message': f"Successfully added movie with id: {movie_id}!"})
         }
     except Exception as e:
         return{
             'statusCode': 500,
             'body': json.dumps({'error': str(e)})
         }
-    
-# try:
 
-        #     presigned_url = s3.generate_presigned_url(
-        #             'put_object',
-        #             Params={'Bucket': 'movie-bucket', 'Key': f"{movie_id}"},
-        #             ExpiresIn=3600
-        #         )
-            
-        #     return {
-        #         'statusCode': 200,
-        #         'headers': {
-        #             'Access-Control-Allow-Origin': '*',
-        #         },
-        #         'body': json.dumps({
-        #             'message': 'Successfully added a movie!',
-        #             'upload_url': presigned_url
-        #         })
-        #     }
-        # except Exception as e:
-        #     return {
-        #         'statusCode': 404,
-        #         'body': json.dumps({'message': str(e)})
-        #     }
+
+def get_last_movie_id():
+    paginator = s3.get_paginator("list_objects_v2")
+    page_iterator = paginator.paginate(Bucket="movie-bucket3")
+
+    last_movie_id = 0
+    for page in page_iterator:
+        if "Contents" in page:
+            keys = [int(obj['Key']) for obj in page['Contents']]
+            if keys:
+                last_movie_id = max(keys)
+    
+    return last_movie_id
