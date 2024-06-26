@@ -1,0 +1,323 @@
+:host {
+  display: contents;
+}
+.cards-container {
+  margin-top: 80px;
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  background-color: #0e0a08; /* Dodano */
+}
+.cards-desktop11 {
+  margin-top: 40px;
+  width: 80%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  align-items: flex-start;
+  flex-shrink: 0;
+  flex-direction: column;
+  background-color: #0e0a08; /* Promijenjeno */
+}
+.cards-mattoolbarcontent {
+  width: inherit;
+  height: 78px;
+  display: flex;
+  padding: 4px 16px;
+  overflow: hidden;
+  align-self: flex-start;
+  align-items: center;
+  flex-shrink: 0;
+  background-color: #0e0a08; /* Promijenjeno */
+}
+.cards-matbtn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  padding: 0;
+  align-self: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 40px;
+  justify-content: center;
+}
+.cards-navlink {
+  display: contents;
+}
+.cards-logo12 {
+  width: 44px;
+  height: 44px;
+  align-self: center;
+  text-decoration: none;
+}
+.cards-navlink1 {
+  display: contents;
+}
+.cards-matbtn1 {
+  gap: 16px;
+  top: 15px;
+  left: 1784px;
+  width: 104px;
+  height: 48px;
+  display: flex;
+  padding: 0 16px;
+  position: absolute;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 4px;
+  justify-content: center;
+  text-decoration: none;
+  background-color: rgba(241, 90, 42, 1);
+}
+.cards-content {
+  gap: 8px;
+  display: flex;
+  padding: 11px 0;
+  align-self: stretch;
+  align-items: center;
+}
+.cards-text {
+  color: var(--dl-color-shades-white);
+  height: auto;
+  text-align: center;
+  line-height: 36px;
+}
+.cards-matdivider {
+  top: 78px;
+  left: 0px;
+  width: 1920px;
+  height: 2px;
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+  background-color: #585858FF;
+}
+
+.cards-guestsdropdown {
+  gap: 10px;
+  width: 229px;
+  display: flex;
+  padding: 8px 12px;
+  overflow: hidden;
+  align-self: stretch;
+  align-items: center;
+  flex-shrink: 0;
+  border-color: rgba(164, 164, 164, 0.42);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 4px;
+}
+.cards-vector {
+  width: 15px;
+  height: 15px;
+}
+.cards-matinputslot {
+  gap: 10px;
+  color: rgba(18, 61, 108, 0.8700000047683716);
+  display: flex;
+  overflow: hidden;
+  flex-grow: 1;
+  font-size: 14px;
+  text-align: left;
+  align-items: center;
+  font-family: Roboto;
+  font-weight: 400;
+}
+.cards-maticon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  position: relative;
+  align-items: center;
+  flex-shrink: 0;
+}
+.cards-text2 {
+  color: var(--dl-color-black-054);
+  font-size: medium;
+  height: auto;
+  position: absolute;
+  text-align: center;
+  line-height: 100%;
+}
+
+.cards-locationmatinputslot {
+  gap: 10px;
+  width: 229px;
+  display: flex;
+  overflow: hidden;
+  align-self: stretch;
+  align-items: center;
+  flex-shrink: 0;
+  border-color: rgba(164, 164, 164, 0.42);
+  border-style: solid;
+  border-width: 1px;
+  padding: 8px 12px 8px 8px;
+  border-radius: 4px;
+}
+.cards-vector1 {
+  width: 12px;
+  height: 17px;
+}
+.cards-matinputslot1 {
+  gap: 10px;
+  color: rgba(18, 61, 108, 0.8700000047683716);
+  display: flex;
+  overflow: hidden;
+  font-size: 14px;
+  text-align: left;
+  align-items: center;
+  font-family: Roboto;
+  font-weight: 400;
+}
+.cards-filtersmatinputslot {
+  gap: 10px;
+  width: 127px;
+  display: flex;
+  padding: 8px 12px;
+  overflow: hidden;
+  align-self: stretch;
+  align-items: center;
+  flex-shrink: 0;
+  border-color: rgba(164, 164, 164, 0.42);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 4px;
+}
+
+.cards-filtersmatinputslot:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.cards-matinputslot2 {
+  gap: 10px;
+  color: rgba(18, 61, 108, 0.8700000047683716);
+  display: flex;
+  overflow: hidden;
+  flex-grow: 1;
+  font-size: 14px;
+  text-align: left;
+  align-items: center;
+  font-family: Roboto;
+  font-weight: 400;
+}
+.cards-vector2 {
+  width: 15px;
+  height: 15px;
+}
+.cards-checkinmatinputslot {
+  gap: 10px;
+  width: 229px;
+  display: flex;
+  padding: 8px 12px;
+  overflow: hidden;
+  align-self: stretch;
+  align-items: center;
+  flex-shrink: 0;
+  border-color: rgba(164, 164, 164, 0.42);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 4px;
+}
+.cards-uiwdate {
+  width: 15px;
+  height: 15px;
+}
+.cards-matinputslot3 {
+  gap: 10px;
+  color: rgba(18, 61, 108, 0.8700000047683716);
+  display: flex;
+  overflow: hidden;
+  flex-grow: 1;
+  font-size: 14px;
+  text-align: left;
+  align-items: center;
+  font-family: Roboto;
+  font-weight: 400;
+}
+.cards-checkoutmatinputslot {
+  gap: 10px;
+  width: 229px;
+  display: flex;
+  padding: 8px 12px;
+  overflow: hidden;
+  align-self: stretch;
+  align-items: center;
+  flex-shrink: 0;
+  border-color: rgba(164, 164, 164, 0.42);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 4px;
+}
+.cards-uiwdate1 {
+  width: 15px;
+  height: 15px;
+}
+.cards-matinputslot4 {
+  gap: 10px;
+  color: rgba(18, 61, 108, 0.8700000047683716);
+  display: flex;
+  overflow: hidden;
+  flex-grow: 1;
+  font-size: 14px;
+  text-align: left;
+  align-items: center;
+  font-family: Roboto;
+  font-weight: 400;
+}
+.cards-matbtn2 {
+  width: 30px;
+  height: 50px;
+  display: flex;
+  padding: 0 16px;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 56px;
+  justify-content: center;
+  background-color: rgba(241, 90, 42, 1);
+}
+
+.cards-matbtn2:hover {
+  cursor: pointer;
+}
+
+.cards-vector3 {
+  width: 14px;
+  height: 14px;
+}
+.cards-cardscontent {
+  gap: 25px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  flex-wrap: wrap;
+  align-self: center;
+  align-items: center;
+  flex-shrink: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  justify-content: center;
+  background-color: #0e0a08; /* Promijenjeno */
+}
+.cards-component2 {
+  text-decoration: none;
+}
+.cards-component3 {
+  text-decoration: none;
+}
+.cards-component4 {
+  text-decoration: none;
+}
+.cards-component5 {
+  text-decoration: none;
+}
+.cards-component6 {
+  text-decoration: none;
+}
