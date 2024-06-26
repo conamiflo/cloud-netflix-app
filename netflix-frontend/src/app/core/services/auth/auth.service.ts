@@ -21,9 +21,9 @@ export class AuthService {
 
     }
 
-    var roles:string[] = await this.cognitoService.getUserGroup();
+    var roles:string[]|null =  await this.cognitoService.getUserGroup()!;
 
-    for (const role of roles) {
+    for (const role of roles!) {
       if (allowedRoles.includes(role)) {
         return true;
       }

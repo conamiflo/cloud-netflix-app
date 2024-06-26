@@ -37,9 +37,10 @@ export class LoginComponent {
     var signedIn = await this.cognitoService.signIn(username, password)
     if (!signedIn) {
       this.form.controls['password'].setErrors({'incorrect': true});
+      return;
     }
 
-    this.router.navigate(['/home'])
+    this.router.navigate([''])
 
   }
 }
