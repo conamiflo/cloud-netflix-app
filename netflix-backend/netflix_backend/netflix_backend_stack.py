@@ -78,6 +78,17 @@ class NetflixBackendStack(Stack):
             write_capacity=1
         )
 
+        feed_table = dynamodb.Table(
+            self, "feed-table",
+            table_name="feed-table",
+            partition_key=dynamodb.Attribute(
+                name="username",
+                type=dynamodb.AttributeType.STRING
+            ),
+            read_capacity=1,
+            write_capacity=1
+        )
+
         s3_bucket = s3.Bucket(self,id="movie-bucket3",bucket_name="movie-bucket3")
 
         lambda_role = iam.Role(
@@ -233,3 +244,17 @@ class NetflixBackendStack(Stack):
 
         review_resource = api.root.add_resource("reviews")
         review_resource.add_method("POST", apigateway.LambdaIntegration(review_lambda))
+
+        get_feed_lambda = create_lambda_function(
+            "getFeed",
+            "get_feed.get_feed",
+            "feed_service",
+            "GET",
+            {
+                'MOVIES_TABLE_NAME': movie_table.table_name,
+                'FEED_TABLE_NAME': feed_table.table_name
+            }
+        )
+
+        feed_resource = api.root.add_resource("feed")
+        feed_resource.add_method("GET", apigateway.LambdaIntegration(get_feed_lambda))
