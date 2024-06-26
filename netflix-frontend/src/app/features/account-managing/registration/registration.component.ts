@@ -3,6 +3,7 @@ import {CognitoService} from "../../../core/services/cognito/cognito.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {CommonModule, NgClass, NgIf} from "@angular/common";
 import {UserDTO} from "../../../core/models/UserDTO";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-registration',
@@ -21,6 +22,7 @@ export class RegistrationComponent {
   get f() { return this.form.controls; }
   constructor (private cognitoService:CognitoService,
                private formBuilder: FormBuilder,
+               private router: Router
   ) {
 
   }
@@ -54,6 +56,7 @@ export class RegistrationComponent {
 
     this.cognitoService.signUp(user)
 
+    this.router.navigate([''])
 
 
   }

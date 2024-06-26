@@ -41,8 +41,8 @@ export class CognitoService {
     }
   }
 
-  public signOut(): Promise<any> {
-    return Auth.signOut()
+  public async signOut(): Promise<any> {
+    await Auth.signOut()
 
   }
 
@@ -55,10 +55,16 @@ export class CognitoService {
     })
   }
 
-  async getUserGroup():Promise<string[]> {
-    var res=await Auth.currentSession()
-    var jwt=res.getAccessToken().decodePayload()
-    return jwt['cognito:groups'];
+  async getUserGroup():Promise<string[]|null> {
+    try {
+      var res=await Auth.currentSession()
+      console.log(res)
+      var jwt=res.getAccessToken().decodePayload()
+      return jwt['cognito:groups'];
+    }catch (e){
+      return null
+    }
+
   }
 
 

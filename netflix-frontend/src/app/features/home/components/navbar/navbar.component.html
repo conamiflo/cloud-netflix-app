@@ -16,7 +16,9 @@
       <li><a href="#services">Services</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="/login" class="action_btn">Sign in</a>
+    <a *ngIf="role==null" href="/login" class="action_btn">Sign in</a>
+    <a *ngIf="role!=null" class="action_btn" (click)="signOut()">Sign out</a>
+
     <div class="toggle_btn">
     </div>
   </div>
