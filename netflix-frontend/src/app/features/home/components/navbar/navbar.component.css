@@ -6,14 +6,14 @@
 }
 
 body {
-  height: 60vh;
-  background-image: url('/assets/background.png');
-  background-color: rgba(0,0,0,0.5);
-  background-blend-mode: color;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  margin-bottom: 0px;
+  /*height: 60vh;*/
+  /*background-image: url('/assets/background.png');*/
+  /*background-color: rgba(0,0,0,0.5);*/
+  /*background-blend-mode: color;*/
+  /*background-size: cover;*/
+  /*background-position: center;*/
+  /*position: relative;*/
+  /*margin-bottom: 0px;*/
 }
 
 
@@ -39,6 +39,9 @@ a:hover{
 header{
   position: relative;
   padding: 0 2rem;
+  background-color: #0e0a08;
+  background-blend-mode: color;
+  background-size: cover;
 }
 
 .navbar{
