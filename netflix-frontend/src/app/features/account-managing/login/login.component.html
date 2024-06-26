@@ -8,22 +8,16 @@
       <div>
         <h1>Login</h1>
 
-        <form action="">
-          <input type="text" placeholder="Email or phone number" />
-          <input type="password" placeholder="Password" />
-          <button type="submit">Login</button>
-          <div>
-            <label htmlFor="remember-login">
-              <input
-                type="checkbox"
-                defaultChecked
-                name="remember"
-                id="remember-login"
-              />
-              <span>Remember me</span>
-            </label>
-            <a href="http://localhost:4200">Need help?</a>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <input type="text" placeholder="Email or phone number" formControlName="username" />
+          <input type="password" placeholder="Password" formControlName="password" />
+          <div *ngIf="submitted && f['password'].errors" style="color: #D5011D">
+
+            <p>Invalid Credentials</p>
+
           </div>
+          <button type="submit">Login</button>
+
         </form>
         <button>
           <img src="./assets/vectors/facebook.svg" alt="facebook" /> Connect with Facebook
