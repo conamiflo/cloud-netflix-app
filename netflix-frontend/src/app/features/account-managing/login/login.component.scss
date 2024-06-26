@@ -239,6 +239,16 @@ div#Login {
     }
   }
 }
+header {
+  a {
+    text-decoration: none;
+    img {
+      max-width: 167px; // Primer za maksimalnu širinu slike
+      height: auto; // Automatsko prilagođavanje visine
+    }
+  }
+}
+
 
 @media (max-width: 425px) {
   div#Login {
