@@ -52,6 +52,76 @@
   color: white;
 }
 
+.search-box-container{
+  background-color: #0e0a08;
+  padding-left: 47px;
+  display: flex;
+  padding-bottom: 35px;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.search-box input{
+  padding: 10px;
+  width: 750px;
+  border: none;
+  border-radius: 50px;
+  font-weight: bold;
+  color: white;
+  background-color: #0e0a08;
+  border-style: solid;
+  border-color: white;
+  border-width: 2px;
+}
+
+::placeholder{
+  color: white;
+}
+
+.search-box button{
+  padding: 6px;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  width: 70px;
+  border-radius: 30px;
+  background-color: red;
+  color: white;
+  margin-left: -75px;
+  transition: 0.6s ease-in-out;
+  cursor: pointer;
+}
+
+.fa{
+  box-sizing: border-box;
+  padding: 10px;
+  width: 42.5px;
+  height: 42.5px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 50%;
+  color: red;
+  text-align: center;
+  font-size: 1.2em;
+  transition: all 1s;
+}
+
+form:hover{
+  width: 300px;
+  cursor: pointer;
+}
+
+form:hover input{
+  display: block;
+}
+
+form:hover .fa{
+  background: #0e0a08;
+  color: red;
+}
+
 .cards-mattoolbarcontent {
   width: inherit;
   height: 78px;
