@@ -1,17 +1,18 @@
+import boto3
 from aws_cdk import (
     aws_lambda as _lambda,
     aws_apigateway as apigateway,
     aws_dynamodb as dynamodb,
     aws_iam as iam,
     aws_s3 as s3,
+    aws_cognito as cognito,
     Stack,
     Duration,
     BundlingOptions,
-    RemovalPolicy
+    RemovalPolicy, custom_resources
 )
+from aws_cdk.aws_cognito import CfnUserPoolUser, CfnUserPoolUserToGroupAttachment
 from constructs import Construct
-from aws_cdk.aws_lambda_python_alpha import PythonLayerVersion
-import boto3
 
 class NetflixBackendStack(Stack):
 
@@ -118,6 +119,111 @@ class NetflixBackendStack(Stack):
         )
 
 
+        user_pool = cognito.UserPool(
+            self, "UserPool9",
+            user_pool_name="UserPool9",
+            self_sign_up_enabled=True,
+            auto_verify=cognito.AutoVerifiedAttrs(email=True),
+            password_policy=cognito.PasswordPolicy(
+                min_length=8,
+                require_digits=True,
+                require_lowercase=True,
+                require_uppercase=True,
+                require_symbols=True
+
+            ),
+            sign_in_aliases=cognito.SignInAliases(username=True),
+            account_recovery=cognito.AccountRecovery.EMAIL_ONLY,
+            standard_attributes=cognito.StandardAttributes(
+                email=cognito.StandardAttribute(
+                    required=True,
+                    mutable=False
+                ),
+                family_name=cognito.StandardAttribute(
+                    required=True,
+                    mutable=True
+                ),
+                phone_number=cognito.StandardAttribute(
+                    required=True,
+                    mutable=True
+                ),
+                given_name=cognito.StandardAttribute(
+                    required=True,
+                    mutable=True
+                )
+            ),
+
+        )
+
+        admins_group = cognito.CfnUserPoolGroup(self, "AdminsGroup",
+                                                group_name="Admins",
+                                                user_pool_id=user_pool.user_pool_id
+                                                )
+
+
+        user = CfnUserPoolUser(self, 'admir',
+                               user_pool_id=user_pool.user_pool_id,
+                               username='admir',
+                               desired_delivery_mediums=["EMAIL"],
+                               user_attributes=[cognito.CfnUserPoolUser.AttributeTypeProperty(
+                                   name="email",
+                                   value="a@gmail.com"
+                               ),cognito.CfnUserPoolUser.AttributeTypeProperty(
+                                   name="family_name",
+                                   value="admirovic"
+                               ),cognito.CfnUserPoolUser.AttributeTypeProperty(
+                                   name="phone_number",
+                                   value='+38160'
+                               ),cognito.CfnUserPoolUser.AttributeTypeProperty(
+                                   name="given_name",
+                                   value="admir"
+                               )])
+
+
+
+
+        cfn_user_pool_user_to_group_attachment = cognito.CfnUserPoolUserToGroupAttachment(self,
+                                                                                          "MyCfnUserPoolUserToGroupAttachment",
+                                                                                          group_name="Admins",
+                                                                                          username="admir",
+                                                                                          user_pool_id=user_pool.user_pool_id
+                                                                                          )
+
+        set_password = custom_resources.AwsCustomResource(self, "SetTestUserPassword",
+                                            on_create=custom_resources.AwsSdkCall(
+                                                service="CognitoIdentityServiceProvider",
+                                                action="adminSetUserPassword",
+                                                parameters={
+                                                    "UserPoolId": user_pool.user_pool_id,
+                                                    "Username": "admir",
+                                                    "Password": "Nemanja123*",
+                                                    "Permanent": True,
+                                                },
+                                                physical_resource_id=custom_resources.PhysicalResourceId.of("SetTestUserPassword")
+                                            ),
+                                            policy=custom_resources.AwsCustomResourcePolicy.from_statements([
+                                                iam.PolicyStatement(
+                                                    actions=["cognito-idp:AdminSetUserPassword"],
+                                                    resources=["*"],
+                                                )
+                                            ]),
+                                            )
+
+        # Ensure the password is set after the user is created
+        set_password.node.add_dependency(user)
+
+        admins_group.node.add_dependency(user_pool)
+        user.node.add_dependency(admins_group)
+        cfn_user_pool_user_to_group_attachment.node.add_dependency(user)
+
+
+
+
+        # Optionally, add the User to a Group
+        # Example: Attach the User to a Group
+
+
+
         def create_lambda_function(id, handler, include_dir, method, environment):
             function = _lambda.Function(
                 self, id,
@@ -137,7 +243,6 @@ class NetflixBackendStack(Stack):
             )
 
             return function
-
 
         api = apigateway.RestApi(self, "netflix-api",
                                 rest_api_name="netflix-api",
@@ -233,3 +338,4 @@ class NetflixBackendStack(Stack):
 
         review_resource = api.root.add_resource("reviews")
         review_resource.add_method("POST", apigateway.LambdaIntegration(review_lambda))
+
