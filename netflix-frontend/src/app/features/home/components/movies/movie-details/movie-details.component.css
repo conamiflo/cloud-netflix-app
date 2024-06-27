@@ -121,8 +121,59 @@ body { background: var(--eerie-black); }
 body.active { overflow: hidden; }
 
 
+.review-container {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  /*background-color: #0e0a08; !* Dodano *!*/
+  background-color: #0f0f0f;
+}
+.review-container2 {
+  margin-top: 40px;
+  width: 80%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  align-items: flex-start;
+  flex-shrink: 0;
+  flex-direction: column;
+  /*background-color: #0e0a08; !* Promijenjeno *!*/
+  background-color: #0f0f0f;
+}
 
+.cards-cardscontent {
+  gap: 25px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  flex-shrink: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+  justify-content: flex-start;
+  flex-direction: column;
+  /*background-color: #0e0a08; !* Promijenjeno *!*/
+  background-color: #0f0f0f;
+}
 
+.cards-title {
+  width: 100%;
+  padding-top: 80px;
+  padding-left: 200px;
+  overflow: hidden;
+  position: relative;
+  align-items: flex-start;
+  font-size: 40px;
+  font-weight: 700;
+  color: white;
+}
+#movie-reviews{
+  padding-bottom: 25px;
+}
 
 /*-----------------------------------*\
  * #REUSED STYLE
@@ -251,6 +302,36 @@ body.active { overflow: hidden; }
 .btn-primary:is(:hover, :focus) {
   background: var(--citrine);
   color: var(--xiketic);
+}
+
+.btn-review-movie{
+  color: var(--white);
+  font-size: var(--fs-11);
+  font-weight: var(--fw-700);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 2px solid var(--citrine);
+  border-radius: 50px;
+  transition: var(--transition-1);
+}
+
+.btn-review-movie > ion-icon { font-size: 16px; }
+
+.btn-review-movie { background: var(--gunmetal-1); }
+
+.btn-review-movie:is(:hover, :focus) {
+  background: var(--citrine);
+  color: var(--xiketic);
+}
+
+.btn-review-movie {
+  font-size: 10px;
+  padding: 10px 17px;
+  letter-spacing: 0;
+  background: transparent;
 }
 
 /**
@@ -423,13 +504,21 @@ body.active { overflow: hidden; }
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 20px 40px;
-  max-width: 460px;
-  background: var(--gunmetal-2);
+  gap: 10px 30px;
+  max-width: 700px;
+  /*background: var(--gunmetal-2);*/
+  /*background-color: rgba(64, 64, 64, 0.8); !* RGBA vrednost sa prozirnošću *!*/
   padding: 25px;
-  border: 1px solid var(--jet);
+  /*border: 1px solid var(--jet);*/
   border-radius: 4px;
   margin-bottom: 30px;
+}
+#edit-movie{
+  /*visibility: hidden;*/
+}
+
+#delete-movie{
+  /*visibility: hidden;*/
 }
 
 .details-actions .share ion-icon {
@@ -1016,6 +1105,100 @@ body.active { overflow: hidden; }
   .download-btn ion-icon {
     font-size: 30px;
     transform: rotate(-0.25turn);
+  }
+
+  .page-frame250 {
+    gap: var(--dl-space-space-unit);
+    width: 80%;
+    display: flex;
+    overflow: hidden;
+    margin-top: var(--dl-space-space-oneandhalfunits);
+    flex-shrink: 0;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 1);
+  }
+  .page-frame168 {
+    width: 255px;
+    display: flex;
+    align-items: flex-start;
+    flex-shrink: 0;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .page-text164 {
+    color: rgba(52, 65, 87, 1);
+    height: auto;
+    font-size: 40px;
+    text-align: left;
+    font-family: Lato;
+    font-weight: 700;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .page-frame521 {
+    width: 110px;
+    display: flex;
+    align-items: flex-start;
+  }
+  .page-star1 {
+    width: 22px;
+    height: 22px;
+  }
+  .page-star2 {
+    width: 22px;
+    height: 22px;
+  }
+  .page-star3 {
+    width: 22px;
+    height: 22px;
+  }
+  .page-star4 {
+    width: 22px;
+    height: 22px;
+  }
+  .page-star5 {
+    width: 22px;
+    height: 22px;
+  }
+  .page-frame169 {
+    gap: 8px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .page-text166 {
+    color: rgba(52, 65, 87, 1);
+    height: auto;
+    font-size: 19px;
+    text-align: left;
+    font-family: Lato;
+    font-weight: 600;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .page-text168 {
+    color: rgba(52, 65, 87, 1);
+    height: auto;
+    font-size: 13px;
+    text-align: left;
+    font-family: Montserrat;
+    font-weight: 400;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
+  }
+  .page-text170 {
+    color: rgba(18, 61, 108, 1);
+    height: auto;
+    font-size: 20px;
+    text-align: left;
+    font-family: Lato;
+    font-weight: 600;
+    line-height: normal;
+    font-stretch: normal;
+    text-decoration: none;
   }
 
 }

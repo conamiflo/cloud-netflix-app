@@ -9,7 +9,9 @@
   align-items: flex-start;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #0e0a08;
+  /*background-color: #0e0a08;*/
+  background-color: #0f0f0f;
+
 }
 .accommodation-card-park-lineapartmentin-miami-fl1 {
   width: 100%;
