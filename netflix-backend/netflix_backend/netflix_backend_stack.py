@@ -49,8 +49,8 @@ class NetflixBackendStack(Stack):
         )
 
         review_table = dynamodb.Table(
-            self, "review-table",
-            table_name="review-table",
+            self, "review-table2",
+            table_name="review-table2",
             partition_key=dynamodb.Attribute(
                 name="review_id",
                 type=dynamodb.AttributeType.STRING
@@ -256,5 +256,20 @@ class NetflixBackendStack(Stack):
             }
         )
 
+        update_users_feed_lambda = create_lambda_function(
+            "updateUsersFeed",
+            "update_users_feed.update_users_feed",
+            "feed_service",
+            "PUT",
+            {
+                'MOVIES_TABLE_NAME': movie_table.table_name,
+                'FEED_TABLE_NAME': feed_table.table_name,
+                'REVIEWS_TABLE_NAME': review_table.table_name,
+                'SUBSCRIPTIONS_TABLE_NAME': subscription_table.table_name,
+                'DOWNLOAD_HISTORY_TABLE_NAME': download_history_table.table_name
+            }
+        )
+
         feed_resource = api.root.add_resource("feed")
         feed_resource.add_method("GET", apigateway.LambdaIntegration(get_feed_lambda))
+        feed_resource.add_method("PUT", apigateway.LambdaIntegration(update_users_feed_lambda))

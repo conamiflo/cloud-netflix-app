@@ -5,7 +5,7 @@ from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Key, Attr
 
 dynamodb = boto3.resource('dynamodb')
-review_table = dynamodb.Table('review-table')
+review_table = dynamodb.Table('review-table2')
 
 
 def review(event, context):
@@ -13,15 +13,13 @@ def review(event, context):
         body = json.loads(event['body'])
         username = body['username']
         movie_id = body['movie_id']
-        review_type = body['type']
-        description = body['description']
         value = body['value']
 
         # Check for existing subscription
-        if check_existing_reviews(username, review_type, movie_id):
+        if check_existing_reviews(username, movie_id):
             return {
                 'statusCode': 400,
-                'body': json.dumps({'message': f"Review already exists from user {username} for movie with id {movie_id} with type {review_type}"})
+                'body': json.dumps({'message': f"Review already exists from user {username} for movie with id {movie_id}"})
             }
 
         review_id = str(get_last_review_id() + 1)
@@ -31,8 +29,6 @@ def review(event, context):
                 'review_id': review_id,
                 'username': username,
                 'movie_id': movie_id,
-                'type': review_type,
-                'description': description,
                 'value': value
             }
         )
@@ -67,10 +63,10 @@ def get_last_review_id():
         return 0
 
 
-def check_existing_reviews(username, review_type, movie_id):
+def check_existing_reviews(username, movie_id):
     try:
         response = review_table.scan(
-            FilterExpression=Attr('username').eq(username) & Attr('type').eq(review_type) & Attr('movie_id').eq(movie_id)
+            FilterExpression=Attr('username').eq(username) & Attr('movie_id').eq(movie_id)
         )
 
         if response['Items']:
