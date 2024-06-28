@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { addIcons} from 'ionicons';
 import {IonIcon} from '@ionic/angular/standalone'
-import { cameraOutline, playCircle, shareSocial, play, downloadOutline, chevronUp ,calendarOutline,timeOutline,star} from 'ionicons/icons';
+import { cameraOutline, playCircle, shareSocial, play, downloadOutline, chevronUp ,calendarOutline,timeOutline,star,send} from 'ionicons/icons';
 import {MovieReviewComponent} from "../movie-review/movie-review.component";
 import {MovieCardComponent} from "../movie-card/movie-card.component";
 import {MovieReviewDialogComponent} from "../movie-review-dialog/movie-review-dialog.component";
@@ -17,7 +17,7 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 })
 export class MovieDetailsComponent{
   constructor(public dialog: MatDialog) {
-    addIcons({ cameraOutline, playCircle, shareSocial, play, downloadOutline, chevronUp,calendarOutline,timeOutline,star});
+    addIcons({ cameraOutline, playCircle, shareSocial, play, downloadOutline, chevronUp,calendarOutline,timeOutline,star,send});
   }
 
   openReviewDialog(): void{

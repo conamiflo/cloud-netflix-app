@@ -1,11 +1,25 @@
 .filter-input{
   width:100%;
 }
+mat-label{
+  color: white;
+}
+.title{
+  color: white;
+}
 .review-content{
   width: 90%;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  background-color: hsl(216, 22%, 18%);
+}
+body{
+  background-color: hsl(216, 22%, 18%);
+}
+
+#select-rating{
+  color: white;
 }
 
 .mat-dialog-actions {
@@ -13,19 +27,26 @@
   justify-content: center;
   flex-direction: column;
 }
+
+mat-dialog-title{
+  color: white;
+}
+
 #review-textarea{
   height: 120px;
+  color: white;
 }
 
 .page-stylelayer1 {
   gap: 4px;
   display: flex;
-  align-self: stretch;
-  align-items: center;
   flex-shrink: 0;
-  border-radius: 10px;
+  border-radius: 50px;
   justify-content: center;
-  background-color: rgba(241, 90, 42, 1);
+  background-color: red;
+}
+span{
+  color: white;
 }
 
 .page-text3 {
