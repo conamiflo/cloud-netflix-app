@@ -67,6 +67,18 @@ export class CognitoService {
 
   }
 
+  async confirmSignUp(username:string,code:string):Promise<boolean> {
+    try {
+      await Auth.confirmSignUp(username,code)
+      return true
+    }catch (e){
+      return false
+    }
+
+  }
+
+
+
 
 
   async signUp(usr:UserDTO) {
@@ -74,7 +86,7 @@ export class CognitoService {
     var password=usr.password
     var phone_number=usr.phone_number
     var email=usr.email
-    var name=usr.name
+    var given_name=usr.name
     var family_name=usr.family_name
     try {
       const { user } = await Auth.signUp({
@@ -83,7 +95,7 @@ export class CognitoService {
         attributes: {
           email, // optional
           phone_number, // optional - E.164 number convention
-          name,// other custom attributes
+          given_name,// other custom attributes
           family_name
         },
         autoSignIn: {
@@ -92,8 +104,10 @@ export class CognitoService {
         }
       });
       console.log(user);
+      return true;
     } catch (error) {
       console.log('error signing up:', error);
+      return false;
     }
   }
 }

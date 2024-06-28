@@ -1,0 +1,28 @@
+<div class="content">
+  <div *ngIf="!success">
+    <h6>A verification code was sent to your email.</h6>
+    <h6 style="margin-left: auto;margin-right: auto;text-align: center">Please enter it below </h6>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <input type="text" formControlName="code" [ngClass]="{ 'is-invalid': submitted && form.get('code')?.errors }" />
+
+      <div *ngIf="submitted&&form.get('password')?.errors" style="color: #D5011D">
+
+        <p>Invalid Code</p>
+
+      </div>
+      <button type="submit">Confirm email</button>
+    </form>
+
+
+  </div>
+
+  <div *ngIf="success">
+    <h1>You have successfully created an account!</h1>
+  </div>
+
+</div>
+
+
+
+

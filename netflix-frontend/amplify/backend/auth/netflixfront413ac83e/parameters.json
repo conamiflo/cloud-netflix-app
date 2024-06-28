@@ -1,16 +1,14 @@
 {
   "authSelections": "userPoolOnly",
-  "resourceName": "netflixfront7a9348dc",
+  "resourceName": "netflixfront413ac83e",
   "serviceType": "imported",
-  "region": "eu-north-1",
-  "aliasAttributes": [
-    "preferred_username"
-  ],
+  "region": "eu-central-1",
+  "authProvidersUserPool": [],
   "requiredAttributes": [
     "phone_number",
     "email",
-    "family_name",
-    "name"
+    "given_name",
+    "family_name"
   ],
   "passwordPolicyMinLength": 8,
   "passwordPolicyCharacters": [
@@ -20,5 +18,8 @@
     "Requires Symbols"
   ],
   "mfaConfiguration": "OFF",
+  "autoVerifiedAttributes": [
+    "email"
+  ],
   "mfaTypes": []
 }
