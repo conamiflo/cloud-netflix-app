@@ -7,8 +7,13 @@
       <input type="text" placeholder="Surname" formControlName="family_name" [ngClass]="{ 'is-invalid': submitted && form.get('family_name')?.errors }"/>
       <input type="text" placeholder="Phone number" formControlName="phone_number"  [ngClass]="{ 'is-invalid': submitted && form.get('phone_number')?.errors }"/>
       <input type="text" placeholder="Email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && form.get('email')?.errors }"/>
+      <div *ngIf="submitted&&email_taken" style="color: #D5011D">
+
+        <p>Username taken</p>
+
+      </div>
       <input type="text" placeholder="Username" formControlName="username" [ngClass]="{ 'is-invalid': submitted && form.get('username')?.errors }" />
-      <div *ngIf="submitted&&form.get('username')?.errors" style="color: #D5011D">
+      <div *ngIf="submitted&&user_taken" style="color: #D5011D">
 
         <p>Username taken</p>
 

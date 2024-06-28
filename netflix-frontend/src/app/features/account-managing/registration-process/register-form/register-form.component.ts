@@ -22,6 +22,9 @@ export class RegisterFormComponent {
 
   form!: FormGroup;
   submitted = false;
+  user_taken: boolean=false;
+  email_taken: boolean=false;
+
   get f() { return this.form.controls; }
   constructor (private cognitoService:CognitoService,
                private formBuilder: FormBuilder,
@@ -43,6 +46,8 @@ export class RegisterFormComponent {
   }
   async onSubmit() {
     this.submitted = true;
+    this.user_taken=false;
+    this.email_taken=false;
 
     if (!this.form.valid) {
       return
@@ -57,14 +62,34 @@ export class RegisterFormComponent {
 
     var user: UserDTO = new UserDTO(username, name, email, password, phone_number, family_name)
 
-    var succ = await this.cognitoService.signUp(user)
+    var err:string = await this.cognitoService.signUp(user)
 
-    if (!succ) {
+    err=String(err)
+
+    console.log(err)
+
+    if(err.includes("UserLambdaValidationException")){
+      this.form.controls['email'].setErrors({'incorrect': true});
+      this.email_taken=true;
+    }
+    else if(err.includes("UsernameExistsException")){
       this.form.controls['username'].setErrors({'incorrect': true});
-      return;
+      this.user_taken=true;
+    }
+    else if(err.includes("phone")){
+      this.form.controls['phone_number'].setErrors({'incorrect': true});
+    }else if(err===''){
+      this.onSuccReg.emit(username);
     }
 
-    this.onSuccReg.emit(username);
+
+
+    // if (!succ) {
+    //   this.form.controls['username'].setErrors({'incorrect': true});
+    //   return;
+    // }
+    //
+    // this.onSuccReg.emit(username);
 
     //this.router.navigate([''])
 

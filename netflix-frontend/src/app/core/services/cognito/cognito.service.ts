@@ -104,10 +104,10 @@ export class CognitoService {
         }
       });
       console.log(user);
-      return true;
+      return '';
     } catch (error) {
       console.log('error signing up:', error);
-      return false;
+      return error as string;
     }
   }
 }
