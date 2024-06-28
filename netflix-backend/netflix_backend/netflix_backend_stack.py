@@ -273,3 +273,16 @@ class NetflixBackendStack(Stack):
         feed_resource = api.root.add_resource("feed")
         feed_resource.add_method("GET", apigateway.LambdaIntegration(get_feed_lambda))
         feed_resource.add_method("PUT", apigateway.LambdaIntegration(update_users_feed_lambda))
+
+        create_download_history_lambda = create_lambda_function(
+            "createDownloadHistory",
+            "create_download_history.create_download_history",
+            "download_history_service",
+            "POST",
+            {
+                'DOWNLOAD_HISTORY_TABLE_NAME': download_history_table.table_name,
+            }
+        )
+
+        history_resource = api.root.add_resource("history")
+        history_resource.add_method("POST", apigateway.LambdaIntegration(create_download_history_lambda))

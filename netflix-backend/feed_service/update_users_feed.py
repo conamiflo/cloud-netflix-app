@@ -2,6 +2,7 @@ import datetime
 import math
 import json
 import boto3
+from decimal import Decimal, ROUND_DOWN
 from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Attr
 
@@ -13,17 +14,18 @@ subscription_table = dynamodb.Table('subscription-table')
 movies_table = dynamodb.Table('movies-dbtable2')
 download_history_table = dynamodb.Table('download-history-table')
 
+
 def exponential_approach(date):
     current_datetime = datetime.datetime.now()
-    delta = (date - current_datetime).total_seconds()
-    decay_rate = 0.0000004
-    #sa ovim decay rateom nakon mesec dana filmovi vec krecu da imaju dosta manju relevantnost: 0.3545875486 npr a nakon nedelju su i dalje relevantni dosta 0.7851189846
-    # a nakon 2 meseca 0.1257323296
+    delta = (current_datetime - date).total_seconds()
+    decay_rate = Decimal('0.0000004')
 
     if delta <= 0:
-        return 1.0
+        return Decimal('1.0')
 
-    return math.exp(-decay_rate * delta)
+    result = Decimal(math.exp(-float(decay_rate * Decimal(delta))))
+    result = result.quantize(Decimal('0.001'), rounding=ROUND_DOWN)
+    return result
 
 def update_users_feed(event, context):
     try:
@@ -57,7 +59,7 @@ def update_users_feed(event, context):
                     movie_items = response.get('Items', [])
                     for movie_item in movie_items:
                         #genres = movie_item.get('genres', [])
-                        #ovo vratiti kada se popravi tabela usera
+                        #ovo vratiti kada se popravi tabela filmova
 
                         genres = movie_item.get('genres', "")
                         actors = movie_item.get('actors', [])
@@ -66,7 +68,7 @@ def update_users_feed(event, context):
                         #     if genre not in genres_dict:
                         #         genres_dict[genre] = 0
                         #     genres_dict[genre] += value
-                        # ovo vratiti kada se popravi tabela usera
+                        # ovo vratiti kada se popravi tabela filmova
 
                         if genres not in genres_dict:
                             genres_dict[genres] = 0
@@ -113,25 +115,33 @@ def update_users_feed(event, context):
 
         if 'Items' in downloads:
             for item in downloads['Items']:
-                if 'movie_id' in item and 'download_date' in item:
+                if 'movie_id' in item and 'timestamp' in item:
                     movie_id = item['movie_id']
-                    download_date = item['download_date']
+                    timestamp = item['timestamp']
 
-                    download_datetime = datetime.datetime.fromisoformat(download_date)
+                    download_datetime = datetime.datetime.fromisoformat(timestamp)
                     value = exponential_approach(download_datetime)
-
+                    print(value)
                     response = movies_table.query(
                         KeyConditionExpression=boto3.dynamodb.conditions.Key('movie_id').eq(movie_id)
                     )
                     movie_items = response.get('Items', [])
                     for movie_item in movie_items:
-                        genres = movie_item.get('genres', [])
+                        # genres = movie_item.get('genres', [])
+                        # ovo vratiti kada se popravi tabela filmova
+
+                        genres = movie_item.get('genres', "")
                         actors = movie_item.get('actors', [])
                         directors = movie_item.get('directors', [])
-                        for genre in genres:
-                            if genre not in genres_dict:
-                                genres_dict[genre] = 0
-                            genres_dict[genre] += value
+                        # for genre in genres:
+                        #     if genre not in genres_dict:
+                        #         genres_dict[genre] = 0
+                        #     genres_dict[genre] += value
+                        # ovo vratiti kada se popravi tabela filmova
+
+                        if genres not in genres_dict:
+                            genres_dict[genres] = 0
+                        genres_dict[genres] += value
 
                         for actor in actors:
                             if actor not in actors_dict:
@@ -150,15 +160,21 @@ def update_users_feed(event, context):
 
         for movie in movies:
             movie_id = movie['movie_id']
-            genres = movie.get('genres', [])
+            genres = movie.get('genres', "")
+            # genres = movie.get('genres', [])
+            # ovo vratiti kada se popravi tabela filmova
             actors = movie.get('actors', [])
             directors = movie.get('directors', [])
 
             weight = 0
 
-            for genre in genres:
-                if genre in genres_dict:
-                    weight += genres_dict[genre]
+            # ovo vratiti kada se popravi tabela filmova
+            # for genre in genres:
+            #     if genre in genres_dict:
+            #         weight += genres_dict[genre]
+
+            if genres in genres_dict:
+                weight += genres_dict[genres]
 
             for actor in actors:
                 if actor in actors_dict:
