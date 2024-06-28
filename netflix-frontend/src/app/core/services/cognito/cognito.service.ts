@@ -60,7 +60,9 @@ export class CognitoService {
       var res=await Auth.currentSession()
       console.log(res)
       var jwt=res.getAccessToken().decodePayload()
-      return jwt['cognito:groups'];
+      var groups=jwt['cognito:groups'];
+     if(groups==undefined) return [];
+     return groups;
     }catch (e){
       return null
     }
