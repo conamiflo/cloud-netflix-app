@@ -1,3 +1,4 @@
+import aws_cdk
 import boto3
 from aws_cdk import (
     aws_lambda as _lambda,
@@ -120,8 +121,8 @@ class NetflixBackendStack(Stack):
 
 
         user_pool = cognito.UserPool(
-            self, "UserPool9",
-            user_pool_name="UserPool9",
+            self, "UserPool",
+            user_pool_name="UserPool",
             self_sign_up_enabled=True,
             auto_verify=cognito.AutoVerifiedAttrs(email=True),
             password_policy=cognito.PasswordPolicy(
@@ -154,6 +155,12 @@ class NetflixBackendStack(Stack):
             ),
 
         )
+
+        web_client = cognito.UserPoolClient(self, "WebAppClient",
+                                    user_pool=user_pool,
+                                    generate_secret=False,  # Typically false for web apps
+                                    user_pool_client_name="WebAppClient",
+                                    )
 
         admins_group = cognito.CfnUserPoolGroup(self, "AdminsGroup",
                                                 group_name="Admins",
@@ -199,19 +206,27 @@ class NetflixBackendStack(Stack):
                                                     "Password": "Nemanja123*",
                                                     "Permanent": True,
                                                 },
-                                                physical_resource_id=custom_resources.PhysicalResourceId.of("SetTestUserPassword")
+                                                physical_resource_id=custom_resources.PhysicalResourceId.of("SetTestUserPassword-admir")
+                                            ),on_update=custom_resources.AwsSdkCall(
+                                                service="CognitoIdentityServiceProvider",
+                                                action="adminSetUserPassword",
+                                                parameters={
+                                                    "UserPoolId": user_pool.user_pool_id,
+                                                    "Username": "admir",
+                                                    "Password": "Nemanja123*",
+                                                    "Permanent": True,
+                                                },
+                                                physical_resource_id=custom_resources.PhysicalResourceId.of("SetTestUserPassword-admir")
                                             ),
-                                            policy=custom_resources.AwsCustomResourcePolicy.from_statements([
-                                                iam.PolicyStatement(
-                                                    actions=["cognito-idp:AdminSetUserPassword"],
-                                                    resources=["*"],
-                                                )
-                                            ]),
+
+                                              policy=custom_resources.AwsCustomResourcePolicy.from_sdk_calls(
+                                                  resources=custom_resources.AwsCustomResourcePolicy.ANY_RESOURCE
+                                              )
                                             )
 
         # Ensure the password is set after the user is created
-        set_password.node.add_dependency(user)
-
+        set_password.node.add_dependency(cfn_user_pool_user_to_group_attachment)
+        web_client.node.add_dependency(user_pool)
         admins_group.node.add_dependency(user_pool)
         user.node.add_dependency(admins_group)
         cfn_user_pool_user_to_group_attachment.node.add_dependency(user)

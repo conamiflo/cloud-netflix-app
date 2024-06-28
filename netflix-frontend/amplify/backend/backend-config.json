@@ -1,6 +1,6 @@
 {
   "auth": {
-    "netflixfront7a9348dc": {
+    "netflixfront9bda64cd": {
       "customAuth": false,
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
@@ -9,35 +9,35 @@
     }
   },
   "parameters": {
-    "AMPLIFY_auth_netflixfront7a9348dc_nativeClientId": {
+    "AMPLIFY_auth_netflixfront9bda64cd_nativeClientId": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "netflixfront7a9348dc"
+          "resourceName": "netflixfront9bda64cd"
         }
       ]
     },
-    "AMPLIFY_auth_netflixfront7a9348dc_userPoolId": {
+    "AMPLIFY_auth_netflixfront9bda64cd_userPoolId": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "netflixfront7a9348dc"
+          "resourceName": "netflixfront9bda64cd"
         }
       ]
     },
-    "AMPLIFY_auth_netflixfront7a9348dc_userPoolName": {
+    "AMPLIFY_auth_netflixfront9bda64cd_userPoolName": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "netflixfront7a9348dc"
+          "resourceName": "netflixfront9bda64cd"
         }
       ]
     },
-    "AMPLIFY_auth_netflixfront7a9348dc_webClientId": {
+    "AMPLIFY_auth_netflixfront9bda64cd_webClientId": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "netflixfront7a9348dc"
+          "resourceName": "netflixfront9bda64cd"
         }
       ]
     }
