@@ -1,5 +1,5 @@
 <body>
-<h1 mat-dialog-title class="title">Movie review</h1>
+<h1 mat-dialog-title class="title">Movie rating</h1>
 <div class="review-content">
   <mat-form-field appearance="outline">
     <mat-label>Rate movie</mat-label>
@@ -15,11 +15,6 @@
       <mat-option value="10">10</mat-option>
     </mat-select>
   </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Review: </mat-label>
-    <textarea matInput id="review-textarea"></textarea>
-  </mat-form-field>
   <div mat-dialog-actions>
       <button mat-button class="page-stylelayer1" id="cancel-review" (click)="onNoClick()">
       <span class="page-text3 MontserratSemibold14px">
@@ -28,7 +23,7 @@
       </button>
       <button mat-button class="page-stylelayer1">
       <span class="page-text3 MontserratSemibold14px">
-        <span>Review movie</span>
+        <span>Rate movie</span>
       </span>
       </button>
   </div>

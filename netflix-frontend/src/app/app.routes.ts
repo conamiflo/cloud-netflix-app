@@ -6,6 +6,7 @@ import {MovieDetailsComponent} from "./features/home/components/movies/movie-det
 import {HomePageComponent} from "./features/home/components/home-page/home-page.component";
 import {CreateMovieComponent} from "./features/home/components/movies/movie-creation/movie-creation.component";
 import {MovieEditComponent} from "./features/home/components/movies/movie-edit/movie-edit.component";
+import {SubscriptionsComponent} from "./features/home/components/subscriptions/subscriptions.component";
 
 export const routes: Routes = [
   {
@@ -31,5 +32,9 @@ export const routes: Routes = [
   {
     path: 'edit-movie',
     component: MovieEditComponent
+  },
+  {
+    path: 'subscriptions',
+    component: SubscriptionsComponent
   },
 ]
