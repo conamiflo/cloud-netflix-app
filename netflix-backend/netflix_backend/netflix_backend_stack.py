@@ -1,3 +1,5 @@
+import os
+
 import aws_cdk
 import boto3
 from aws_cdk import (
@@ -14,6 +16,8 @@ from aws_cdk import (
 )
 from aws_cdk.aws_cognito import CfnUserPoolUser, CfnUserPoolUserToGroupAttachment
 from constructs import Construct
+from debugpy._vendored._util import cwd
+
 
 class NetflixBackendStack(Stack):
 
@@ -154,7 +158,9 @@ class NetflixBackendStack(Stack):
                 )
             ),
 
+
         )
+
 
         web_client = cognito.UserPoolClient(self, "WebAppClient",
                                     user_pool=user_pool,
@@ -277,6 +283,32 @@ class NetflixBackendStack(Stack):
                 'TABLE_NAME': movie_table.table_name,
                 'BUCKET_NAME': s3_bucket.bucket_name
             },
+        )
+
+        prevent_duplicate_email_lambda = create_lambda_function(
+            "preventDuplicateEmail",
+            "prevent_duplicate_email.handler",
+            "user_service",
+            "POST",
+            {}
+        )
+
+        pre_sign_up_lambda = prevent_duplicate_email_lambda
+
+        # Attach the Lambda function as a pre-sign-up trigger to the user pool
+        user_pool.add_trigger(cognito.UserPoolOperation.PRE_SIGN_UP, pre_sign_up_lambda)
+
+        # Create an inline policy statement
+        pre_sign_up_policy_statement = iam.PolicyStatement(
+            actions=["cognito-idp:ListUsers"],
+            resources=[user_pool.user_pool_arn]
+        )
+
+        # Attach the policy statement to the Lambda function's role
+        pre_sign_up_lambda.role.attach_inline_policy(
+            iam.Policy(self, 'PreSignUpLambdaPolicy',
+                       statements=[pre_sign_up_policy_statement]
+                       )
         )
 
         download_movie_lambda = create_lambda_function(
