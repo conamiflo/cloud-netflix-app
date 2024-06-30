@@ -1,6 +1,6 @@
 {
   "authSelections": "userPoolOnly",
-  "resourceName": "netflixfront413ac83e",
+  "resourceName": "netflixfrontend053c0e19",
   "serviceType": "imported",
   "region": "eu-central-1",
   "authProvidersUserPool": [],
