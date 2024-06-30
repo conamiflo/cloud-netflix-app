@@ -1,0 +1,29 @@
+{
+  "authSelections": "userPoolOnly",
+<<<<<<<< HEAD:netflix-frontend/amplify/backend/auth/netflixfront413ac83e/parameters.json
+  "resourceName": "netflixfront413ac83e",
+========
+  "resourceName": "netflixfront9bda64cd",
+>>>>>>>> origin/origin/feature/userpool-back:netflix-frontend/amplify/backend/auth/netflixfront9bda64cd/parameters.json
+  "serviceType": "imported",
+  "region": "eu-central-1",
+  "authProvidersUserPool": [],
+  "requiredAttributes": [
+    "phone_number",
+    "email",
+    "given_name",
+    "family_name"
+  ],
+  "passwordPolicyMinLength": 8,
+  "passwordPolicyCharacters": [
+    "Requires Lowercase",
+    "Requires Uppercase",
+    "Requires Numbers",
+    "Requires Symbols"
+  ],
+  "mfaConfiguration": "OFF",
+  "autoVerifiedAttributes": [
+    "email"
+  ],
+  "mfaTypes": []
+}

@@ -1,23 +1,23 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-netflixfront-dev-02358-authRole",
-      "UnauthRoleArn": "arn:aws:iam::590183998696:role/amplify-netflixfront-dev-02358-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::590183998696:role/amplify-netflixfront-dev-02358-authRole",
+      "AuthRoleName": "amplify-netflixfront-dev-71797-authRole",
+      "UnauthRoleArn": "arn:aws:iam::590183998696:role/amplify-netflixfront-dev-71797-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::590183998696:role/amplify-netflixfront-dev-71797-authRole",
       "Region": "eu-central-1",
-      "DeploymentBucketName": "amplify-netflixfront-dev-02358-deployment",
-      "UnauthRoleName": "amplify-netflixfront-dev-02358-unauthRole",
-      "StackName": "amplify-netflixfront-dev-02358",
-      "StackId": "arn:aws:cloudformation:eu-central-1:590183998696:stack/amplify-netflixfront-dev-02358/15c05930-3539-11ef-9fd8-02ce43b99ac5",
-      "AmplifyAppId": "d1gefcq38d6u8b"
+      "DeploymentBucketName": "amplify-netflixfront-dev-71797-deployment",
+      "UnauthRoleName": "amplify-netflixfront-dev-71797-unauthRole",
+      "StackName": "amplify-netflixfront-dev-71797",
+      "StackId": "arn:aws:cloudformation:eu-central-1:590183998696:stack/amplify-netflixfront-dev-71797/c1612020-34a9-11ef-ba71-023ebd615b6b",
+      "AmplifyAppId": "d1mklcvt2vm0kf"
     },
     "categories": {
       "auth": {
-        "netflixfront413ac83e": {
-          "userPoolId": "eu-central-1_M0pqfq2Pn",
-          "userPoolName": "UserPool",
-          "webClientId": "6vem2e4o9hu6n0qtd4q1hfg4lf",
-          "nativeClientId": "6vem2e4o9hu6n0qtd4q1hfg4lf"
+        "netflixfront9bda64cd": {
+          "userPoolId": "eu-central-1_8fpguyoU3",
+          "userPoolName": "UserPool10",
+          "webClientId": "4fvirkh5uep8fibcj06ips817p",
+          "nativeClientId": "4fvirkh5uep8fibcj06ips817p"
         }
       }
     }
