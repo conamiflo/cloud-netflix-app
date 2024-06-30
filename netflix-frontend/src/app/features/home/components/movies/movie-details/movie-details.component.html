@@ -40,10 +40,10 @@
 
         <div class="movie-detail-content">
 
-          <p class="detail-subtitle">New Episodes</p>
 
           <h1 class="h1 detail-title">
-            Free <strong>Guy</strong>
+            {{movie.title}}
+<!--            Free <strong>Guy</strong>-->
           </h1>
 
           <div class="meta-wrapper">
@@ -63,6 +63,9 @@
 
               <a href="#">Science Fiction</a>
             </div>
+<!--            <div class="ganre-wrapper">-->
+<!--              <a *ngFor="let genre of movie.genres; let last = last" href="#">{{ genre }}{{ !last ? ',' : '' }}</a>-->
+<!--            </div>-->
 
             <div class="date-time">
 
@@ -81,13 +84,14 @@
           </div>
 
           <p class="storyline">
-            A bank teller called Guy realizes he is a background character in an open world video game called Free
-            City that will
-            soon go offline.
+<!--            A bank teller called Guy realizes he is a background character in an open world video game called Free-->
+<!--            City that will-->
+<!--            soon go offline.-->
+            {{movie.description}}
             <br/>
-            Directors: Christopher Nolan
+            Directors: {{ movie.directors.join(', ') }}
             <br/>
-            Actors: Gojo Satoru, Sukuna
+            Actors: {{ movie.actors.join(', ') }}
           </p>
           <div class="details-actions">
 

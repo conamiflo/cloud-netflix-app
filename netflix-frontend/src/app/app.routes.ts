@@ -22,7 +22,7 @@ export const routes: Routes = [
     component: HomePageComponent
   },
   {
-    path: 'movie',
+    path: 'movies/:id/:title',
     component: MovieDetailsComponent
   },
   {
