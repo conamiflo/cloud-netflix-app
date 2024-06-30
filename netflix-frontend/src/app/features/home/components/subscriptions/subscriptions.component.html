@@ -1,0 +1,52 @@
+<body>
+<main>
+  <section id="hero">
+    <h1>Welcome</h1>
+    <p>Discover the latest movies and classic hits <br/>in the best resolution and sound. </p>
+  </section>
+</main>
+<div class="cards-container">
+  <div class="cards-desktop11">
+    <div class="cards-title">
+      <span>Subscribe to genre</span>
+    </div>
+    <div class="search-box-container">
+      <div class="search-box">
+        <input type="text" placeholder="Type a genre you want to subscribe to">
+        <button>Subscribe</button>
+      </div>
+    </div>
+    <div class="cards-title">
+      <span>Subscribe to actor</span>
+    </div>
+    <div class="search-box-container">
+      <div class="search-box">
+        <input type="text" placeholder="Type an actor you want to subscribe to">
+        <button>Subscribe</button>
+      </div>
+    </div>
+    <div class="cards-title">
+      <span>Subscribe to director</span>
+    </div>
+    <div class="search-box-container">
+      <div class="search-box">
+        <input type="text" placeholder="Type a director you want to subscribe to">
+        <button>Subscribe</button>
+      </div>
+    </div>
+    <div class="cards-title">
+      <span>Subscriptions: </span>
+    </div>
+    <div class="cards-cardscontent">
+      <!--      <div *ngFor="let accommodation of accommodationsForShow">-->
+      <!--        <app-accommodation-card (clicked)="onAccommodationClicked($event)" [accommodation]="accommodation"></app-accommodation-card>-->
+      <!--      </div>-->
+      <app-subscriptions-card></app-subscriptions-card>
+      <app-subscriptions-card></app-subscriptions-card>
+      <app-subscriptions-card></app-subscriptions-card>
+      <app-subscriptions-card></app-subscriptions-card>
+    </div>
+  </div>
+</div>
+</body>
+

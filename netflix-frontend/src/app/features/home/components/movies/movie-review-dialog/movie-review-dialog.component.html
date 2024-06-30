@@ -1,0 +1,29 @@
+<body>
+<h1 mat-dialog-title class="title">Movie rating</h1>
+<div class="review-content">
+  <mat-form-field appearance="outline">
+    <mat-label>Rate movie</mat-label>
+    <mat-select id="select-rating">
+      <mat-option value="1">1</mat-option>
+      <mat-option value="2">2</mat-option>
+      <mat-option value="3">3</mat-option>
+      <mat-option value="4">4</mat-option>
+      <mat-option value="5">5</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div mat-dialog-actions>
+      <button mat-button class="page-stylelayer1" id="cancel-review" (click)="onNoClick()">
+      <span class="page-text3 MontserratSemibold14px">
+        <span>Cancel</span>
+      </span>
+      </button>
+      <button mat-button class="page-stylelayer1">
+      <span class="page-text3 MontserratSemibold14px">
+        <span>Rate movie</span>
+      </span>
+      </button>
+  </div>
+</div>
+</body>
+
+

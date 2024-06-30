@@ -1,0 +1,35 @@
+<div id="Login">
+  <div class="opactity_controller">
+    <header>
+      <a href=""><img src="./assets/logo.png" alt="logo" /></a>
+    </header>
+
+    <div class="content">
+      <div>
+        <h1>Login</h1>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <input type="text" placeholder="Email or phone number" formControlName="username" />
+          <input type="password" placeholder="Password" formControlName="password" />
+          <div *ngIf="submitted && f['password'].errors" style="color: #D5011D">
+
+            <p>Invalid Credentials</p>
+
+          </div>
+          <button type="submit">Login</button>
+
+        </form>
+        <button>
+          <img src="./assets/vectors/facebook.svg" alt="facebook" /> Connect with Facebook
+        </button>
+        <h6>New here? <span> <a href="/registration">Sign up now</a></span></h6>
+        <span>
+          This page is protected by Google reCAPTCHA
+          <br />
+          to ensure you are not a robot. <a href="">Learn more.</a>
+        </span>
+      </div>
+    </div>
+
+  </div>
+</div>

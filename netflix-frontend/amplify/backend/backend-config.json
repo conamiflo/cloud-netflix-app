@@ -1,0 +1,45 @@
+{
+  "auth": {
+    "netflixfront413ac83e": {
+      "customAuth": false,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
+      "serviceType": "imported"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_auth_netflixfront413ac83e_nativeClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "netflixfront413ac83e"
+        }
+      ]
+    },
+    "AMPLIFY_auth_netflixfront413ac83e_userPoolId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "netflixfront413ac83e"
+        }
+      ]
+    },
+    "AMPLIFY_auth_netflixfront413ac83e_userPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "netflixfront413ac83e"
+        }
+      ]
+    },
+    "AMPLIFY_auth_netflixfront413ac83e_webClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "netflixfront413ac83e"
+        }
+      ]
+    }
+  }
+}
