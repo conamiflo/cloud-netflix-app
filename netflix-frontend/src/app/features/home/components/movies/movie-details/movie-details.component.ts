@@ -47,15 +47,12 @@ export class MovieDetailsComponent{
   }
 
   downloadFile() {
-    this.fileDownloadService.downloadFileFromPresignedUrl(this.movie.download_url)
-      .subscribe((data: Blob) => {
-        // Ovde možete manipulisati sa dobijenim blob-om, npr. sačuvati ga ili prikazati korisniku
-        const blob = new Blob([data], { type: 'application/octet-stream' });
-        const url = window.URL.createObjectURL(blob);
-        window.open(url);
-      }, error => {
-        console.error('Greška prilikom skidanja fajla', error);
-      });
+      const link = document.createElement('a');
+      link.style.display = 'none';
+      link.href = this.movie.download_url;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
   }
 
   openReviewDialog(): void{

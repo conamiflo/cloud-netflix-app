@@ -26,7 +26,7 @@ def download_movie(event, context):
         
         if 'Item' in response:
 
-            url = s3_client.generate_presigned_url('get_object', Params={'Bucket': s3_bucket, 'Key': movie_id}, ExpiresIn=3600)
+            url = s3_client.generate_presigned_url('get_object', Params={'Bucket': s3_bucket, 'Key': movie_id,'ResponseContentDisposition': 'attachment'}, ExpiresIn=3600)
 
             item = response['Item']
             item['download_url'] = url
