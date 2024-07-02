@@ -10,7 +10,6 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {ActivatedRoute} from "@angular/router";
 import {MovieService} from "../../../../../core/services/movie/movie.service";
 import {NgFor} from "@angular/common";
-import {FileDownloadService} from "../../../../../core/services/download/download.service";
 
 @Component({
   selector: 'app-movie-details',
@@ -22,8 +21,7 @@ import {FileDownloadService} from "../../../../../core/services/download/downloa
 export class MovieDetailsComponent{
   constructor(public dialog: MatDialog,
               private route: ActivatedRoute,
-              private movieService: MovieService,
-              private fileDownloadService: FileDownloadService) {
+              private movieService: MovieService,) {
     addIcons({ cameraOutline, playCircle, shareSocial, play, downloadOutline, chevronUp,calendarOutline,timeOutline,star,send});
   }
   movie: any;

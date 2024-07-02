@@ -32,4 +32,15 @@ export class MovieService {
     return this.httpClient.get(environment.cloudHost + 'feed', { params });
   }
 
+  searchMovies(title: string, description: string, actors: string, directors: string, genres: string): Observable<any> {
+    let params = new HttpParams()
+      .set('title', title)
+      .set('description', description)
+      .set('actors', actors)
+      .set('directors', directors)
+      .set('genres', genres);
+
+    return this.httpClient.get(environment.cloudHost + 'search', { params });
+  }
+
 }

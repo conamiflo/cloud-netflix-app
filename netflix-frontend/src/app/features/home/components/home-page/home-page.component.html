@@ -1,4 +1,3 @@
-<body>
 <main>
   <section id="hero">
     <h1>Welcome</h1>
@@ -12,27 +11,24 @@
     </div>
     <div class="search-box-container">
       <div class="search-box">
-        <input type="text" placeholder="Title">
+        <input type="text" placeholder="Title" [(ngModel)]="title">
       </div>
       <div class="search-box">
-        <input type="text" placeholder="Description">
+        <input type="text" placeholder="Description" [(ngModel)]="description">
       </div>
       <div class="search-box">
-        <input type="text" placeholder="Actors">
+        <input type="text" placeholder="Actors" [(ngModel)]="actors">
       </div>
       <div class="search-box">
-        <input type="text" placeholder="Directors">
+        <input type="text" placeholder="Directors" [(ngModel)]="directors">
       </div>
       <div class="search-box">
-        <input type="text" placeholder="Genres">
+        <input type="text" placeholder="Genres" [(ngModel)]="genres">
       </div>
-      <button>Search</button>
-
+      <button (click)="searchMovies()">Search</button>
     </div>
     <div class="cards-cardscontent">
-        <app-movie-card *ngFor="let movie of movies" [movie]="movie"></app-movie-card>
+      <app-movie-card *ngFor="let movie of movies" [movie]="movie"></app-movie-card>
     </div>
   </div>
 </div>
-</body>
-
