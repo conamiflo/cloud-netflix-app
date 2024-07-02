@@ -25,4 +25,11 @@ export class MovieService {
     return this.httpClient.get(environment.cloudHost + 'movies', { params });
   }
 
+  getFeed(username: string): Observable<any> {
+    let params = new HttpParams()
+      .set('username', username);
+
+    return this.httpClient.get(environment.cloudHost + 'feed', { params });
+  }
+
 }
