@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import {environment} from "../../../../env/env";
 
@@ -41,6 +41,12 @@ export class MovieService {
       .set('genres', genres);
 
     return this.httpClient.get(environment.cloudHost + 'search', { params });
+  }
+
+  createMovie(movieData: any): Observable<any> {
+    const url = environment.cloudHost + 'movies'; // Update with your actual endpoint
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.post(url, JSON.stringify(movieData), { headers });
   }
 
 }

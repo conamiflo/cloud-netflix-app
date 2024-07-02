@@ -47,6 +47,9 @@ def post_movie(event, context):
 
         return {
             'statusCode': 200,
+            'headers': {
+                    'Access-Control-Allow-Origin': '*',
+                },
             'body': json.dumps({'message': f"Successfully added movie with id: {movie_id}!"})
         }
     except Exception as e:
