@@ -134,6 +134,7 @@ class NetflixBackendStack(Stack):
             )
         )
 
+#userpool
 
         user_pool = cognito.UserPool(
             self, "UserPool",
@@ -183,6 +184,11 @@ class NetflixBackendStack(Stack):
                                                 group_name="Admins",
                                                 user_pool_id=user_pool.user_pool_id
                                                 )
+
+        users_group = cognito.CfnUserPoolGroup(self, "UsersGroup",
+                                                        group_name="Users",
+                                                        user_pool_id=user_pool.user_pool_id
+                                                        )
 
 
         user = CfnUserPoolUser(self, 'admir',
@@ -245,6 +251,8 @@ class NetflixBackendStack(Stack):
         set_password.node.add_dependency(cfn_user_pool_user_to_group_attachment)
         web_client.node.add_dependency(user_pool)
         admins_group.node.add_dependency(user_pool)
+        users_group.node.add_dependency(user_pool)
+
         user.node.add_dependency(admins_group)
         cfn_user_pool_user_to_group_attachment.node.add_dependency(user)
 
@@ -304,10 +312,20 @@ class NetflixBackendStack(Stack):
             {}
         )
 
+        add_to_user_group = create_lambda_function(
+                    "addToUserGroup",
+                    "add_to_user_group.handler",
+                    "user_service",
+                    "POST",
+                    {}
+                )
+
         pre_sign_up_lambda = prevent_duplicate_email_lambda
+        post_sign_lambda=add_to_user_group
 
         # Attach the Lambda function as a pre-sign-up trigger to the user pool
         user_pool.add_trigger(cognito.UserPoolOperation.PRE_SIGN_UP, pre_sign_up_lambda)
+        user_pool.add_trigger(cognito.UserPoolOperation.POST_CONFIRMATION,post_sign_lambda)
 
         # Create an inline policy statement
         pre_sign_up_policy_statement = iam.PolicyStatement(
@@ -319,6 +337,22 @@ class NetflixBackendStack(Stack):
         pre_sign_up_lambda.role.attach_inline_policy(
             iam.Policy(self, 'PreSignUpLambdaPolicy',
                        statements=[pre_sign_up_policy_statement]
+                       )
+        )
+
+        post_confirmation_policy_statement = iam.PolicyStatement(
+            actions=[
+                "cognito-idp:AdminAddUserToGroup",
+                "cognito-idp:AdminGetUser",
+                "cognito-idp:ListUsers"
+            ],
+            resources=[user_pool.user_pool_arn]
+        )
+
+        # Attach the policy statement to the post confirmation Lambda function's role
+        post_sign_lambda.role.attach_inline_policy(
+            iam.Policy(self, 'PostConfirmationLambdaPolicy',
+                       statements=[post_confirmation_policy_statement]
                        )
         )
 

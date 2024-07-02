@@ -47,7 +47,7 @@ export class EmailConfirmComponent {
       this.form.controls['code'].setErrors({'incorrect': true});
       return;
     }
-
+    this.form.controls['code'].setErrors(null);
     this.success=true
 
   }
