@@ -7,12 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Free Guy 2021</title>
 
-  <!--
-    - favicon
-  -->
-  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
-
-
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
@@ -29,21 +23,15 @@
       <div class="container">
 
         <figure class="movie-detail-banner">
-
-          <img src="./assets/images/movie-4.png" alt="Free guy movie poster">
-
-          <button class="play-btn">
-            <ion-icon name="play-circle"></ion-icon>
-          </button>
-
+              <video src="{{movie.download_url}}" controls></video>
         </figure>
 
         <div class="movie-detail-content">
 
-          <p class="detail-subtitle">New Episodes</p>
 
           <h1 class="h1 detail-title">
-            Free <strong>Guy</strong>
+            {{movie.title}}
+<!--            Free <strong>Guy</strong>-->
           </h1>
 
           <div class="meta-wrapper">
@@ -63,6 +51,9 @@
 
               <a href="#">Science Fiction</a>
             </div>
+<!--            <div class="ganre-wrapper">-->
+<!--              <a *ngFor="let genre of movie.genres; let last = last" href="#">{{ genre }}{{ !last ? ',' : '' }}</a>-->
+<!--            </div>-->
 
             <div class="date-time">
 
@@ -81,21 +72,21 @@
           </div>
 
           <p class="storyline">
-            A bank teller called Guy realizes he is a background character in an open world video game called Free
-            City that will
-            soon go offline.
+<!--            A bank teller called Guy realizes he is a background character in an open world video game called Free-->
+<!--            City that will-->
+<!--            soon go offline.-->
+            {{movie.description}}
             <br/>
-            Directors: Christopher Nolan
+            Directors: {{ movie.directors.join(', ') }}
             <br/>
-            Actors: Gojo Satoru, Sukuna
+            Actors: {{ movie.actors.join(', ') }}
           </p>
           <div class="details-actions">
+              <button class="btn btn-primary download" (click)="downloadFile()">
+                <ion-icon name="play"></ion-icon>
 
-            <button class="btn btn-primary">
-              <ion-icon name="play"></ion-icon>
-
-              <span>Watch Now</span>
-            </button>
+                <span>Download movie</span>
+              </button>
 
             <button class="btn btn-primary" id="edit-movie">
               <ion-icon name="play"></ion-icon>
@@ -111,11 +102,11 @@
 
           </div>
 
-          <a href="./assets/images/movie-4.png" download class="download-btn">
-            <span>Download</span>
+<!--          <a href="./assets/images/movie-4.png" download class="download-btn">-->
+<!--            <span>Download</span>-->
 
-            <ion-icon name="download-outline"></ion-icon>
-          </a>
+<!--            <ion-icon name="download-outline"></ion-icon>-->
+<!--          </a>-->
 
         </div>
 

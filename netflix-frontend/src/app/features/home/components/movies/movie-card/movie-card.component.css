@@ -208,7 +208,7 @@
   color: white;
   border: unset;
   height: 30px; /* Povećana visina */
-  border-radius: 10px;
+  border-radius: 50px;
   font-weight: 600;
   cursor: pointer;
   display: flex;

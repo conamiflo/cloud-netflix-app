@@ -288,9 +288,9 @@ class NetflixBackendStack(Stack):
                                 rest_api_name="netflix-api",
                                 endpoint_types=[apigateway.EndpointType.REGIONAL],
                                 default_cors_preflight_options=apigateway.CorsOptions(
-                                    allow_origins=apigateway.Cors.ALL_ORIGINS,
-                                    allow_methods=apigateway.Cors.ALL_METHODS,
-                                    allow_headers=apigateway.Cors.DEFAULT_HEADERS
+                                    allow_origins=["*"],
+                                    allow_methods=["PUT","POST","DELETE","GET","HEAD"],
+                                    allow_headers=["*"]
                                 ))
 
         create_movie_lambda = create_lambda_function(

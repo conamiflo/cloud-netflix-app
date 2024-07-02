@@ -48,6 +48,9 @@ def get_feed(event, context):
 
         return {
             'statusCode': 200,
+            'headers': {
+                    'Access-Control-Allow-Origin': '*',
+                },
             'body': json.dumps({'movies': movies})
         }
     except ClientError as e:
