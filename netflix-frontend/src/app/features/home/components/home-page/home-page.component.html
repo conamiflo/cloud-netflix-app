@@ -12,9 +12,22 @@
     </div>
     <div class="search-box-container">
       <div class="search-box">
-        <input type="text" placeholder="Type here to search">
-        <button>Search</button>
+        <input type="text" placeholder="Title">
       </div>
+      <div class="search-box">
+        <input type="text" placeholder="Description">
+      </div>
+      <div class="search-box">
+        <input type="text" placeholder="Actors">
+      </div>
+      <div class="search-box">
+        <input type="text" placeholder="Directors">
+      </div>
+      <div class="search-box">
+        <input type="text" placeholder="Genres">
+      </div>
+      <button>Search</button>
+
     </div>
     <div class="cards-cardscontent">
         <app-movie-card *ngFor="let movie of movies" [movie]="movie"></app-movie-card>

@@ -36,6 +36,7 @@ export class MovieDetailsComponent{
       if (movieId && movieTitle) {
         this.movieService.getMovieByIdAndTitle(movieId, movieTitle).subscribe(
           (data) => {
+            console.log(data.genres)
             this.movie = data;
           },
           (error) => {
