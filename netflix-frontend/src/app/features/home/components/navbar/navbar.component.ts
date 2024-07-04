@@ -20,7 +20,7 @@ export class NavbarComponent {
   }
 
   async ngOnInit() {
-    // this.role = await this.cognitoService.getUserGroup()
+    this.role = await this.cognitoService.getUserGroup()
     // console.log(this.role)
     // console.log('aa')
     // var url=this.router.url
