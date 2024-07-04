@@ -13,6 +13,7 @@ from aws_cdk import (
 )
 from aws_cdk.aws_apigateway import AuthorizationType, IAuthorizer, Authorizer
 from aws_cdk.aws_cognito import CfnUserPoolUser, CfnUserPoolUserToGroupAttachment
+from aws_cdk.aws_lambda import Architecture
 from constructs import Construct
 from debugpy._vendored._util import cwd
 
@@ -334,13 +335,14 @@ class NetflixBackendStack(Stack):
 
         layer = _lambda.LayerVersion(self, 'layer',
             code= _lambda.Code.from_asset('./layer-jwt'),
-            compatible_runtimes= [_lambda.Runtime.PYTHON_3_11],
+            compatible_runtimes= [_lambda.Runtime.PYTHON_3_9],
             layer_version_name= 'jwt-layer',
         )
 
         authenticate_group=_lambda.Function(
             self, "authenticateGroup",
-            runtime=_lambda.Runtime.PYTHON_3_11,
+            runtime=_lambda.Runtime.PYTHON_3_9,
+            architecture=Architecture.X86_64,
             handler="authenticate_group.handler",
             code=_lambda.Code.from_asset("user_service"),
             memory_size=128,

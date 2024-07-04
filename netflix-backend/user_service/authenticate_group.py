@@ -1,14 +1,7 @@
-from urllib.parse import urlparse
-
 import boto3
-from jwt import decode
 import json
-from jwt import exceptions as jwt_exceptions
-from botocore.exceptions import ClientError
 import os
-
-cognito_client = boto3.client('cognito-idp')
-ssm_client = boto3.client('ssm')
+import cognitojwt
 
 mapGroupsToPaths = {
     '/testiranje': {
@@ -16,11 +9,11 @@ mapGroupsToPaths = {
     }
 }
 
-
-
 userpool_id= os.environ.get('USERPOOL_ID')
 app_client_id =os.environ.get('WEB_CLIENT_ID')
 region = boto3.Session().region_name
+
+# Fetch the signing key using the JWKS URL
 
 def handler(event, context):
 
@@ -29,23 +22,23 @@ def handler(event, context):
     http_method = event['httpMethod']
     resource=event['resource']
 
-
     try:
-        claims = decode(token, options={"verify_signature": False})
+
+        claims: dict = cognitojwt.decode(
+            token,
+            region,
+            userpool_id,
+            app_client_id=app_client_id,  # Optional
+            testmode=False  # Disable token expiration check for testing purposes
+        )
 
         user_groups = claims.get('cognito:groups', [])
-
 
         if mapGroupsToPaths[resource][http_method]  not in user_groups:
             raise Exception('User is not authorized to perform this action')
 
-
-    except jwt_exceptions.DecodeError as e:
-        raise Exception('Unauthorized')
-    except jwt_exceptions.InvalidTokenError as e:
-        raise Exception('Unauthorized')
-    except ClientError as e:
-        raise Exception('Unauthorized')
+    except Exception as e:
+        raise Exception('Unauthorizer')
 
     response = generateAllow('me', "*")
     print('authorized')
@@ -78,5 +71,4 @@ def generatePolicy(principalId, effect, resource):
 
 def generateAllow(principalId, resource):
     return generatePolicy(principalId, 'Allow', resource)
-
 

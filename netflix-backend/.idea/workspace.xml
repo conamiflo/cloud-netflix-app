@@ -5,34 +5,344 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b5f14119-8757-4eac-a490-5f671ae20ee6" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/PyJWT-2.8.0.dist-info/AUTHORS.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/PyJWT-2.8.0.dist-info/INSTALLER" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/PyJWT-2.8.0.dist-info/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/PyJWT-2.8.0.dist-info/METADATA" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/PyJWT-2.8.0.dist-info/RECORD" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/PyJWT-2.8.0.dist-info/REQUESTED" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/PyJWT-2.8.0.dist-info/WHEEL" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/PyJWT-2.8.0.dist-info/top_level.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/algorithms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/api_jwk.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/api_jws.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/api_jwt.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/exceptions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/help.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/jwk_set_cache.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/jwks_client.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/py.typed" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/types.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/utils.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/warnings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user_service/authenticate_group.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/_cffi_backend.cpython-311-darwin.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/bin/pyrsa-decrypt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/bin/pyrsa-encrypt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/bin/pyrsa-keygen" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/bin/pyrsa-priv2pub" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/bin/pyrsa-sign" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/bin/pyrsa-verify" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi-1.16.0.dist-info/INSTALLER" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi-1.16.0.dist-info/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi-1.16.0.dist-info/METADATA" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi-1.16.0.dist-info/RECORD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi-1.16.0.dist-info/WHEEL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi-1.16.0.dist-info/entry_points.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi-1.16.0.dist-info/top_level.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/_cffi_errors.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/_cffi_include.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/_embedding.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/_imp_emulation.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/_shimmed_dist_utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/api.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/backend_ctypes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/cffi_opcode.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/commontypes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/cparser.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/error.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/ffiplatform.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/lock.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/parse_c_type.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/pkgconfig.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/recompiler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/setuptools_ext.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/vengine_cpy.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/vengine_gen.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cffi/verifier.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cognitojwt-1.4.1.dist-info/INSTALLER" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cognitojwt-1.4.1.dist-info/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cognitojwt-1.4.1.dist-info/METADATA" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cognitojwt-1.4.1.dist-info/RECORD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cognitojwt-1.4.1.dist-info/REQUESTED" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cognitojwt-1.4.1.dist-info/WHEEL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cognitojwt-1.4.1.dist-info/top_level.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cognitojwt/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cognitojwt/constants.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cognitojwt/exceptions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cognitojwt/jwt_async.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cognitojwt/jwt_sync.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cognitojwt/token_utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography-42.0.8.dist-info/INSTALLER" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography-42.0.8.dist-info/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography-42.0.8.dist-info/LICENSE.APACHE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography-42.0.8.dist-info/LICENSE.BSD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography-42.0.8.dist-info/METADATA" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography-42.0.8.dist-info/RECORD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography-42.0.8.dist-info/WHEEL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography-42.0.8.dist-info/top_level.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/__about__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/exceptions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/fernet.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/_oid.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/backends/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/backends/openssl/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/backends/openssl/aead.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/backends/openssl/backend.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/backends/openssl/ciphers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/backends/openssl/decode_asn1.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust.abi3.so" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/__init__.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/_openssl.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/asn1.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/exceptions.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/ocsp.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/openssl/__init__.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/openssl/aead.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/openssl/cmac.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/openssl/dh.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/openssl/dsa.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/openssl/ec.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/openssl/ed25519.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/openssl/ed448.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/openssl/hashes.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/openssl/hmac.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/openssl/kdf.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/openssl/keys.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/openssl/poly1305.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/openssl/rsa.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/openssl/x25519.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/openssl/x448.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/pkcs7.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/_rust/x509.pyi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/openssl/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/openssl/_conditional.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/bindings/openssl/binding.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/_asymmetric.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/_cipheralgorithm.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/_serialization.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/asymmetric/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/asymmetric/dh.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/asymmetric/dsa.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/asymmetric/ec.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/asymmetric/ed25519.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/asymmetric/ed448.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/asymmetric/padding.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/asymmetric/rsa.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/asymmetric/types.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/asymmetric/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/asymmetric/x25519.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/asymmetric/x448.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/ciphers/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/ciphers/aead.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/ciphers/algorithms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/ciphers/base.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/ciphers/modes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/cmac.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/constant_time.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/hashes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/hmac.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/kdf/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/kdf/concatkdf.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/kdf/hkdf.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/kdf/kbkdf.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/kdf/pbkdf2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/kdf/scrypt.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/kdf/x963kdf.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/keywrap.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/padding.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/poly1305.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/serialization/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/serialization/base.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/serialization/pkcs12.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/serialization/pkcs7.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/serialization/ssh.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/twofactor/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/twofactor/hotp.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/hazmat/primitives/twofactor/totp.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/py.typed" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/x509/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/x509/base.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/x509/certificate_transparency.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/x509/extensions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/x509/general_name.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/x509/name.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/x509/ocsp.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/x509/oid.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/cryptography/x509/verification.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa-0.19.0.dist-info/INSTALLER" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa-0.19.0.dist-info/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa-0.19.0.dist-info/METADATA" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa-0.19.0.dist-info/RECORD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa-0.19.0.dist-info/WHEEL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa-0.19.0.dist-info/top_level.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/_compat.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/_rwlock.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/_sha3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/_version.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/curves.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/der.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/ecdh.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/ecdsa.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/eddsa.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/ellipticcurve.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/errors.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/keys.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/numbertheory.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/rfc6979.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/ssh.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/test_curves.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/test_der.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/test_ecdh.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/test_ecdsa.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/test_eddsa.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/test_ellipticcurve.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/test_jacobi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/test_keys.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/test_malformed_sigs.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/test_numbertheory.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/test_pyecdsa.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/test_rw_lock.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/test_sha3.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/ecdsa/util.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/idna-3.7.dist-info/INSTALLER" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/idna-3.7.dist-info/LICENSE.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/idna-3.7.dist-info/METADATA" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/idna-3.7.dist-info/RECORD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/idna-3.7.dist-info/WHEEL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/idna/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/idna/codec.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/idna/compat.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/idna/core.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/idna/idnadata.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/idna/intranges.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/idna/package_data.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/idna/py.typed" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/idna/uts46data.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/jose/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/jose/backends/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/jose/backends/_asn1.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/jose/backends/base.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/jose/backends/cryptography_backend.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/jose/backends/ecdsa_backend.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/jose/backends/native.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/jose/backends/rsa_backend.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/jose/constants.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/jose/exceptions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/jose/jwe.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/jose/jwk.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/jose/jws.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/jose/jwt.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/jose/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1-0.6.0.dist-info/INSTALLER" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1-0.6.0.dist-info/LICENSE.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1-0.6.0.dist-info/METADATA" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1-0.6.0.dist-info/RECORD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1-0.6.0.dist-info/WHEEL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1-0.6.0.dist-info/top_level.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1-0.6.0.dist-info/zip-safe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/codec/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/codec/ber/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/codec/ber/decoder.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/codec/ber/encoder.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/codec/ber/eoo.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/codec/cer/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/codec/cer/decoder.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/codec/cer/encoder.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/codec/der/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/codec/der/decoder.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/codec/der/encoder.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/codec/native/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/codec/native/decoder.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/codec/native/encoder.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/codec/streaming.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/compat/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/compat/integer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/compat/octets.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/debug.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/error.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/type/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/type/base.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/type/char.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/type/constraint.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/type/error.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/type/namedtype.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/type/namedval.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/type/opentype.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/type/tag.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/type/tagmap.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/type/univ.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pyasn1/type/useful.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser-2.22.dist-info/INSTALLER" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser-2.22.dist-info/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser-2.22.dist-info/METADATA" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser-2.22.dist-info/RECORD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser-2.22.dist-info/WHEEL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser-2.22.dist-info/top_level.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/_ast_gen.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/_build_tables.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/_c_ast.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/ast_transforms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/c_ast.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/c_generator.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/c_lexer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/c_parser.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/lextab.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/ply/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/ply/cpp.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/ply/ctokens.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/ply/lex.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/ply/yacc.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/ply/ygen.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/plyparser.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/pycparser/yacctab.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/python_jose-3.3.0.dist-info/INSTALLER" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/python_jose-3.3.0.dist-info/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/python_jose-3.3.0.dist-info/METADATA" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/python_jose-3.3.0.dist-info/RECORD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/python_jose-3.3.0.dist-info/WHEEL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/python_jose-3.3.0.dist-info/top_level.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa-4.9.dist-info/INSTALLER" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa-4.9.dist-info/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa-4.9.dist-info/METADATA" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa-4.9.dist-info/RECORD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa-4.9.dist-info/WHEEL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa-4.9.dist-info/entry_points.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa/asn1.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa/cli.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa/common.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa/core.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa/key.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa/parallel.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa/pem.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa/pkcs1.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa/pkcs1_v2.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa/prime.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa/py.typed" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa/randnum.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa/transform.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/rsa/util.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/six-1.16.0.dist-info/INSTALLER" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/six-1.16.0.dist-info/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/six-1.16.0.dist-info/METADATA" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/six-1.16.0.dist-info/RECORD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/six-1.16.0.dist-info/WHEEL" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/six-1.16.0.dist-info/top_level.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/layer-jwt/python/lib/python3.9/site-packages/six.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/PyJWT-2.8.0.dist-info/AUTHORS.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/PyJWT-2.8.0.dist-info/INSTALLER" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/PyJWT-2.8.0.dist-info/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/PyJWT-2.8.0.dist-info/METADATA" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/PyJWT-2.8.0.dist-info/RECORD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/PyJWT-2.8.0.dist-info/REQUESTED" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/PyJWT-2.8.0.dist-info/WHEEL" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/PyJWT-2.8.0.dist-info/top_level.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/algorithms.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/api_jwk.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/api_jws.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/api_jwt.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/exceptions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/help.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/jwk_set_cache.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/jwks_client.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/py.typed" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/types.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/layer-jwt/python/lib/python3.11/site-packages/jwt/warnings.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/netflix_backend/netflix_backend_stack.py" beforeDir="false" afterPath="$PROJECT_DIR$/netflix_backend/netflix_backend_stack.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../netflix-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../netflix-frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../netflix-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../netflix-frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../netflix-frontend/src/app/core/services/cognito/cognito.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../netflix-frontend/src/app/core/services/cognito/cognito.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../netflix-frontend/src/app/features/home/components/navbar/navbar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../netflix-frontend/src/app/features/home/components/navbar/navbar.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user_service/authenticate_group.py" beforeDir="false" afterPath="$PROJECT_DIR$/user_service/authenticate_group.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,16 +359,20 @@
   &quot;associatedIndex&quot;: 1
 }</component>
   <component name="ProjectId" id="2iSlVeM6zxotuB60iRco8XRnNmU" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "Python.netflix_backend_stack.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "group__authentication",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/borislavcelar/Documents/GitHub/netflix/netflix-backend/layer-jwt",
     "node.js.detected.package.eslint": "true",
@@ -85,12 +399,15 @@
       <updated>1719491884807</updated>
       <workItem from="1719491886133" duration="16026000" />
       <workItem from="1719509254324" duration="7545000" />
-      <workItem from="1720044398409" duration="21099000" />
+      <workItem from="1720044398409" duration="30313000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/netflix_backend$netflix_backend_stack.coverage" NAME="netflix_backend_stack Coverage Results" MODIFIED="1719500383812" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/netflix_backend" />
