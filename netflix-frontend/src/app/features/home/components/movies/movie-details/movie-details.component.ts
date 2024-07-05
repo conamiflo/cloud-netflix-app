@@ -10,6 +10,7 @@ import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {ActivatedRoute} from "@angular/router";
 import {MovieService} from "../../../../../core/services/movie/movie.service";
 import {NgFor} from "@angular/common";
+import {CognitoService} from "../../../../../core/services/cognito/cognito.service";
 
 @Component({
   selector: 'app-movie-details',
@@ -21,7 +22,8 @@ import {NgFor} from "@angular/common";
 export class MovieDetailsComponent{
   constructor(public dialog: MatDialog,
               private route: ActivatedRoute,
-              private movieService: MovieService,) {
+              private movieService: MovieService,
+              private cognitoService: CognitoService) {
     addIcons({ cameraOutline, playCircle, shareSocial, play, downloadOutline, chevronUp,calendarOutline,timeOutline,star,send});
   }
   movie: any;
@@ -45,13 +47,31 @@ export class MovieDetailsComponent{
     });
   }
 
-  downloadFile() {
-      const link = document.createElement('a');
-      link.style.display = 'none';
-      link.href = this.movie.download_url;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+  async downloadFile() {
+    try {
+      const username = await this.cognitoService.getUsername();
+      if (!username) {
+        console.error('User is not logged in');
+        return;
+      }
+
+      this.movieService.downloadMovie(username, this.movie.movie_id).subscribe(
+        response => {
+          console.log('Download history created successfully:', response);
+          const link = document.createElement('a');
+          link.style.display = 'none';
+          link.href = this.movie.download_url;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        },
+        error => {
+          console.error('Error creating download history:', error);
+        }
+      );
+    } catch (error) {
+      console.error('Error getting username:', error);
+    }
   }
 
   openReviewDialog(): void{
@@ -59,5 +79,7 @@ export class MovieDetailsComponent{
       width: '550px'
       });
   }
+
+
 }
 

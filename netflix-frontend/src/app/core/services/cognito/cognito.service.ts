@@ -41,6 +41,20 @@ export class CognitoService {
     }
   }
 
+  public async getUsername(): Promise<string | null> {
+    try {
+      const userInfo = await Auth.currentUserInfo();
+      if (userInfo && userInfo.username) {
+        return userInfo.username;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error('Error getting user info:', error);
+      return null;
+    }
+  }
+
   public async signOut(): Promise<any> {
     await Auth.signOut()
 

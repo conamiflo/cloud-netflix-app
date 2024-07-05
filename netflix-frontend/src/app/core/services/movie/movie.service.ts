@@ -49,4 +49,11 @@ export class MovieService {
     return this.httpClient.post(url, JSON.stringify(movieData), { headers });
   }
 
+  downloadMovie(username: string, movieId: string): Observable<any> {
+    const url = environment.cloudHost + 'history';
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = { username, movie_id: movieId };
+    return this.httpClient.post(url, JSON.stringify(body), { headers });
+  }
+
 }

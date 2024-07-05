@@ -20,16 +20,16 @@ export class NavbarComponent {
   }
 
   async ngOnInit() {
-    // this.role = await this.cognitoService.getUserGroup()
-    // console.log(this.role)
-    // console.log('aa')
-    // var url=this.router.url
-    // url=url.split('?')[0].split('/').pop()!
-    // url=String(url)
-    //
-    // if(!(url==='login' || url==='registration') && this.role==null){
-    //   this.router.navigate(['login'])
-    // }
+    this.role = await this.cognitoService.getUserGroup()
+    console.log(this.role)
+    console.log('aa')
+    var url=this.router.url
+    url=url.split('?')[0].split('/').pop()!
+    url=String(url)
+
+    if(!(url==='login' || url==='registration') && this.role==null){
+      this.router.navigate(['login'])
+    }
 
 
 
