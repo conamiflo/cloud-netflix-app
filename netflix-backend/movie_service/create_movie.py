@@ -18,6 +18,7 @@ def post_movie(event, context):
         actors = body['actors']
         directors = body['directors']
         description = body['description']
+        series = body.get('series', '')
         movie = body['movie']
         
         movie_id = str(get_last_movie_id() + 1)
@@ -42,6 +43,7 @@ def post_movie(event, context):
                 'file_type': file_type,
                 'movie_size': movie_size,
                 'movie_modified': movie_modified,
+                'series': series,
             }
         )  
 
