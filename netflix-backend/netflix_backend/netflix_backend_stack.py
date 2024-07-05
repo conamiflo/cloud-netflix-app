@@ -378,10 +378,24 @@ class NetflixBackendStack(Stack):
             },
         )
 
+        delete_movie_lambda = create_lambda_function(
+            "deleteMovie",
+            "delete_movie.delete_movie",
+            "movie_service",
+            "DELETE",
+            {
+                'MOVIE_TABLE_NAME': movie_table.table_name,
+                'REVIEW_TABLE_NAME': review_table.table_name,
+                'DOWNLOAD_HISTORY_TABLE_NAME': download_history_table.table_name,
+                'BUCKET_NAME': s3_bucket.bucket_name
+            },
+        )
+
         movies_resource = api.root.add_resource("movies")
         movies_resource.add_method("POST", apigateway.LambdaIntegration(create_movie_lambda))
         movies_resource.add_method("GET", apigateway.LambdaIntegration(download_movie_lambda))
         movies_resource.add_method("PUT", apigateway.LambdaIntegration(update_movie_lambda))
+        movies_resource.add_method("DELETE", apigateway.LambdaIntegration(delete_movie_lambda))
 
         subscribe_lambda = create_lambda_function(
             "subscribe",
