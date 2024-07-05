@@ -25,6 +25,9 @@ def get_feed(event, context):
         if not feed_item or 'feed' not in feed_item:
             return {
                 'statusCode': 404,
+                'headers': {
+                    'Access-Control-Allow-Origin': '*',
+                },
                 'body': json.dumps({'message': f"No feed found for user {username}."})
             }
 
@@ -49,19 +52,25 @@ def get_feed(event, context):
         return {
             'statusCode': 200,
             'headers': {
-                    'Access-Control-Allow-Origin': '*',
-                },
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'movies': movies})
         }
     except ClientError as e:
         print(f"ClientError: {e}")
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'error': str(e)})
         }
     except Exception as e:
         print(f"Exception: {e}")
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'error': str(e)})
         }

@@ -19,6 +19,9 @@ def review(event, context):
         if check_existing_reviews(username, movie_id):
             return {
                 'statusCode': 400,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
                 'body': json.dumps({'message': f"Review already exists from user {username} for movie with id {movie_id}"})
             }
 
@@ -35,11 +38,17 @@ def review(event, context):
 
         return {
             'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'message': f"Successfully added review with id: {review_id}!"})
         }
     except Exception as e:
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'error': str(e)})
         }
 

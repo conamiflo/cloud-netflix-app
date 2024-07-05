@@ -19,6 +19,9 @@ def subscribe(event, context):
         if check_existing_subscription(username, subscription_type, value):
             return {
                 'statusCode': 400,
+                'headers': {
+                    'Access-Control-Allow-Origin': '*',
+                },
                 'body': json.dumps({'message': f"Subscription already exists for user {username} with type {subscription_type} and value {value}!"})
             }
 
@@ -35,11 +38,17 @@ def subscribe(event, context):
 
         return {
             'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'message': f"Successfully added subscription with id: {subscription_id}!"})
         }
     except Exception as e:
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'error': str(e)})
         }
 

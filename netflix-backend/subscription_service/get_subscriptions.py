@@ -22,20 +22,32 @@ def get_subscriptions(event, context):
         if not items:
             return {
                 'statusCode': 404,
+                'headers': {
+                    'Access-Control-Allow-Origin': '*',
+                },
                 'body': json.dumps({'message': f"No subscriptions found for user {username}."})
             }
 
         return {
             'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'subscriptions': items})
         }
     except ClientError as e:
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'error': str(e)})
         }
     except Exception as e:
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'error': str(e)})
         }

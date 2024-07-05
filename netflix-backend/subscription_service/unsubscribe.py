@@ -23,12 +23,18 @@ def unsubscribe(event, context):
 
         return {
             'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'message': f"Successfully deleted subscription with id: {subscription_id} for user: {username}!"})
         }
     except KeyError as e:
         # Handle missing subscription_id or username parameter in query string
         return {
             'statusCode': 400,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'error': 'Missing subscription_id or username parameter in query string'})
         }
     except ClientError as e:
@@ -37,16 +43,25 @@ def unsubscribe(event, context):
         if error_code == 'ConditionalCheckFailedException':
             return {
                 'statusCode': 404,
+                'headers': {
+                    'Access-Control-Allow-Origin': '*',
+                },
                 'body': json.dumps({'error': f"Subscription with id {subscription_id} for user {username} not found!"})
             }
         else:
             return {
                 'statusCode': 500,
+                'headers': {
+                    'Access-Control-Allow-Origin': '*',
+                },
                 'body': json.dumps({'error': str(e)})
             }
     except Exception as e:
         # Handle any other unexpected errors
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'error': str(e)})
         }

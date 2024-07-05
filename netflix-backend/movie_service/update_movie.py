@@ -63,5 +63,8 @@ def update_movie(event, context):
     except Exception as e:
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'error': str(e)})
         }

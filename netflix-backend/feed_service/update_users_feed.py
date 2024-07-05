@@ -58,21 +58,14 @@ def update_users_feed(event, context):
 
                     movie_items = response.get('Items', [])
                     for movie_item in movie_items:
-                        #genres = movie_item.get('genres', [])
-                        #ovo vratiti kada se popravi tabela filmova
-
-                        genres = movie_item.get('genres', "")
+                        genres = movie_item.get('genres', [])
                         actors = movie_item.get('actors', [])
                         directors = movie_item.get('directors', [])
-                        # for genre in genres:
-                        #     if genre not in genres_dict:
-                        #         genres_dict[genre] = 0
-                        #     genres_dict[genre] += value
-                        # ovo vratiti kada se popravi tabela filmova
 
-                        if genres not in genres_dict:
-                            genres_dict[genres] = 0
-                        genres_dict[genres] += value
+                        for genre in genres:
+                            if genre not in genres_dict:
+                                genres_dict[genre] = 0
+                            genres_dict[genre] += value
 
                         for actor in actors:
                             if actor not in actors_dict:
@@ -127,21 +120,14 @@ def update_users_feed(event, context):
                     )
                     movie_items = response.get('Items', [])
                     for movie_item in movie_items:
-                        # genres = movie_item.get('genres', [])
-                        # ovo vratiti kada se popravi tabela filmova
-
-                        genres = movie_item.get('genres', "")
+                        genres = movie_item.get('genres', [])
                         actors = movie_item.get('actors', [])
                         directors = movie_item.get('directors', [])
-                        # for genre in genres:
-                        #     if genre not in genres_dict:
-                        #         genres_dict[genre] = 0
-                        #     genres_dict[genre] += value
-                        # ovo vratiti kada se popravi tabela filmova
 
-                        if genres not in genres_dict:
-                            genres_dict[genres] = 0
-                        genres_dict[genres] += value
+                        for genre in genres:
+                            if genre not in genres_dict:
+                                genres_dict[genre] = 0
+                            genres_dict[genre] += value
 
                         for actor in actors:
                             if actor not in actors_dict:
@@ -160,21 +146,15 @@ def update_users_feed(event, context):
 
         for movie in movies:
             movie_id = movie['movie_id']
-            genres = movie.get('genres', "")
-            # genres = movie.get('genres', [])
-            # ovo vratiti kada se popravi tabela filmova
+            genres = movie.get('genres', [])
             actors = movie.get('actors', [])
             directors = movie.get('directors', [])
 
             weight = 0
 
-            # ovo vratiti kada se popravi tabela filmova
-            # for genre in genres:
-            #     if genre in genres_dict:
-            #         weight += genres_dict[genre]
-
-            if genres in genres_dict:
-                weight += genres_dict[genres]
+            for genre in genres:
+                if genre in genres_dict:
+                    weight += genres_dict[genre]
 
             for actor in actors:
                 if actor in actors_dict:
@@ -211,21 +191,33 @@ def update_users_feed(event, context):
 
         return {
             'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'message': 'Feed updated successfully', 'feed': top_movie_ids})
         }
 
     except ClientError as e:
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'error': str(e)})
         }
     except ValueError as e:
         return {
             'statusCode': 400,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'error': str(e)})
         }
     except Exception as e:
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'error': str(e)})
         }
