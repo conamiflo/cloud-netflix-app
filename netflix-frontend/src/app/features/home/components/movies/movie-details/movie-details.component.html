@@ -41,20 +41,9 @@
 
               <div class="badge badge-outline">HD</div>
             </div>
-
             <div class="ganre-wrapper">
-              <a href="#">Comedy,</a>
-
-              <a href="#">Action,</a>
-
-              <a href="#">Adventure,</a>
-
-              <a href="#">Science Fiction</a>
+              <a *ngFor="let genre of movie.genres; let last = last" href="#">{{ genre }}{{ !last ? ',' : '' }}</a>
             </div>
-<!--            <div class="ganre-wrapper">-->
-<!--              <a *ngFor="let genre of movie.genres; let last = last" href="#">{{ genre }}{{ !last ? ',' : '' }}</a>-->
-<!--            </div>-->
-
             <div class="date-time">
 
               <div>
@@ -125,9 +114,7 @@
   </div>
   <div class="review-container2">
     <div class="cards-cardscontent">
-      <app-movie-review></app-movie-review>
-      <app-movie-review></app-movie-review>
-      <app-movie-review></app-movie-review>
+      <app-movie-review *ngFor="let review of reviews" [review]="review"></app-movie-review>
     </div>
   </div>
 </div>

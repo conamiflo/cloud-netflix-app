@@ -11,6 +11,7 @@ import {ActivatedRoute} from "@angular/router";
 import {MovieService} from "../../../../../core/services/movie/movie.service";
 import {NgFor} from "@angular/common";
 import {CognitoService} from "../../../../../core/services/cognito/cognito.service";
+import {ReviewService} from "../../../../../core/services/review/review.service";
 
 @Component({
   selector: 'app-movie-details',
@@ -23,10 +24,12 @@ export class MovieDetailsComponent{
   constructor(public dialog: MatDialog,
               private route: ActivatedRoute,
               private movieService: MovieService,
-              private cognitoService: CognitoService) {
+              private cognitoService: CognitoService,
+              private reviewService: ReviewService,) {
     addIcons({ cameraOutline, playCircle, shareSocial, play, downloadOutline, chevronUp,calendarOutline,timeOutline,star,send});
   }
   movie: any;
+  reviews: any[] = [];
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -36,13 +39,23 @@ export class MovieDetailsComponent{
       if (movieId && movieTitle) {
         this.movieService.getMovieByIdAndTitle(movieId, movieTitle).subscribe(
           (data) => {
-            console.log(data.genres)
             this.movie = data;
           },
           (error) => {
             console.error('Error fetching movie data', error);
           }
         );
+
+        this.reviewService.getAllReviews(movieId).subscribe(
+          (data) => {
+            this.reviews = data.reviews;
+            console.log(data)
+          },
+          (error) => {
+            console.error('Error fetching reviews', error);
+          }
+        );
+
       }
     });
   }

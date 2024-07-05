@@ -21,4 +21,11 @@ export class ReviewService {
     return this.httpClient.post(url, JSON.stringify(body), { headers });
   }
 
+  getAllReviews(movieId: string): Observable<any> {
+    const url = environment.cloudHost + 'reviews';
+    let params = new HttpParams()
+      .set('movie_id', movieId);
+    return this.httpClient.get(url, { params });
+  }
+
 }

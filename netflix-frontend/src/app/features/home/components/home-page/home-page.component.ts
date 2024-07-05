@@ -3,6 +3,7 @@ import {MovieCardComponent} from "../movies/movie-card/movie-card.component";
 import {MovieService} from "../../../../core/services/movie/movie.service";
 import {CommonModule, NgFor} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {CognitoService} from "../../../../core/services/cognito/cognito.service";
 
 @Component({
   selector: 'app-home-page',
@@ -19,17 +20,25 @@ export class HomePageComponent {
   directors: string = '';
   genres: string = '';
 
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: MovieService,
+              private cognitoService: CognitoService,
+  ) {}
 
   ngOnInit() {
-    this.movieService.getFeed('Borizzlav-Celar').subscribe(
-      (data) => {
-        this.movies = data.movies;
-      },
-      (error) => {
-        console.error('Error fetching movies', error);
+    this.cognitoService.getUsername().then(username => {
+      if (username) {
+        this.movieService.getFeed(username).subscribe(
+          (data) => {
+            this.movies = data.movies;
+          },
+          (error) => {
+            console.error('Error fetching movies', error);
+          }
+        );
+      } else {
+        console.error('No username found. User may not be logged in.');
       }
-    );
+    });
   }
 
   searchMovies() {
