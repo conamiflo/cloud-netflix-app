@@ -5,15 +5,17 @@ import boto3
 from decimal import Decimal, ROUND_DOWN
 from botocore.exceptions import ClientError
 from boto3.dynamodb.conditions import Attr
+import os
 
-# Initialize the DynamoDB resource
+client = boto3.client('cognito-idp')
+
 dynamodb = boto3.resource('dynamodb')
 feed_table = dynamodb.Table('feed-table')
 review_table = dynamodb.Table('review-table2')
 subscription_table = dynamodb.Table('subscription-table')
 movies_table = dynamodb.Table('movies-dbtable2')
 download_history_table = dynamodb.Table('download-history-table')
-
+user_pool_id = os.environ['USER_POOL_ID']
 
 def exponential_approach(date):
     current_datetime = datetime.datetime.now()
@@ -26,6 +28,64 @@ def exponential_approach(date):
     result = Decimal(math.exp(-float(decay_rate * Decimal(delta))))
     result = result.quantize(Decimal('0.001'), rounding=ROUND_DOWN)
     return result
+
+def update_all_users_feed(event, context):
+    try:
+        response = client.list_users(
+            UserPoolId=user_pool_id,
+        )
+        for user in response['Users']:
+            username = user['Username']
+            top_movie_ids = get_top_movies(username)
+            existing_feed = feed_table.get_item(Key={'username': username})
+
+            if 'Item' in existing_feed:
+                feed_table.update_item(
+                    Key={'username': username},
+                    UpdateExpression='SET #f = :feed',
+                    ExpressionAttributeNames={'#f': 'feed'},
+                    ExpressionAttributeValues={':feed': top_movie_ids}
+                )
+            else:
+                feed_table.put_item(
+                    Item={
+                        'username': username,
+                        'feed': top_movie_ids
+                    }
+                )
+
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
+            'body': json.dumps({'message': 'Feeds updated successfully.'})
+        }
+
+    except ClientError as e:
+        return {
+            'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
+            'body': json.dumps({'error': str(e)})
+        }
+    except ValueError as e:
+        return {
+            'statusCode': 400,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
+            'body': json.dumps({'error': str(e)})
+        }
+    except Exception as e:
+        return {
+            'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
+            'body': json.dumps({'error': str(e)})
+        }
 
 
 def update_users_feed(event, context):

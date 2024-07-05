@@ -247,7 +247,6 @@ class NetflixBackendStack(Stack):
                                               )
                                             )
 
-        # Ensure the password is set after the user is created
         set_password.node.add_dependency(cfn_user_pool_user_to_group_attachment)
         web_client.node.add_dependency(user_pool)
         admins_group.node.add_dependency(user_pool)
@@ -256,11 +255,6 @@ class NetflixBackendStack(Stack):
         user.node.add_dependency(admins_group)
         cfn_user_pool_user_to_group_attachment.node.add_dependency(user)
 
-
-
-
-        # Optionally, add the User to a Group
-        # Example: Attach the User to a Group
 
 
 
@@ -477,13 +471,32 @@ class NetflixBackendStack(Stack):
                 'FEED_TABLE_NAME': feed_table.table_name,
                 'REVIEWS_TABLE_NAME': review_table.table_name,
                 'SUBSCRIPTIONS_TABLE_NAME': subscription_table.table_name,
-                'DOWNLOAD_HISTORY_TABLE_NAME': download_history_table.table_name
+                'DOWNLOAD_HISTORY_TABLE_NAME': download_history_table.table_name,
+                'USER_POOL_ID': user_pool.user_pool_id
+            }
+        )
+
+        update_all_users_feed_lambda = create_lambda_function(
+            "updateAllUsersFeed",
+            "update_users_feed.update_all_users_feed",
+            "feed_service",
+            "PUT",
+            {
+                'MOVIES_TABLE_NAME': movie_table.table_name,
+                'FEED_TABLE_NAME': feed_table.table_name,
+                'REVIEWS_TABLE_NAME': review_table.table_name,
+                'SUBSCRIPTIONS_TABLE_NAME': subscription_table.table_name,
+                'DOWNLOAD_HISTORY_TABLE_NAME': download_history_table.table_name,
+                'USER_POOL_ID': user_pool.user_pool_id
             }
         )
 
         feed_resource = api.root.add_resource("feed")
         feed_resource.add_method("GET", apigateway.LambdaIntegration(get_feed_lambda))
         feed_resource.add_method("PUT", apigateway.LambdaIntegration(update_users_feed_lambda))
+
+        all_users_feed_resource = feed_resource.add_resource("all-users")
+        all_users_feed_resource.add_method("PUT", apigateway.LambdaIntegration(update_all_users_feed_lambda))
 
         create_download_history_lambda = create_lambda_function(
             "createDownloadHistory",
