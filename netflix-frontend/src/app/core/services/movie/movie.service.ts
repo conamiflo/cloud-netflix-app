@@ -56,4 +56,12 @@ export class MovieService {
     return this.httpClient.post(url, JSON.stringify(body), { headers });
   }
 
+  deleteMovie(movieId: string, title: string): Observable<any> {
+    const url = environment.cloudHost + 'movies';
+    const params = new HttpParams()
+      .set('movie_id', movieId)
+      .set('title', title);
+    return this.httpClient.delete(url, { params });
+  }
+
 }

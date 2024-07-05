@@ -7,7 +7,7 @@ import {MovieCardComponent} from "../movie-card/movie-card.component";
 import {MovieReviewDialogComponent} from "../movie-review-dialog/movie-review-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MovieService} from "../../../../../core/services/movie/movie.service";
 import {NgFor} from "@angular/common";
 import {CognitoService} from "../../../../../core/services/cognito/cognito.service";
@@ -25,7 +25,8 @@ export class MovieDetailsComponent{
               private route: ActivatedRoute,
               private movieService: MovieService,
               private cognitoService: CognitoService,
-              private reviewService: ReviewService,) {
+              private reviewService: ReviewService,
+              private router:Router) {
     addIcons({ cameraOutline, playCircle, shareSocial, play, downloadOutline, chevronUp,calendarOutline,timeOutline,star,send});
   }
   movie: any;
@@ -58,6 +59,18 @@ export class MovieDetailsComponent{
 
       }
     });
+  }
+
+  deleteMovie() {
+    this.movieService.deleteMovie(this.movie.movie_id, this.movie.title).subscribe(
+      (response) => {
+        alert(`Successfully deleted movie with id: ${this.movie.movie_id}`);
+        this.router.navigate(['']);
+      },
+      (error) => {
+        console.error('Error deleting movie', error);
+      }
+    );
   }
 
   downloadFile() {
