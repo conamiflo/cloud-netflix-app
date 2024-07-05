@@ -47,14 +47,11 @@ export class MovieDetailsComponent{
     });
   }
 
-  async downloadFile() {
-    try {
-      const username = await this.cognitoService.getUsername();
+  downloadFile() {
+    this.cognitoService.getUsername().then(username => {
       if (!username) {
-        console.error('User is not logged in');
         return;
       }
-
       this.movieService.downloadMovie(username, this.movie.movie_id).subscribe(
         response => {
           console.log('Download history created successfully:', response);
@@ -69,14 +66,17 @@ export class MovieDetailsComponent{
           console.error('Error creating download history:', error);
         }
       );
-    } catch (error) {
+    }).catch(error => {
       console.error('Error getting username:', error);
-    }
+    });
   }
 
   openReviewDialog(): void{
     const dialogRef = this.dialog.open(MovieReviewDialogComponent, {
-      width: '550px'
+      width: '550px',
+      data: {
+        movieId: this.movie.movie_id
+      }
       });
   }
 

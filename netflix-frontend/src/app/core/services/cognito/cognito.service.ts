@@ -41,7 +41,7 @@ export class CognitoService {
     }
   }
 
-  public async getUsername(): Promise<string | null> {
+  async getUsername(): Promise<string | null> {
     try {
       const userInfo = await Auth.currentUserInfo();
       if (userInfo && userInfo.username) {
