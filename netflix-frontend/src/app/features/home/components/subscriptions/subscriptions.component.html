@@ -1,46 +1,45 @@
-<body>
-<main>
-  <section id="hero">
-    <h1>Welcome</h1>
-    <p>Discover the latest movies and classic hits <br/>in the best resolution and sound. </p>
-  </section>
-</main>
 <div class="cards-container">
   <div class="cards-desktop11">
     <div class="cards-title">
       <span>Subscribe to genre</span>
     </div>
-    <div class="search-box-container">
-      <div class="search-box">
-        <input type="text" placeholder="Type a genre you want to subscribe to">
-        <button>Subscribe</button>
+    <form [formGroup]="subscriptionsGenreForm">
+      <div class="search-box-container">
+        <div class="search-box">
+          <input formControlName="genre" type="text" placeholder="Type a genre you want to subscribe to" required>
+          <button type="submit" (click)="subscribeToGenre()">Subscribe</button>
+        </div>
       </div>
-    </div>
+    </form>
+
     <div class="cards-title">
       <span>Subscribe to actor</span>
     </div>
-    <div class="search-box-container">
-      <div class="search-box">
-        <input type="text" placeholder="Type an actor you want to subscribe to">
-        <button>Subscribe</button>
+    <form [formGroup]="subscriptionsActorForm">
+      <div class="search-box-container">
+        <div class="search-box">
+          <input formControlName="actor" type="text" placeholder="Type an actor you want to subscribe to" required>
+          <button type="submit" (click)="subscribeToActor()">Subscribe</button>
+        </div>
       </div>
-    </div>
+    </form>
+
     <div class="cards-title">
       <span>Subscribe to director</span>
     </div>
-    <div class="search-box-container">
-      <div class="search-box">
-        <input type="text" placeholder="Type a director you want to subscribe to">
-        <button>Subscribe</button>
+    <form [formGroup]="subscriptionsDirectorForm">
+      <div class="search-box-container">
+        <div class="search-box">
+          <input formControlName="director" type="text" placeholder="Type a director you want to subscribe to" required>
+          <button type="submit" (click)="subscribeToDirector()">Subscribe</button>
+        </div>
       </div>
-    </div>
+    </form>
+
     <div class="cards-title">
       <span>Subscriptions: </span>
     </div>
     <div class="cards-cardscontent">
-      <!--      <div *ngFor="let accommodation of accommodationsForShow">-->
-      <!--        <app-accommodation-card (clicked)="onAccommodationClicked($event)" [accommodation]="accommodation"></app-accommodation-card>-->
-      <!--      </div>-->
       <app-subscriptions-card></app-subscriptions-card>
       <app-subscriptions-card></app-subscriptions-card>
       <app-subscriptions-card></app-subscriptions-card>
@@ -48,5 +47,3 @@
     </div>
   </div>
 </div>
-</body>
-
