@@ -5,16 +5,16 @@ from boto3.dynamodb.conditions import Attr
 
 # Initialize the DynamoDB resource
 dynamodb = boto3.resource('dynamodb')
-subscription_table = dynamodb.Table('subscription-table')
+review_table = dynamodb.Table('review-table2')
 
 
-def get_subscriptions(event, context):
+def get_reviews(event, context):
     try:
-        username = event['queryStringParameters']['username']
+        movie_id = event['queryStringParameters']['movie_id']
 
         # Query the table for items with the specified username
-        response = subscription_table.scan(
-            FilterExpression=Attr('username').eq(username)
+        response = review_table.scan(
+            FilterExpression=Attr('movie_id').eq(movie_id)
         )
 
         items = response['Items']
@@ -25,7 +25,7 @@ def get_subscriptions(event, context):
                 'headers': {
                     'Access-Control-Allow-Origin': '*',
                 },
-                'body': json.dumps({'subscriptions': []})
+                'body': json.dumps({'reviews': []})
             }
 
         return {
@@ -33,7 +33,7 @@ def get_subscriptions(event, context):
             'headers': {
                 'Access-Control-Allow-Origin': '*',
             },
-            'body': json.dumps({'subscriptions': items})
+            'body': json.dumps({'reviews': items})
         }
     except ClientError as e:
         return {

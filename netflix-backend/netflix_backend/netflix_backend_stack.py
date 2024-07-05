@@ -442,8 +442,19 @@ class NetflixBackendStack(Stack):
             }
         )
 
+        get_review_lambda = create_lambda_function(
+            "getReview",
+            "get_reviews.get_reviews",
+            "review_service",
+            "GET",
+            {
+                'TABLE_NAME': review_table.table_name
+            }
+        )
+
         review_resource = api.root.add_resource("reviews")
         review_resource.add_method("POST", apigateway.LambdaIntegration(review_lambda))
+        review_resource.add_method("GET", apigateway.LambdaIntegration(get_review_lambda))
 
         get_feed_lambda = create_lambda_function(
             "getFeed",
