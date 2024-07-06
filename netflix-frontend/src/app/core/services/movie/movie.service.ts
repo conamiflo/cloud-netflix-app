@@ -62,6 +62,7 @@ export class MovieService {
       .set('movie_id', movieId)
       .set('title', title);
     return this.httpClient.delete(url, { params });
+
   }
 
 }

@@ -40,10 +40,7 @@
       <span>Subscriptions: </span>
     </div>
     <div class="cards-cardscontent">
-      <app-subscriptions-card></app-subscriptions-card>
-      <app-subscriptions-card></app-subscriptions-card>
-      <app-subscriptions-card></app-subscriptions-card>
-      <app-subscriptions-card></app-subscriptions-card>
+      <app-subscriptions-card *ngFor="let subscription of subscriptions" [subscription]="subscription"></app-subscriptions-card>
     </div>
   </div>
 </div>

@@ -1,8 +1,8 @@
 <div class="page-frame251">
   <div class="page-frame249">
-    <span class="page-text172"><span>Subscribed to actor Just Joo</span></span>
+    <span class="page-text172"><span>Subscribed to {{ subscription.type | lowercase }} <span style="color: red">{{ subscription.value }}</span></span></span>
   </div>
-  <button class="unsubscribe">
+  <button class="unsubscribe" (click)="unsubscribe()">
     <span>Unsubscribe</span>
   </button>
 </div>
