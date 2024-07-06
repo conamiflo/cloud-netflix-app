@@ -7,13 +7,14 @@
       <div>
         <h1>Edit movie</h1>
 
-        <form>
+        <form [formGroup]="editMovieForm" (ngSubmit)="editMovie()">
           <input type="text" placeholder="Title" formControlName="title" />
           <input type="text" placeholder="Genres" formControlName="genres" />
           <input type="text" placeholder="Actors" formControlName="actors" />
           <input type="text" placeholder="Description" formControlName="description" />
           <input type="text" placeholder="Directors" formControlName="directors" />
-          <input type="file" accept="video/mp4" placeholder="Upload movie" formControlName="movie" />
+          <input type="text" placeholder="Series" formControlName="series" />
+          <input type="file" accept="video/mp4" (change)="onFileChange($event)" placeholder="Upload movie" formControlName="movieFile" />
           <button type="submit">Edit movie</button>
         </form>
       </div>

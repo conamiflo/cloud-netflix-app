@@ -9,7 +9,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MovieService} from "../../../../../core/services/movie/movie.service";
-import {NgFor} from "@angular/common";
+import {NgFor, NgIf} from "@angular/common";
 import {CognitoService} from "../../../../../core/services/cognito/cognito.service";
 import {ReviewService} from "../../../../../core/services/review/review.service";
 import {ReactiveFormsModule} from "@angular/forms";
@@ -17,7 +17,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 @Component({
   selector: 'app-movie-details',
   standalone: true,
-    imports: [IonIcon, MovieReviewComponent, MovieCardComponent, MatLabel, MatFormField, NgFor, ReactiveFormsModule],
+    imports: [IonIcon, MovieReviewComponent, MovieCardComponent, MatLabel, MatFormField, NgFor, ReactiveFormsModule,NgIf],
   templateUrl: './movie-details.component.html',
   styleUrl: './movie-details.component.css'
 })
@@ -43,6 +43,10 @@ export class MovieDetailsComponent implements OnInit{
         this.getReviews(movieId);
       }
     });
+  }
+
+  editMovie() {
+    this.router.navigate(['edit-movie', this.movie.movie_id, this.movie.title]);
   }
 
   getSeries(series: string, movieId : string){
@@ -75,7 +79,7 @@ export class MovieDetailsComponent implements OnInit{
               this.getSeries(this.movie.series, movieId);
             }
           },
-          (error) => { 
+          (error) => {
             console.error('Error fetching movie data', error);
           }
         );

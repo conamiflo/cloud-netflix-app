@@ -44,7 +44,7 @@ export class MovieService {
   }
 
   createMovie(movieData: any): Observable<any> {
-    const url = environment.cloudHost + 'movies'; // Update with your actual endpoint
+    const url = environment.cloudHost + 'movies';
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post(url, JSON.stringify(movieData), { headers });
   }
@@ -72,6 +72,16 @@ export class MovieService {
       .set('exclude_movie_id', excludeMovieId);
 
     return this.httpClient.get(url, { params });
+  }
+
+  editMovie(movieId: string, movieData: any): Observable<any> {
+    const url = environment.cloudHost + 'movies';
+    const body = {
+      movie_id: movieId,
+      ...movieData
+    };
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.put(url, JSON.stringify(body), { headers });
   }
 
 }

@@ -77,7 +77,7 @@
                 <span>Download movie</span>
               </button>
 
-            <button class="btn btn-primary" id="edit-movie">
+            <button class="btn btn-primary" id="edit-movie" (click)="editMovie()">
               <ion-icon name="play"></ion-icon>
 
               <span>Edit movie</span>
@@ -104,7 +104,7 @@
   </article>
 </main>
 
-<div class="cards-container2">
+<div class="cards-container2" *ngIf="movies.length > 0">
   <div class="cards-desktop112">
     <div class="cards-title2">
       <span>Episodes from series</span>

@@ -33,7 +33,7 @@ def update_movie(event, context):
                 'body': json.dumps({'message': 'Movie not found'})
             }
 
-        if 'movie' in body:
+        if 'movie' in body and body['movie'] is not None:
             movie = body['movie']
             encoded_movie = base64.b64decode(movie)
             s3.put_object(Bucket=s3_bucket, Key=movie_id, Body=encoded_movie, ContentType='video/mp4')
