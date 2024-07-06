@@ -23,6 +23,7 @@ export class CreateMovieComponent implements OnInit {
       description: ['', Validators.required],
       directors: ['', Validators.required],
       movieFile: [null, Validators.required],
+      series: [''],
       movie: [null]
     });
   }
@@ -38,6 +39,7 @@ export class CreateMovieComponent implements OnInit {
       this.formData.description = this.createMovieForm.value.description;
       this.formData.directors = this.createMovieForm.value.directors.split(',').map((director: string) => director.trim());
       this.formData.movieFile = this.createMovieForm.value.movieFile;
+      this.formData.series = this.createMovieForm.value.series;
       this.formData.movie = this.createMovieForm.value.movie;
 
       this.movieService.createMovie(this.formData).subscribe(

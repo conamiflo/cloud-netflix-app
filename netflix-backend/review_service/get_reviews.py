@@ -19,14 +19,14 @@ def get_reviews(event, context):
 
         items = response['Items']
 
-        if not items:
-            return {
-                'statusCode': 404,
-                'headers': {
-                    'Access-Control-Allow-Origin': '*',
-                },
-                'body': json.dumps({'reviews': []})
-            }
+        # if not items:
+        #     return {
+        #         'statusCode': 404,
+        #         'headers': {
+        #             'Access-Control-Allow-Origin': '*',
+        #         },
+        #         'body': json.dumps({'reviews': []})
+        #     }
 
         return {
             'statusCode': 200,

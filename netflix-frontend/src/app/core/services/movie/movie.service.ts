@@ -65,4 +65,13 @@ export class MovieService {
 
   }
 
+  getMoviesBySeries(series: string, excludeMovieId: string): Observable<any> {
+    const url = environment.cloudHost + 'series';
+    let params = new HttpParams()
+      .set('series', series)
+      .set('exclude_movie_id', excludeMovieId);
+
+    return this.httpClient.get(url, { params });
+  }
+
 }

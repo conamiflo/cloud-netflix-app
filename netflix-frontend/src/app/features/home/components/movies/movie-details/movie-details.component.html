@@ -104,6 +104,17 @@
   </article>
 </main>
 
+<div class="cards-container2">
+  <div class="cards-desktop112">
+    <div class="cards-title2">
+      <span>Episodes from series</span>
+    </div>
+    <div class="cards-cardscontent2">
+      <app-movie-card *ngFor="let movie of movies" [movie]="movie"></app-movie-card>
+    </div>
+  </div>
+</div>
+
 <div class="review-container">
   <div class="cards-title">
     <span id="movie-reviews">Movie reviews</span>
@@ -112,6 +123,7 @@
       <span>Review movie</span>
     </button>
   </div>
+
   <div class="review-container2">
     <div class="cards-cardscontent">
       <app-movie-review *ngFor="let review of reviews" [review]="review"></app-movie-review>

@@ -384,13 +384,27 @@ class NetflixBackendStack(Stack):
                 'BUCKET_NAME': s3_bucket.bucket_name
             },
         )
+        
+        get_series_lambda = create_lambda_function(
+            "getMovieSeries",
+            "get_series.get_series",
+            "movie_service",
+            "GET",
+            {
+                'TABLE_NAME': movie_table.table_name,
+                'BUCKET_NAME': s3_bucket.bucket_name
+            },
+        )
 
         movies_resource = api.root.add_resource("movies")
         movies_resource.add_method("POST", apigateway.LambdaIntegration(create_movie_lambda))
         movies_resource.add_method("GET", apigateway.LambdaIntegration(download_movie_lambda))
         movies_resource.add_method("PUT", apigateway.LambdaIntegration(update_movie_lambda))
         movies_resource.add_method("DELETE", apigateway.LambdaIntegration(delete_movie_lambda))
-
+        
+        movies_resource = api.root.add_resource("series")
+        movies_resource.add_method("GET", apigateway.LambdaIntegration(get_series_lambda))
+        
         subscribe_lambda = create_lambda_function(
             "subscribe",
             "subscribe.subscribe",
