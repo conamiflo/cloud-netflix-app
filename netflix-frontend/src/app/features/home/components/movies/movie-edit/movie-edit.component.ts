@@ -26,13 +26,13 @@ export class MovieEditComponent {
 
   ngOnInit(): void {
     this.editMovieForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      genres: ['', Validators.required],
-      actors: ['', Validators.required],
-      description: ['', Validators.required],
-      directors: ['', Validators.required],
-      movieFile: [null],
-      series: ['', Validators.required],
+      title: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]], // Exclude underscore
+      genres: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]],
+      actors: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]],
+      description: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]],
+      directors: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]],
+      movieFile: [null, Validators.required],
+      series: [''],
       movie: [null]
     });
     this.route.paramMap.subscribe(params => {

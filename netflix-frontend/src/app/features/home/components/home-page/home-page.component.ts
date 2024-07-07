@@ -45,6 +45,7 @@ export class HomePageComponent {
     console.log(this.title,this.description,this.actors,this.directors,this.genres)
     this.movieService.searchMovies(this.title, this.description, this.actors, this.directors, this.genres).subscribe(
       (data) => {
+        console.log(this.title,this.description,this.actors,this.directors,this.genres);
         this.movies = data;
       },
       (error) => {

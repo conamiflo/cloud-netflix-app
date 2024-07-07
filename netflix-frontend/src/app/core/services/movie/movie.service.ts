@@ -33,6 +33,7 @@ export class MovieService {
   }
 
   searchMovies(title: string, description: string, actors: string, directors: string, genres: string): Observable<any> {
+    const url = environment.cloudHost + 'search';
     let params = new HttpParams()
       .set('title', title)
       .set('description', description)
@@ -40,7 +41,7 @@ export class MovieService {
       .set('directors', directors)
       .set('genres', genres);
 
-    return this.httpClient.get(environment.cloudHost + 'search', { params });
+    return this.httpClient.get(url, { params });
   }
 
   createMovie(movieData: any): Observable<any> {

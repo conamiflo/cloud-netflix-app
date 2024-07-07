@@ -9,6 +9,7 @@ movies_table = dynamodb.Table('movies-dbtable2')
 s3_bucket = 'movie-bucket3'
 
 
+
 def post_movie(event, context):
     
     try:
@@ -44,6 +45,7 @@ def post_movie(event, context):
                 'movie_size': movie_size,
                 'movie_modified': movie_modified,
                 'series': series,
+                'search_data': generate_search_key(title,description,actors,directors,genres)
             }
         )  
 
@@ -76,3 +78,6 @@ def get_last_movie_id():
                 last_movie_id = max(keys)
     
     return last_movie_id
+
+def generate_search_key(title, description, actors, directors, genres):
+    return f"{title}_{description}_{actors}_{directors}_{genres}"
