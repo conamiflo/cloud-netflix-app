@@ -48,8 +48,6 @@ export class MovieService {
       params = params.set('genres', genres.join(','));
     }
 
-    console.log(params)
-
     return this.httpClient.get(url, { params });
   }
 

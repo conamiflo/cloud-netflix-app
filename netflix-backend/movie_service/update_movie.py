@@ -47,6 +47,8 @@ def update_movie(event, context):
         for key in item:
             if key not in body:
                 body[key] = item[key]
+        del body['movie']
+        del body['movieFile']
                 
         movies_table.delete_item(Key={'movie_id': movie_id, 'title': old_title})
 

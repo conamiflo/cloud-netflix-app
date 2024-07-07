@@ -22,7 +22,7 @@ def search_movies(event, context):
         actors = query_params.get('actors', '')
         directors = query_params.get('directors', '')
         genres = query_params.get('genres', '')
-
+        
         search_key = generate_search_key(title, description, actors, directors, genres).strip()
 
         if title and description and actors and directors and genres:
@@ -82,4 +82,9 @@ def search_movies(event, context):
         }
 
 def generate_search_key(title, description, actors, directors, genres):
-    return f"{title}_{description}_{actors}_{directors}_{genres}"
+    
+    actors_list = actors.split(',') if actors else []
+    directors_list = directors.split(',') if directors else []
+    genres_list = genres.split(',') if genres else []
+    
+    return f"{title}_{description}_{actors_list}_{directors_list}_{genres_list}"
