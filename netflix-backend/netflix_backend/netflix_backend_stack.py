@@ -257,6 +257,12 @@ class NetflixBackendStack(Stack):
 
 
 
+        layer = _lambda.LayerVersion(self, 'layer-ffmpeg',
+                                     code= _lambda.Code.from_asset('./layer-ffmeg'),
+                                     compatible_runtimes= [_lambda.Runtime.PYTHON_3_11],
+                                     layer_version_name= 'ffmpeg-layer',
+                                     )
+
 
         def create_lambda_function(id, handler, include_dir, method, environment):
             function = _lambda.Function(
