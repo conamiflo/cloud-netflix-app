@@ -318,7 +318,7 @@ class NetflixBackendStack(Stack):
             environment={
                 'TABLE_NAME': movie_table.table_name,
                 'BUCKET_NAME': s3_bucket.bucket_name,
-                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url,
             },
             role=lambda_role,
             layers=[ffmpeg_layer]
