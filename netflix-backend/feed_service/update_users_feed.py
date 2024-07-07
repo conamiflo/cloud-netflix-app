@@ -134,7 +134,7 @@ def get_top_movies(username):
                 movie_id = item['movie_id']
 
                 value = item.get('value', 1)
-                value -= 2
+                value = int(value) - 2
                 value = value / 2
 
                 response = movies_table.query(
