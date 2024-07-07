@@ -127,35 +127,6 @@ section#hero {
   cursor: pointer;
 }
 
-.fa{
-  box-sizing: border-box;
-  padding: 10px;
-  width: 42.5px;
-  height: 42.5px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  border-radius: 50%;
-  color: red;
-  text-align: center;
-  font-size: 1.2em;
-  transition: all 1s;
-}
-
-form:hover{
-  width: 300px;
-  cursor: pointer;
-}
-
-form:hover input{
-  display: block;
-}
-
-form:hover .fa{
-  background: #0e0a08;
-  color: red;
-}
-
 .cards-mattoolbarcontent {
   width: inherit;
   height: 78px;

@@ -12,7 +12,6 @@ def get_subscriptions(event, context):
     try:
         username = event['queryStringParameters']['username']
 
-        # Query the table for items with the specified username
         response = subscription_table.scan(
             FilterExpression=Attr('username').eq(username)
         )
@@ -22,20 +21,32 @@ def get_subscriptions(event, context):
         if not items:
             return {
                 'statusCode': 404,
-                'body': json.dumps({'message': f"No subscriptions found for user {username}."})
+                'headers': {
+                    'Access-Control-Allow-Origin': '*',
+                },
+                'body': json.dumps({'subscriptions': []})
             }
 
         return {
             'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'subscriptions': items})
         }
     except ClientError as e:
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'error': str(e)})
         }
     except Exception as e:
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'error': str(e)})
         }

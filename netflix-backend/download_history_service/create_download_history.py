@@ -1,4 +1,5 @@
 import base64
+import os
 import datetime
 import json
 import boto3
@@ -7,7 +8,8 @@ from boto3.dynamodb.conditions import Key, Attr
 
 dynamodb = boto3.resource('dynamodb')
 download_history_table = dynamodb.Table('download-history-table')
-
+sqs = boto3.client('sqs')
+feed_update_queue_url = os.environ['FEED_UPDATE_QUEUE_URL']
 def create_download_history(event, context):
     try:
         body = json.loads(event['body'])
@@ -25,13 +27,27 @@ def create_download_history(event, context):
             }
         )
 
+        sqs.send_message(
+            QueueUrl=feed_update_queue_url,
+            MessageBody=json.dumps({
+                'event': 'user_download_movie',
+                'username': username
+            })
+        )
+
         return {
             'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'message': f"Successfully added download history with id: {download_id}!"})
         }
     except Exception as e:
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'error': str(e)})
         }
 

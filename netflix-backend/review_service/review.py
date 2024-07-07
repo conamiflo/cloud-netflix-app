@@ -1,4 +1,5 @@
 import base64
+import os
 import json
 import boto3
 from botocore.exceptions import ClientError
@@ -6,7 +7,8 @@ from boto3.dynamodb.conditions import Key, Attr
 
 dynamodb = boto3.resource('dynamodb')
 review_table = dynamodb.Table('review-table2')
-
+sqs = boto3.client('sqs')
+feed_update_queue_url = os.environ['FEED_UPDATE_QUEUE_URL']
 
 def review(event, context):
     try:
@@ -19,6 +21,9 @@ def review(event, context):
         if check_existing_reviews(username, movie_id):
             return {
                 'statusCode': 400,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
                 'body': json.dumps({'message': f"Review already exists from user {username} for movie with id {movie_id}"})
             }
 
@@ -33,13 +38,27 @@ def review(event, context):
             }
         )
 
+        sqs.send_message(
+            QueueUrl=feed_update_queue_url,
+            MessageBody=json.dumps({
+                'event': 'user_review',
+                'username': username
+            })
+        )
+
         return {
             'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'message': f"Successfully added review with id: {review_id}!"})
         }
     except Exception as e:
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
             'body': json.dumps({'error': str(e)})
         }
 

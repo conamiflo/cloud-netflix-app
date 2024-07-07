@@ -32,21 +32,64 @@ export class MovieService {
     return this.httpClient.get(environment.cloudHost + 'feed', { params });
   }
 
-  searchMovies(title: string, description: string, actors: string, directors: string, genres: string): Observable<any> {
+  searchMovies(title: string, description: string, actors: string[], directors: string[], genres: string[]): Observable<any> {
+    const url = environment.cloudHost + 'search';
+
     let params = new HttpParams()
       .set('title', title)
-      .set('description', description)
-      .set('actors', actors)
-      .set('directors', directors)
-      .set('genres', genres);
+      .set('description', description);
+    if (actors.length > 0) {
+      params = params.set('actors', actors.join(','));
+    }
+    if (directors.length > 0) {
+      params = params.set('directors', directors.join(','));
+    }
+    if (genres.length > 0) {
+      params = params.set('genres', genres.join(','));
+    }
 
-    return this.httpClient.get(environment.cloudHost + 'search', { params });
+    return this.httpClient.get(url, { params });
   }
 
   createMovie(movieData: any): Observable<any> {
-    const url = environment.cloudHost + 'movies'; // Update with your actual endpoint
+    const url = environment.cloudHost + 'movies';
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.post(url, JSON.stringify(movieData), { headers });
+  }
+
+  downloadMovie(username: string, movieId: string): Observable<any> {
+    const url = environment.cloudHost + 'history';
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = { username, movie_id: movieId };
+    return this.httpClient.post(url, JSON.stringify(body), { headers });
+  }
+
+  deleteMovie(movieId: string, title: string): Observable<any> {
+    const url = environment.cloudHost + 'movies';
+    const params = new HttpParams()
+      .set('movie_id', movieId)
+      .set('title', title);
+    return this.httpClient.delete(url, { params });
+
+  }
+
+  getMoviesBySeries(series: string, excludeMovieId: string): Observable<any> {
+    const url = environment.cloudHost + 'series';
+    let params = new HttpParams()
+      .set('series', series)
+      .set('exclude_movie_id', excludeMovieId);
+
+    return this.httpClient.get(url, { params });
+  }
+
+  editMovie(movieId: string, movieData: any): Observable<any> {
+    const url = environment.cloudHost + 'movies';
+    const body = {
+      movie_id: movieId,
+      ...movieData
+    };
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.put(url, JSON.stringify(body), { headers });
   }
 
 }

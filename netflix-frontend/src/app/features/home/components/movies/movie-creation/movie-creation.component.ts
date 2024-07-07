@@ -17,12 +17,13 @@ export class CreateMovieComponent implements OnInit {
 
   constructor(private fb: FormBuilder,private movieService: MovieService, private router: Router) {
     this.createMovieForm = this.fb.group({
-      title: ['', Validators.required],
-      genres: ['', Validators.required],
-      actors: ['', Validators.required],
-      description: ['', Validators.required],
-      directors: ['', Validators.required],
+      title: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]], // Exclude underscore
+      genres: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]],
+      actors: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]],
+      description: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]],
+      directors: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]],
       movieFile: [null, Validators.required],
+      series: [''],
       movie: [null]
     });
   }
@@ -38,6 +39,7 @@ export class CreateMovieComponent implements OnInit {
       this.formData.description = this.createMovieForm.value.description;
       this.formData.directors = this.createMovieForm.value.directors.split(',').map((director: string) => director.trim());
       this.formData.movieFile = this.createMovieForm.value.movieFile;
+      this.formData.series = this.createMovieForm.value.series;
       this.formData.movie = this.createMovieForm.value.movie;
 
       this.movieService.createMovie(this.formData).subscribe(

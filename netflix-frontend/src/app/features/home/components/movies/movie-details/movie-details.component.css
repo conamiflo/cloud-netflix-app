@@ -121,6 +121,26 @@ body { background: var(--eerie-black); }
 body.active { overflow: hidden; }
 
 
+select {
+  appearance: none;
+  padding: 12px 24px;
+  font-size: var(--fs-11);
+  font-weight: var(--fw-700);
+  color: var(--white);
+  /*background-color: var(--gunmetal-1);*/
+  border: 2px solid var(--citrine);
+  border-radius: 50px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition-1);
+}
+
+/* Stilizacija hover/focus stanja */
+select:is(:hover, :focus) {
+  background-color: var(--citrine);
+  color: var(--xiketic);
+}
+
 .review-container {
   width: 100%;
   display: flex;
@@ -1199,6 +1219,61 @@ body.active { overflow: hidden; }
     line-height: normal;
     font-stretch: normal;
     text-decoration: none;
+  }
+
+  .cards-container2 {
+    width: 100%;
+    display: flex;
+    overflow: auto;
+    min-height: 50vh;
+    align-items: center;
+    flex-direction: column;
+    /*background-color: #0e0a08; !* Dodano *!*/
+    background-color: #0f0f0f;
+  }
+  .cards-desktop112 {
+    margin-top: 40px;
+    width: 80%;
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    align-items: flex-start;
+    flex-shrink: 0;
+    flex-direction: column;
+    /*background-color: #0e0a08; !* Promijenjeno *!*/
+    background-color: #0f0f0f;
+
+  }
+
+  .cards-cardscontent2 {
+    gap: 25px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow: hidden;
+    flex-wrap: wrap;
+    align-self: center;
+    align-items: center;
+    flex-shrink: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    justify-content: center;
+    /*background-color: #0e0a08; !* Promijenjeno *!*/
+    background-color: #0f0f0f;
+
+  }
+
+  .cards-title2 {
+    width: 100%;
+    padding-top: 80px;
+    padding-bottom: 50px;
+    overflow: hidden;
+    position: relative;
+    align-items: flex-start;
+    font-size: 40px;
+    font-weight: 700;
+    color: white;
   }
 
 }

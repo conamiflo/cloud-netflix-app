@@ -41,20 +41,9 @@
 
               <div class="badge badge-outline">HD</div>
             </div>
-
             <div class="ganre-wrapper">
-              <a href="#">Comedy,</a>
-
-              <a href="#">Action,</a>
-
-              <a href="#">Adventure,</a>
-
-              <a href="#">Science Fiction</a>
+              <a *ngFor="let genre of movie.genres; let last = last" href="#">{{ genre }}{{ !last ? ',' : '' }}</a>
             </div>
-<!--            <div class="ganre-wrapper">-->
-<!--              <a *ngFor="let genre of movie.genres; let last = last" href="#">{{ genre }}{{ !last ? ',' : '' }}</a>-->
-<!--            </div>-->
-
             <div class="date-time">
 
               <div>
@@ -82,19 +71,27 @@
             Actors: {{ movie.actors.join(', ') }}
           </p>
           <div class="details-actions">
+
+            <select class="resolution-select" [(ngModel)]="selectedQuality" (change)="updateDownloadUrl()">
+              <option value="original">Original quality</option>
+              <option value="360p">360p</option>
+              <option value="480p">480p</option>
+              <option value="720p">720p</option>
+            </select>
+
               <button class="btn btn-primary download" (click)="downloadFile()">
                 <ion-icon name="play"></ion-icon>
 
                 <span>Download movie</span>
               </button>
 
-            <button class="btn btn-primary" id="edit-movie">
+            <button class="btn btn-primary" id="edit-movie" (click)="editMovie()">
               <ion-icon name="play"></ion-icon>
 
               <span>Edit movie</span>
             </button>
 
-            <button class="btn btn-primary" id="delete-movie">
+            <button class="btn btn-primary" id="delete-movie" (click)="deleteMovie()">
               <ion-icon name="play"></ion-icon>
 
               <span>Delete movie</span>
@@ -115,6 +112,17 @@
   </article>
 </main>
 
+<div class="cards-container2" *ngIf="movies.length > 0">
+  <div class="cards-desktop112">
+    <div class="cards-title2">
+      <span>Episodes from series</span>
+    </div>
+    <div class="cards-cardscontent2">
+      <app-movie-card *ngFor="let movie of movies" [movie]="movie"></app-movie-card>
+    </div>
+  </div>
+</div>
+
 <div class="review-container">
   <div class="cards-title">
     <span id="movie-reviews">Movie reviews</span>
@@ -123,11 +131,10 @@
       <span>Review movie</span>
     </button>
   </div>
+
   <div class="review-container2">
     <div class="cards-cardscontent">
-      <app-movie-review></app-movie-review>
-      <app-movie-review></app-movie-review>
-      <app-movie-review></app-movie-review>
+      <app-movie-review *ngFor="let review of reviews" [review]="review"></app-movie-review>
     </div>
   </div>
 </div>

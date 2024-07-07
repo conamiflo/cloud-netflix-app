@@ -12,8 +12,8 @@
     <div class="logo"><a href="#"><img src="/assets/logo.png"></a></div>
     <ul class="links">
       <li><a href="">Home</a></li>
-      <li><a href="">Movies</a></li>
       <li><a href="/subscriptions">Subscriptions</a></li>
+      <li><a href="/create-movie">Create movie</a></li>
     </ul>
     <a *ngIf="role==null" href="/login" class="action_btn">Sign in</a>
     <a *ngIf="role!=null" class="action_btn" (click)="signOut()">Sign out</a>

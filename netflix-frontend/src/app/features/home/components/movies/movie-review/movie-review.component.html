@@ -1,9 +1,9 @@
 <div class="page-frame251">
   <div class="page-frame249">
-    <span class="page-text172"><span>user_username</span></span>
+    <span class="page-text172"><span>{{ review.username}}</span></span>
     <div class="page-frame">
       <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
-        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star" *ngIf="star <= review.value"></ion-icon>
       </ng-container>
     </div>
   </div>
