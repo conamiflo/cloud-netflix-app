@@ -606,12 +606,11 @@ class NetflixBackendStack(Stack):
 
         update_users_feed_lambda = create_lambda_function(
             "updateUsersFeed",
-            "update_users_feed.update_users_feed",
+            "update_users_feed.update_users_feed",)
 
         feed_update_lambda = create_lambda_function(
             "FeedUpdateLambda",
             "update_users_feed.lambda_handler",
-
             "feed_service",
             "POST",
             {
