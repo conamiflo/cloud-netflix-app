@@ -47,10 +47,13 @@ def update_movie(event, context):
         for key in item:
             if key not in body:
                 body[key] = item[key]
-
+        del body['movie']
+        del body['movieFile']
+                
         movies_table.delete_item(Key={'movie_id': movie_id, 'title': old_title})
 
         body['title'] = new_title
+        body['search_data'] = generate_search_key(body['title'],body['description'],body['actors'],body['directors'],body['genres'])
         movies_table.put_item(Item=body)
 
         return {
@@ -68,3 +71,7 @@ def update_movie(event, context):
             },
             'body': json.dumps({'error': str(e)})
         }
+
+
+def generate_search_key(title, description, actors, directors, genres):
+    return f"{title}_{description}_{actors}_{directors}_{genres}"

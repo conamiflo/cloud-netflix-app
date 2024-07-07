@@ -38,6 +38,15 @@ class NetflixBackendStack(Stack):
             read_capacity=1,
             write_capacity=1
         )
+        
+        movie_table.add_global_secondary_index(
+            index_name="SearchIndex",
+            partition_key=dynamodb.Attribute(
+                name="search_data",
+                type=dynamodb.AttributeType.STRING
+            ),
+            projection_type=dynamodb.ProjectionType.ALL
+        )
 
         subscription_table = dynamodb.Table(
             self, "subscription-table",
@@ -395,6 +404,17 @@ class NetflixBackendStack(Stack):
                 'BUCKET_NAME': s3_bucket.bucket_name
             },
         )
+        
+        search_movies_lambda = create_lambda_function(
+            "searchMoviesLambda",
+            "search_movies.search_movies",
+            "movie_service",
+            "GET",
+            {
+                'TABLE_NAME': movie_table.table_name,
+                'BUCKET_NAME': s3_bucket.bucket_name
+            },
+        )
 
         movies_resource = api.root.add_resource("movies")
         movies_resource.add_method("POST", apigateway.LambdaIntegration(create_movie_lambda))
@@ -404,6 +424,9 @@ class NetflixBackendStack(Stack):
         
         movies_resource = api.root.add_resource("series")
         movies_resource.add_method("GET", apigateway.LambdaIntegration(get_series_lambda))
+        
+        search_resource = api.root.add_resource("search")
+        search_resource.add_method("GET", apigateway.LambdaIntegration(search_movies_lambda))
         
         subscribe_lambda = create_lambda_function(
             "subscribe",

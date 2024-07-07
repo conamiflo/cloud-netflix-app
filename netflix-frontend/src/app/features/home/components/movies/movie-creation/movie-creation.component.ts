@@ -17,11 +17,11 @@ export class CreateMovieComponent implements OnInit {
 
   constructor(private fb: FormBuilder,private movieService: MovieService, private router: Router) {
     this.createMovieForm = this.fb.group({
-      title: ['', Validators.required],
-      genres: ['', Validators.required],
-      actors: ['', Validators.required],
-      description: ['', Validators.required],
-      directors: ['', Validators.required],
+      title: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]], // Exclude underscore
+      genres: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]],
+      actors: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]],
+      description: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]],
+      directors: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]],
       movieFile: [null, Validators.required],
       series: [''],
       movie: [null]

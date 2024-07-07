@@ -42,8 +42,11 @@ export class HomePageComponent {
   }
 
   searchMovies() {
-    console.log(this.title,this.description,this.actors,this.directors,this.genres)
-    this.movieService.searchMovies(this.title, this.description, this.actors, this.directors, this.genres).subscribe(
+    const actors = this.actors.split(',').map(actor => actor.trim());
+    const directors = this.directors.split(',').map(director => director.trim());
+    const genres = this.genres.split(',').map(genre => genre.trim());
+
+    this.movieService.searchMovies(this.title, this.description, actors, directors, genres).subscribe(
       (data) => {
         this.movies = data;
       },
