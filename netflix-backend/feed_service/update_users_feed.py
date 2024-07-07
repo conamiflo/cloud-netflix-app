@@ -39,7 +39,7 @@ def lambda_handler(event, context):
 
             if event_type == 'new_movie' or event_type == 'update_movie' or event_type == 'delete_movie':
                 update_all_users_feed()
-            elif event_type in ['user_subscription', 'user_review', 'user_download_movie']:
+            elif event_type in ['user_subscription', 'user_review', 'user_download_movie', 'user_unsubscribe']:
                 update_users_feed(username)
 
         return {

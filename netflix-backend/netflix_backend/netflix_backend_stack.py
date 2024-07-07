@@ -456,7 +456,8 @@ class NetflixBackendStack(Stack):
             "subscription_service",
             "DELETE",
             {
-                'TABLE_NAME': subscription_table.table_name
+                'TABLE_NAME': subscription_table.table_name,
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
             }
         )
 
