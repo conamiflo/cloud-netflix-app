@@ -12,7 +12,8 @@ from aws_cdk import (
     Stack,
     Duration,
     BundlingOptions,
-    RemovalPolicy, custom_resources
+    RemovalPolicy, custom_resources,
+    aws_sns as sns
 )
 from aws_cdk.aws_cognito import CfnUserPoolUser, CfnUserPoolUserToGroupAttachment
 from constructs import Construct
@@ -318,10 +319,16 @@ class NetflixBackendStack(Stack):
             {
                 'TABLE_NAME': movie_table.table_name,
                 'BUCKET_NAME': s3_bucket.bucket_name,
-                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url,
+                'USER_POOL_ID': user_pool.user_pool_id
             },
         )
-
+        
+        create_movie_lambda.add_to_role_policy(iam.PolicyStatement(
+            actions=["sns:CreateTopic", "sns:Publish", "sns:Subscribe"],
+            resources=["*"],
+        ))
+        
         prevent_duplicate_email_lambda = create_lambda_function(
             "preventDuplicateEmail",
             "prevent_duplicate_email.handler",
@@ -456,6 +463,11 @@ class NetflixBackendStack(Stack):
             }
         )
 
+        subscribe_lambda.add_to_role_policy(iam.PolicyStatement(
+            actions=["sns:CreateTopic", "sns:Publish", "sns:Subscribe", "sns:Unsubscribe"],
+            resources=["*"],
+        ))
+        
         unsubscribe_lambda = create_lambda_function(
             "unsubscribe",
             "unsubscribe.unsubscribe",
@@ -466,6 +478,16 @@ class NetflixBackendStack(Stack):
                 'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
             }
         )
+        
+        unsubscribe_lambda.add_to_role_policy(iam.PolicyStatement(
+            actions=["sns:CreateTopic",
+                     "sns:DeleteTopic",
+                     "sns:Publish",
+                     "sns:Subscribe",
+                     "sns:Unsubscribe",
+                     "sns:ListSubscriptionsByTopic"],
+            resources=["*"],
+        ))
 
         get_subscriptions_lambda = create_lambda_function(
             "getSubscriptions",
@@ -553,3 +575,6 @@ class NetflixBackendStack(Stack):
 
         history_resource = api.root.add_resource("history")
         history_resource.add_method("POST", apigateway.LambdaIntegration(create_download_history_lambda))
+        
+            
+

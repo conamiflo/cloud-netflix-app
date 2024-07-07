@@ -9,6 +9,9 @@ dynamodb = boto3.resource('dynamodb')
 subscription_table = dynamodb.Table('subscription-table')
 sqs = boto3.client('sqs')
 feed_update_queue_url = os.environ['FEED_UPDATE_QUEUE_URL']
+sns = boto3.client('sns')
+cognito = boto3.client('cognito-idp')
+user_pool_id = os.environ['USER_POOL_ID']
 
 def subscribe(event, context):
     try:
@@ -36,6 +39,16 @@ def subscribe(event, context):
                 'value': value
             }
         )
+        
+        topic_arn = create_or_find_sns_topic(subscription_type, value)
+
+        if topic_arn:
+            sns.subscribe(
+                TopicArn=topic_arn,
+                Protocol='email',
+                Endpoint=get_user_email(username)
+            )
+        
 
         sqs.send_message(
             QueueUrl=feed_update_queue_url,
@@ -61,6 +74,43 @@ def subscribe(event, context):
             'body': json.dumps({'error': str(e)})
         }
 
+
+def create_or_find_sns_topic(subscription_type, value):
+    try:
+        topic_name = f"{subscription_type}-{value}"
+        topic_arn = ""
+
+        topics = sns.list_topics()['Topics']
+        existing_topic = next((topic for topic in topics if topic_name in topic['TopicArn']), None)
+
+        if existing_topic:
+            topic_arn = existing_topic['TopicArn']
+        else:
+            response = sns.create_topic(Name=topic_name)
+            topic_arn = response['TopicArn']
+
+        return topic_arn
+    except Exception as e:
+        print(f"Error creating or finding SNS topic: {str(e)}")
+        return None
+
+
+def get_user_email(username):
+    try:
+        response = cognito.admin_get_user(
+            UserPoolId=user_pool_id,
+            Username=username
+        )
+        for attr in response['UserAttributes']:
+            if attr['Name'] == 'email':
+                return attr['Value']
+        return None
+    except cognito.exceptions.UserNotFoundException as e:
+        print(f"User with username '{username}' not found.")
+        return None
+    except Exception as e:
+        print(f"Error fetching user email: {str(e)}")
+        return None
 
 def get_last_subscription_id():
     try:

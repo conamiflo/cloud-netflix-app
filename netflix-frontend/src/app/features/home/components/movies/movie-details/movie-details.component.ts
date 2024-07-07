@@ -12,12 +12,12 @@ import {MovieService} from "../../../../../core/services/movie/movie.service";
 import {NgFor, NgIf} from "@angular/common";
 import {CognitoService} from "../../../../../core/services/cognito/cognito.service";
 import {ReviewService} from "../../../../../core/services/review/review.service";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-movie-details',
   standalone: true,
-    imports: [IonIcon, MovieReviewComponent, MovieCardComponent, MatLabel, MatFormField, NgFor, ReactiveFormsModule,NgIf],
+  imports: [IonIcon, MovieReviewComponent, MovieCardComponent, MatLabel, MatFormField, NgFor, ReactiveFormsModule, NgIf, FormsModule],
   templateUrl: './movie-details.component.html',
   styleUrl: './movie-details.component.css'
 })
@@ -33,6 +33,7 @@ export class MovieDetailsComponent implements OnInit{
   movie: any;
   reviews: any[] = [];
   movies: any[] = [];
+  selectedQuality: string = 'Original quality';
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -141,6 +142,15 @@ export class MovieDetailsComponent implements OnInit{
         movieId: this.movie.movie_id
       }
       });
+  }
+
+  updateDownloadUrl(): void {
+    const selectedQualityUrl = this.movie.download_urls[this.selectedQuality];
+    if (selectedQualityUrl) {
+      this.movie.download_url = selectedQualityUrl;
+    } else {
+      console.error('Download URL not available for selected quality');
+    }
   }
 
 
