@@ -1,4 +1,5 @@
 import base64
+import os
 import json
 import boto3
 from botocore.exceptions import ClientError
@@ -6,7 +7,8 @@ from boto3.dynamodb.conditions import Key, Attr
 
 dynamodb = boto3.resource('dynamodb')
 subscription_table = dynamodb.Table('subscription-table')
-
+sqs = boto3.client('sqs')
+feed_update_queue_url = os.environ['FEED_UPDATE_QUEUE_URL']
 
 def subscribe(event, context):
     try:
@@ -15,7 +17,6 @@ def subscribe(event, context):
         subscription_type = body['type']
         value = body['value']
 
-        # Check for existing subscription
         if check_existing_subscription(username, subscription_type, value):
             return {
                 'statusCode': 400,
@@ -34,6 +35,14 @@ def subscribe(event, context):
                 'type': subscription_type,
                 'value': value
             }
+        )
+
+        sqs.send_message(
+            QueueUrl=feed_update_queue_url,
+            MessageBody=json.dumps({
+                'event': 'user_subscription',
+                'username': username
+            })
         )
 
         return {
