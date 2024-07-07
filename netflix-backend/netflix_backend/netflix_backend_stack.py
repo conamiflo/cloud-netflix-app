@@ -508,7 +508,9 @@ class NetflixBackendStack(Stack):
             "POST",
             {
                 'TABLE_NAME': subscription_table.table_name,
-                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url,
+                'USER_POOL_ID': user_pool.user_pool_id
+                
             }
         )
 
@@ -524,7 +526,9 @@ class NetflixBackendStack(Stack):
             "DELETE",
             {
                 'TABLE_NAME': subscription_table.table_name,
-                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url,
+                'USER_POOL_ID': user_pool.user_pool_id
+                
             }
         )
         
@@ -604,9 +608,9 @@ class NetflixBackendStack(Stack):
         #                                   uri='arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/'+uri+'/invocations'
         #                               ))
 
-        update_users_feed_lambda = create_lambda_function(
-            "updateUsersFeed",
-            "update_users_feed.update_users_feed",)
+        # update_users_feed_lambda = create_lambda_function(
+        #     "updateUsersFeed",
+        #     "update_users_feed.update_users_feed",)
 
         feed_update_lambda = create_lambda_function(
             "FeedUpdateLambda",
