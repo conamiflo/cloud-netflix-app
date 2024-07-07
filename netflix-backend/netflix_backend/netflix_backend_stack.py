@@ -490,16 +490,16 @@ class NetflixBackendStack(Stack):
         )
 
         movies_resource = api.root.add_resource("movies")
-        movies_resource.add_method("POST", apigateway.LambdaIntegration(create_movie_lambda))
-        movies_resource.add_method("GET", apigateway.LambdaIntegration(download_movie_lambda))
-        movies_resource.add_method("PUT", apigateway.LambdaIntegration(update_movie_lambda))
-        movies_resource.add_method("DELETE", apigateway.LambdaIntegration(delete_movie_lambda))
+        movies_resource.add_method("POST", apigateway.LambdaIntegration(create_movie_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
+        movies_resource.add_method("GET", apigateway.LambdaIntegration(download_movie_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
+        movies_resource.add_method("PUT", apigateway.LambdaIntegration(update_movie_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
+        movies_resource.add_method("DELETE", apigateway.LambdaIntegration(delete_movie_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
         
         movies_resource = api.root.add_resource("series")
-        movies_resource.add_method("GET", apigateway.LambdaIntegration(get_series_lambda))
+        movies_resource.add_method("GET", apigateway.LambdaIntegration(get_series_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
         
         search_resource = api.root.add_resource("search")
-        search_resource.add_method("GET", apigateway.LambdaIntegration(search_movies_lambda))
+        search_resource.add_method("GET", apigateway.LambdaIntegration(search_movies_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
         
         subscribe_lambda = create_lambda_function(
             "subscribe",
@@ -549,9 +549,9 @@ class NetflixBackendStack(Stack):
         )
 
         subscriptions_resource = api.root.add_resource("subscriptions")
-        subscriptions_resource.add_method("POST", apigateway.LambdaIntegration(subscribe_lambda))
-        subscriptions_resource.add_method("DELETE", apigateway.LambdaIntegration(unsubscribe_lambda))
-        subscriptions_resource.add_method("GET", apigateway.LambdaIntegration(get_subscriptions_lambda))
+        subscriptions_resource.add_method("POST", apigateway.LambdaIntegration(subscribe_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
+        subscriptions_resource.add_method("DELETE", apigateway.LambdaIntegration(unsubscribe_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
+        subscriptions_resource.add_method("GET", apigateway.LambdaIntegration(get_subscriptions_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
 
 
 
@@ -577,8 +577,8 @@ class NetflixBackendStack(Stack):
         )
 
         review_resource = api.root.add_resource("reviews")
-        review_resource.add_method("POST", apigateway.LambdaIntegration(review_lambda))
-        review_resource.add_method("GET", apigateway.LambdaIntegration(get_review_lambda))
+        review_resource.add_method("POST", apigateway.LambdaIntegration(review_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
+        review_resource.add_method("GET", apigateway.LambdaIntegration(get_review_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
 
         get_feed_lambda = create_lambda_function(
             "getFeed",
@@ -604,9 +604,6 @@ class NetflixBackendStack(Stack):
         #                                   uri='arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/'+uri+'/invocations'
         #                               ))
 
-        update_users_feed_lambda = create_lambda_function(
-            "updateUsersFeed",
-            "update_users_feed.update_users_feed",)
 
         feed_update_lambda = create_lambda_function(
             "FeedUpdateLambda",
@@ -628,7 +625,7 @@ class NetflixBackendStack(Stack):
         )
 
         feed_resource = api.root.add_resource("feed")
-        feed_resource.add_method("GET", apigateway.LambdaIntegration(get_feed_lambda))
+        feed_resource.add_method("GET", apigateway.LambdaIntegration(get_feed_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
 
         create_download_history_lambda = create_lambda_function(
             "createDownloadHistory",
@@ -642,7 +639,7 @@ class NetflixBackendStack(Stack):
         )
 
         history_resource = api.root.add_resource("history")
-        history_resource.add_method("POST", apigateway.LambdaIntegration(create_download_history_lambda))
+        history_resource.add_method("POST", apigateway.LambdaIntegration(create_download_history_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
         
             
 

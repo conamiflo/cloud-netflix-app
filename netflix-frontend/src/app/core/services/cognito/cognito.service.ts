@@ -61,9 +61,8 @@ export class CognitoService {
   }
 
   async getJWT(){
-    var res=await Auth.currentSession()
-    var jwt=res.getAccessToken().decodePayload()
-
+    const session = await Auth.currentSession();
+    const jwt = session.getAccessToken().getJwtToken(); // Get the actual JWT token
     return jwt;
   }
 

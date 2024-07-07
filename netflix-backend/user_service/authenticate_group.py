@@ -6,7 +6,31 @@ import cognitojwt
 mapGroupsToPaths = {
     '/testiranje': {
         'GET': 'Users'
-    }
+    },
+    '/movies':{
+        "GET":['Users','Admins'],
+        "POST":'Admins',
+        "PUT":"Admins",
+        "DELETE":"Admins"
+    },
+    '/series':{
+        "GET":['Users','Admins'],
+    },
+    '/search':{
+        "GET":['Users','Admins'],
+    },
+    '/subscription':{
+        "GET":['Users','Admins'],
+        "POST":['Users','Admins'],
+        "DELETE":['Users','Admins']
+    },'/reviews':{
+        "GET":['Users','Admins'],
+        "POST":['Users','Admins'],
+    },'/feed':{
+        "GET":['Users','Admins'],
+    },'/history':{
+        "POST":['Users','Admins'],
+    },
 }
 
 userpool_id= os.environ.get('USERPOOL_ID')
