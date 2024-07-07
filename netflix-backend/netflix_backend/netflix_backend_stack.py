@@ -151,8 +151,6 @@ class NetflixBackendStack(Stack):
             )
         )
 
-#userpool
-
         user_pool = cognito.UserPool(
             self, "UserPool",
             user_pool_name="UserPool",
@@ -274,7 +272,7 @@ class NetflixBackendStack(Stack):
 
 
 
-        layer = _lambda.LayerVersion(self, 'layer-ffmpeg',
+        ffmpeg_layer = _lambda.LayerVersion(self, 'layer-ffmpeg',
                                      code= _lambda.Code.from_asset('./layer-ffmeg'),
                                      compatible_runtimes= [_lambda.Runtime.PYTHON_3_11],
                                      layer_version_name= 'ffmpeg-layer',
@@ -310,16 +308,20 @@ class NetflixBackendStack(Stack):
                                     allow_headers=["*"]
                                 ))
 
-        create_movie_lambda = create_lambda_function(
-            "createMovie",
-            "create_movie.post_movie",
-            "movie_service",
-            "POST",
-            {
+        create_movie_lambda = _lambda.Function(
+            self, "createMovie",
+            runtime=_lambda.Runtime.PYTHON_3_11,
+            handler="create_movie.post_movie",
+            code=_lambda.Code.from_asset("movie_service"),
+            memory_size=128,
+            timeout=Duration.seconds(300),
+            environment={
                 'TABLE_NAME': movie_table.table_name,
                 'BUCKET_NAME': s3_bucket.bucket_name,
                 'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
             },
+            role=lambda_role,
+            layers=[ffmpeg_layer]
         )
 
         prevent_duplicate_email_lambda = create_lambda_function(
