@@ -44,13 +44,12 @@ export class MovieService {
   async getFeed(username: string): Promise<Observable<any>> {
     var value = await this.cognitoService.getJWT()
     const headers = new HttpHeaders()
-      .append('authorizationToken', value as string);
-    headers.append('authorizationToken', value);
+      .append('authorizationtoken', value as string);
 
     let params = new HttpParams()
       .set('username', username);
-
     return this.httpClient.get(environment.cloudHost + 'feed', {headers, params});
+
   }
 
   async searchMovies(title: string, description: string, actors: string[], directors: string[], genres: string[]): Promise<Observable<any>> {
