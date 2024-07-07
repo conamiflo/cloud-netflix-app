@@ -25,6 +25,7 @@
     "@types/angular-material": "^1.1.77",
     "amazon-cognito-identity-js": "^6.3.12",
     "aws-amplify": "^5.3.19",
+    "aws-jwt-verify": "^4.0.1",
     "ionicons": "^7.4.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

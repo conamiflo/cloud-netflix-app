@@ -1,7 +1,4 @@
-import os
 
-import aws_cdk
-import boto3
 from aws_cdk import (
     aws_lambda as _lambda,
     aws_apigateway as apigateway,
@@ -15,7 +12,9 @@ from aws_cdk import (
     RemovalPolicy, custom_resources,
     aws_sns as sns
 )
+from aws_cdk.aws_apigateway import AuthorizationType, IAuthorizer, Authorizer
 from aws_cdk.aws_cognito import CfnUserPoolUser, CfnUserPoolUserToGroupAttachment
+from aws_cdk.aws_lambda import Architecture
 from constructs import Construct
 from aws_cdk import aws_sqs as sqs, aws_lambda_event_sources as event_sources
 from debugpy._vendored._util import cwd
@@ -345,6 +344,56 @@ class NetflixBackendStack(Stack):
                     {}
                 )
 
+
+
+
+
+        hello = create_lambda_function(
+            "hello",
+            "test.handler",
+            "user_service",
+            "POST",
+            {}
+        )
+
+
+
+        layer = _lambda.LayerVersion(self, 'layer',
+            code= _lambda.Code.from_asset('./layer-jwt'),
+            compatible_runtimes= [_lambda.Runtime.PYTHON_3_9],
+            layer_version_name= 'jwt-layer',
+        )
+
+        authenticate_group=_lambda.Function(
+            self, "authenticateGroup",
+            runtime=_lambda.Runtime.PYTHON_3_9,
+            architecture=Architecture.X86_64,
+            handler="authenticate_group.handler",
+            code=_lambda.Code.from_asset("user_service"),
+            memory_size=128,
+            timeout=Duration.seconds(10),
+            environment={'USERPOOL_ID':user_pool.user_pool_id,
+                         'WEB_CLIENT_ID':web_client.user_pool_client_id},
+            role=lambda_role,
+            layers=[layer]
+        )
+
+
+        authorizer=apigateway.RequestAuthorizer(self,id="bla",
+                                                 authorizer_name="blabla",
+                                                 identity_sources=['method.request.header.authorizationToken'],
+                                                 handler=authenticate_group,
+                                                )
+
+
+
+        test_resource=api.root.add_resource("testiranje")
+        test_resource.add_method("GET", apigateway.LambdaIntegration(hello),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
+
+
+        # Attach GET method to /users resource
+
+
         pre_sign_up_lambda = prevent_duplicate_email_lambda
         post_sign_lambda=add_to_user_group
 
@@ -504,6 +553,8 @@ class NetflixBackendStack(Stack):
         subscriptions_resource.add_method("DELETE", apigateway.LambdaIntegration(unsubscribe_lambda))
         subscriptions_resource.add_method("GET", apigateway.LambdaIntegration(get_subscriptions_lambda))
 
+
+
         review_lambda = create_lambda_function(
             "review",
             "review.review",
@@ -540,9 +591,27 @@ class NetflixBackendStack(Stack):
             }
         )
 
+
+        # method = apigateway.CfnMethod(self, "TestMethod",
+        #                               rest_api_id=api.rest_api_id,
+        #                               resource_id=test_resource.ref,
+        #                               http_method="GET",
+        #                               authorization_type="CUSTOM",
+        #                               authorizer_id=authorizer.attr_authorizer_id,  # Replace with your authorizer ID
+        #                               integration=apigateway.CfnMethod.IntegrationProperty(
+        #                                   type="AWS_PROXY",
+        #                                   integration_http_method="POST",
+        #                                   uri='arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/'+uri+'/invocations'
+        #                               ))
+
+        update_users_feed_lambda = create_lambda_function(
+            "updateUsersFeed",
+            "update_users_feed.update_users_feed",
+
         feed_update_lambda = create_lambda_function(
             "FeedUpdateLambda",
             "update_users_feed.lambda_handler",
+
             "feed_service",
             "POST",
             {

@@ -60,13 +60,11 @@ export class CognitoService {
 
   }
 
-  getJWT(){
-    Auth.currentSession().then(res=>{
-      let accessToken = res.getAccessToken()
-      let jwt = accessToken.decodePayload()
+  async getJWT(){
+    var res=await Auth.currentSession()
+    var jwt=res.getAccessToken().decodePayload()
 
-      return jwt;
-    })
+    return jwt;
   }
 
   async getUserGroup():Promise<string[]|null> {
