@@ -121,6 +121,26 @@ body { background: var(--eerie-black); }
 body.active { overflow: hidden; }
 
 
+select {
+  appearance: none;
+  padding: 12px 24px;
+  font-size: var(--fs-11);
+  font-weight: var(--fw-700);
+  color: var(--white);
+  /*background-color: var(--gunmetal-1);*/
+  border: 2px solid var(--citrine);
+  border-radius: 50px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition-1);
+}
+
+/* Stilizacija hover/focus stanja */
+select:is(:hover, :focus) {
+  background-color: var(--citrine);
+  color: var(--xiketic);
+}
+
 .review-container {
   width: 100%;
   display: flex;
