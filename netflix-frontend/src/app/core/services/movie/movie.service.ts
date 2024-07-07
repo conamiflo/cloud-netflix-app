@@ -32,14 +32,23 @@ export class MovieService {
     return this.httpClient.get(environment.cloudHost + 'feed', { params });
   }
 
-  searchMovies(title: string, description: string, actors: string, directors: string, genres: string): Observable<any> {
+  searchMovies(title: string, description: string, actors: string[], directors: string[], genres: string[]): Observable<any> {
     const url = environment.cloudHost + 'search';
+
     let params = new HttpParams()
       .set('title', title)
-      .set('description', description)
-      .set('actors', actors)
-      .set('directors', directors)
-      .set('genres', genres);
+      .set('description', description);
+    if (actors.length > 0) {
+      params = params.set('actors', actors.join(','));
+    }
+    if (directors.length > 0) {
+      params = params.set('directors', directors.join(','));
+    }
+    if (genres.length > 0) {
+      params = params.set('genres', genres.join(','));
+    }
+
+    console.log(params)
 
     return this.httpClient.get(url, { params });
   }

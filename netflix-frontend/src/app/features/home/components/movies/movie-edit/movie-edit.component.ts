@@ -26,12 +26,12 @@ export class MovieEditComponent {
 
   ngOnInit(): void {
     this.editMovieForm = this.formBuilder.group({
-      title: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]], // Exclude underscore
+      title: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]],
       genres: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]],
       actors: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]],
       description: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]],
       directors: ['', [Validators.required, Validators.pattern(/^[^_]*$/)]],
-      movieFile: [null, Validators.required],
+      movieFile: [null],
       series: [''],
       movie: [null]
     });

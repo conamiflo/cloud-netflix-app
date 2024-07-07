@@ -13,9 +13,6 @@ class DecimalEncoder(json.JSONEncoder):
             return float(obj)
         return super(DecimalEncoder, self).default(obj)
 
-def generate_search_key(title, description, actors, directors, genres):
-    return f"{title}_{description}_{actors}_{directors}_{genres}"
-
 def search_movies(event, context):
     movies_table = dynamodb.Table('movies-dbtable2')
     try:
@@ -43,14 +40,20 @@ def search_movies(event, context):
                 filter_expression.append("contains(description, :description)")
                 expression_attribute_values[":description"] = description
             if actors:
-                filter_expression.append("contains(actors, :actors)")
-                expression_attribute_values[":actors"] = actors
+                actors_list = actors.split(',')
+                for actor in actors_list:
+                    filter_expression.append("contains(actors, :actor)")
+                    expression_attribute_values[":actor"] = actor.strip()
             if directors:
-                filter_expression.append("contains(directors, :directors)")
-                expression_attribute_values[":directors"] = directors
+                directors_list = directors.split(',')
+                for director in directors_list:
+                    filter_expression.append("contains(directors, :director)")
+                    expression_attribute_values[":director"] = director.strip()
             if genres:
-                filter_expression.append("contains(genres, :genres)")
-                expression_attribute_values[":genres"] = genres
+                genres_list = genres.split(',')
+                for genre in genres_list:
+                    filter_expression.append("contains(genres, :genre)")
+                    expression_attribute_values[":genre"] = genre.strip()
 
             filter_expression = " AND ".join(filter_expression)
 
@@ -77,3 +80,6 @@ def search_movies(event, context):
             },
             'body': json.dumps({'error': str(e)})
         }
+
+def generate_search_key(title, description, actors, directors, genres):
+    return f"{title}_{description}_{actors}_{directors}_{genres}"
