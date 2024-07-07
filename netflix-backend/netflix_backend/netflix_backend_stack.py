@@ -313,7 +313,8 @@ class NetflixBackendStack(Stack):
             {
                 'TABLE_NAME': movie_table.table_name,
                 'BUCKET_NAME': s3_bucket.bucket_name,
-                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url,
+                'USER_POOL_ID': user_pool.user_pool_id
             },
         )
         
