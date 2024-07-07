@@ -1,4 +1,5 @@
 import base64
+import os
 import json
 import boto3
 from botocore.exceptions import ClientError
@@ -6,7 +7,8 @@ from boto3.dynamodb.conditions import Key, Attr
 
 dynamodb = boto3.resource('dynamodb')
 review_table = dynamodb.Table('review-table2')
-
+sqs = boto3.client('sqs')
+feed_update_queue_url = os.environ['FEED_UPDATE_QUEUE_URL']
 
 def review(event, context):
     try:
@@ -34,6 +36,14 @@ def review(event, context):
                 'movie_id': movie_id,
                 'value': value
             }
+        )
+
+        sqs.send_message(
+            QueueUrl=feed_update_queue_url,
+            MessageBody=json.dumps({
+                'event': 'user_review',
+                'username': username
+            })
         )
 
         return {

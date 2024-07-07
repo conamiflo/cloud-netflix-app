@@ -37,7 +37,7 @@ def lambda_handler(event, context):
             event_type = message['event']
             username = message.get('username', '')
 
-            if event_type == 'new_movie' or event_type == 'update_movie':
+            if event_type == 'new_movie' or event_type == 'update_movie' or event_type == 'delete_movie':
                 update_all_users_feed()
             elif event_type in ['user_subscription', 'user_review', 'user_download_movie']:
                 update_users_feed(username)

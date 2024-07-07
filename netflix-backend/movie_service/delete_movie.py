@@ -10,6 +10,8 @@ movie_table = dynamodb.Table('movies-dbtable2')
 review_table = dynamodb.Table('review-table2')
 download_history_table = dynamodb.Table('download-history-table')
 s3_bucket = 'movie-bucket3'
+sqs = boto3.client('sqs')
+feed_update_queue_url = os.environ['FEED_UPDATE_QUEUE_URL']
 
 def delete_movie(event, context):
     query_params = event.get('queryStringParameters', {})
@@ -49,6 +51,13 @@ def delete_movie(event, context):
                         'username': each['username']
                     }
                 )
+
+        sqs.send_message(
+            QueueUrl=feed_update_queue_url,
+            MessageBody=json.dumps({
+                'event': 'delete_movie'
+            })
+        )
         
         return {
         'statusCode': 200,

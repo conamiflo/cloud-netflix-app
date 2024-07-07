@@ -311,7 +311,8 @@ class NetflixBackendStack(Stack):
             "POST",
             {
                 'TABLE_NAME': movie_table.table_name,
-                'BUCKET_NAME': s3_bucket.bucket_name
+                'BUCKET_NAME': s3_bucket.bucket_name,
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
             },
         )
 
@@ -385,7 +386,8 @@ class NetflixBackendStack(Stack):
             "PUT",
             {
                 'TABLE_NAME': movie_table.table_name,
-                'BUCKET_NAME': s3_bucket.bucket_name
+                'BUCKET_NAME': s3_bucket.bucket_name,
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
             },
         )
 
@@ -398,7 +400,8 @@ class NetflixBackendStack(Stack):
                 'MOVIE_TABLE_NAME': movie_table.table_name,
                 'REVIEW_TABLE_NAME': review_table.table_name,
                 'DOWNLOAD_HISTORY_TABLE_NAME': download_history_table.table_name,
-                'BUCKET_NAME': s3_bucket.bucket_name
+                'BUCKET_NAME': s3_bucket.bucket_name,
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
             },
         )
         
@@ -478,7 +481,8 @@ class NetflixBackendStack(Stack):
             "review_service",
             "POST",
             {
-                'TABLE_NAME': review_table.table_name
+                'TABLE_NAME': review_table.table_name,
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
             }
         )
 
@@ -536,6 +540,7 @@ class NetflixBackendStack(Stack):
             "POST",
             {
                 'DOWNLOAD_HISTORY_TABLE_NAME': download_history_table.table_name,
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
             }
         )
 
