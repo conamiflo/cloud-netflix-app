@@ -1,10 +1,13 @@
 import json
+import os
 import boto3
 from botocore.exceptions import ClientError
 
 
 dynamodb = boto3.resource('dynamodb')
 subscription_table = dynamodb.Table('subscription-table')
+sqs = boto3.client('sqs')
+feed_update_queue_url = os.environ['FEED_UPDATE_QUEUE_URL']
 
 def unsubscribe(event, context):
     try:
@@ -17,6 +20,14 @@ def unsubscribe(event, context):
                 'username': username
             },
             ConditionExpression="attribute_exists(subscription_id)"
+        )
+
+        sqs.send_message(
+            QueueUrl=feed_update_queue_url,
+            MessageBody=json.dumps({
+                'event': 'user_unsubscribe',
+                'username': username
+            })
         )
 
         return {

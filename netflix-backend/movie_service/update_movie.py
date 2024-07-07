@@ -1,4 +1,5 @@
 import base64
+import os
 import json
 import boto3
 from botocore import client
@@ -8,6 +9,8 @@ dynamodb = boto3.resource('dynamodb')
 s3 = boto3.client('s3')
 movies_table = dynamodb.Table('movies-dbtable2')
 s3_bucket = 'movie-bucket3'
+sqs = boto3.client('sqs')
+feed_update_queue_url = os.environ['FEED_UPDATE_QUEUE_URL']
 
 def update_movie(event, context):
     
@@ -33,7 +36,7 @@ def update_movie(event, context):
                 'body': json.dumps({'message': 'Movie not found'})
             }
 
-        if 'movie' in body:
+        if 'movie' in body and body['movie'] is not None:
             movie = body['movie']
             encoded_movie = base64.b64decode(movie)
             s3.put_object(Bucket=s3_bucket, Key=movie_id, Body=encoded_movie, ContentType='video/mp4')
@@ -47,11 +50,21 @@ def update_movie(event, context):
         for key in item:
             if key not in body:
                 body[key] = item[key]
-
+        del body['movie']
+        del body['movieFile']
+                
         movies_table.delete_item(Key={'movie_id': movie_id, 'title': old_title})
 
         body['title'] = new_title
+        body['search_data'] = generate_search_key(body['title'],body['description'],body['actors'],body['directors'],body['genres'])
         movies_table.put_item(Item=body)
+
+        sqs.send_message(
+            QueueUrl=feed_update_queue_url,
+            MessageBody=json.dumps({
+                'event': 'update_movie'
+            })
+        )
 
         return {
             'statusCode': 200,
@@ -68,3 +81,7 @@ def update_movie(event, context):
             },
             'body': json.dumps({'error': str(e)})
         }
+
+
+def generate_search_key(title, description, actors, directors, genres):
+    return f"{title}_{description}_{actors}_{directors}_{genres}"

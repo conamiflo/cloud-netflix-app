@@ -1,4 +1,5 @@
 import base64
+import os
 import json
 import boto3
 from botocore import client
@@ -7,6 +8,8 @@ dynamodb = boto3.resource('dynamodb')
 s3 = boto3.client('s3')
 movies_table = dynamodb.Table('movies-dbtable2')
 s3_bucket = 'movie-bucket3'
+sqs = boto3.client('sqs')
+feed_update_queue_url = os.environ['FEED_UPDATE_QUEUE_URL']
 
 
 def post_movie(event, context):
@@ -44,8 +47,16 @@ def post_movie(event, context):
                 'movie_size': movie_size,
                 'movie_modified': movie_modified,
                 'series': series,
+                'search_data': generate_search_key(title,description,actors,directors,genres)
             }
-        )  
+        )
+
+        sqs.send_message(
+            QueueUrl=feed_update_queue_url,
+            MessageBody=json.dumps({
+                'event': 'new_movie'
+            })
+        )
 
         return {
             'statusCode': 200,
@@ -76,3 +87,6 @@ def get_last_movie_id():
                 last_movie_id = max(keys)
     
     return last_movie_id
+
+def generate_search_key(title, description, actors, directors, genres):
+    return f"{title}_{description}_{actors}_{directors}_{genres}"

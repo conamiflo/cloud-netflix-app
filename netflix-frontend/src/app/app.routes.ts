@@ -30,7 +30,7 @@ export const routes: Routes = [
     component: CreateMovieComponent
   },
   {
-    path: 'edit-movie',
+    path: 'edit-movie/:id/:title',
     component: MovieEditComponent
   },
   {

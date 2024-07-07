@@ -4,13 +4,17 @@ import {MovieService} from "../../../../core/services/movie/movie.service";
 import {SubscriptionService} from "../../../../core/services/subscription/subscription.service";
 import {CognitoService} from "../../../../core/services/cognito/cognito.service";
 import {Form, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {MovieReviewComponent} from "../movies/movie-review/movie-review.component";
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-subscriptions',
   standalone: true,
   imports: [
     SubscriptionsCardComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MovieReviewComponent,
+    NgForOf
   ],
   templateUrl: './subscriptions.component.html',
   styleUrl: './subscriptions.component.css'
@@ -20,6 +24,7 @@ export class SubscriptionsComponent implements OnInit{
   subscriptionsGenreForm: FormGroup;
   subscriptionsActorForm: FormGroup;
   subscriptionsDirectorForm: FormGroup;
+  subscriptions: any[] = [];
 
   constructor(private fb: FormBuilder,
               private cognitoService: CognitoService,
@@ -28,6 +33,7 @@ export class SubscriptionsComponent implements OnInit{
   }
   async loadUsername() {
     this.username = await this.cognitoService.getUsername();
+    this.loadSubscriptions();
   }
 
   ngOnInit(): void {
@@ -40,7 +46,21 @@ export class SubscriptionsComponent implements OnInit{
     this.subscriptionsDirectorForm = this.fb.group({
       director: ['', [Validators.required, Validators.minLength(3)]]
     });
+  }
 
+  loadSubscriptions(): void {
+    if (this.username) {
+      this.subscriptionService.getSubscriptions(this.username).subscribe(
+        (response) => {
+          this.subscriptions = response.subscriptions;
+        },
+        (error) => {
+          console.error('Error loading subscriptions:', error);
+        }
+      );
+    } else {
+      console.error('User is not logged in.');
+    }
   }
 
   subscribeToGenre() {
@@ -52,8 +72,6 @@ export class SubscriptionsComponent implements OnInit{
           console.error(error);
           alert('You cannot subscribe to that genre');
         });
-      } else {
-        console.error('User is not logged in.');
       }
     }else {
       alert('Invalid genre!')
@@ -92,6 +110,10 @@ export class SubscriptionsComponent implements OnInit{
     }else {
       alert('Invalid director!')
     }
+  }
+
+  handleUnsubscribed(subscriptionId: string) {
+    this.subscriptions = this.subscriptions.filter(sub => sub.subscription_id !== subscriptionId);
   }
 
 }

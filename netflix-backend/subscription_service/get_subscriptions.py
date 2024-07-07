@@ -12,7 +12,6 @@ def get_subscriptions(event, context):
     try:
         username = event['queryStringParameters']['username']
 
-        # Query the table for items with the specified username
         response = subscription_table.scan(
             FilterExpression=Attr('username').eq(username)
         )

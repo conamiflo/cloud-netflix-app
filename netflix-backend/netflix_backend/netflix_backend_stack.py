@@ -16,6 +16,7 @@ from aws_cdk import (
 )
 from aws_cdk.aws_cognito import CfnUserPoolUser, CfnUserPoolUserToGroupAttachment
 from constructs import Construct
+from aws_cdk import aws_sqs as sqs, aws_lambda_event_sources as event_sources
 from debugpy._vendored._util import cwd
 
 
@@ -37,6 +38,15 @@ class NetflixBackendStack(Stack):
             ),
             read_capacity=1,
             write_capacity=1
+        )
+        
+        movie_table.add_global_secondary_index(
+            index_name="SearchIndex",
+            partition_key=dynamodb.Attribute(
+                name="search_data",
+                type=dynamodb.AttributeType.STRING
+            ),
+            projection_type=dynamodb.ProjectionType.ALL
         )
 
         subscription_table = dynamodb.Table(
@@ -97,6 +107,12 @@ class NetflixBackendStack(Stack):
 
         s3_bucket = s3.Bucket(self,id="movie-bucket3",bucket_name="movie-bucket3")
 
+        feed_update_queue = sqs.Queue(
+            self, "FeedUpdateQueue",
+            queue_name="FeedUpdateQueue",
+            visibility_timeout=Duration.seconds(300)  # Adjust visibility timeout as needed
+        )
+
         lambda_role = iam.Role(
             self, "LambdaRole",
             assumed_by=iam.ServicePrincipal("lambda.amazonaws.com")
@@ -127,9 +143,10 @@ class NetflixBackendStack(Stack):
                     "s3:PutObjectAcl",
                     "s3:GetObject",
                     "s3:GetObjectAcl",
-                    "s3:DeleteObject"
+                    "s3:DeleteObject",
+                    "sqs:SendMessage"
                 ],
-                resources=[movie_table.table_arn,f"{s3_bucket.bucket_arn}/*"]
+                resources=[movie_table.table_arn,f"{s3_bucket.bucket_arn}/*",feed_update_queue.queue_arn]
                 # resources=[movie_table.table_arn,"arn:aws:s3:::<movie-bucket>/*"]
             )
         )
@@ -300,7 +317,8 @@ class NetflixBackendStack(Stack):
             "POST",
             {
                 'TABLE_NAME': movie_table.table_name,
-                'BUCKET_NAME': s3_bucket.bucket_name
+                'BUCKET_NAME': s3_bucket.bucket_name,
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
             },
         )
 
@@ -374,7 +392,8 @@ class NetflixBackendStack(Stack):
             "PUT",
             {
                 'TABLE_NAME': movie_table.table_name,
-                'BUCKET_NAME': s3_bucket.bucket_name
+                'BUCKET_NAME': s3_bucket.bucket_name,
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
             },
         )
 
@@ -387,6 +406,29 @@ class NetflixBackendStack(Stack):
                 'MOVIE_TABLE_NAME': movie_table.table_name,
                 'REVIEW_TABLE_NAME': review_table.table_name,
                 'DOWNLOAD_HISTORY_TABLE_NAME': download_history_table.table_name,
+                'BUCKET_NAME': s3_bucket.bucket_name,
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
+            },
+        )
+        
+        get_series_lambda = create_lambda_function(
+            "getMovieSeries",
+            "get_series.get_series",
+            "movie_service",
+            "GET",
+            {
+                'TABLE_NAME': movie_table.table_name,
+                'BUCKET_NAME': s3_bucket.bucket_name
+            },
+        )
+        
+        search_movies_lambda = create_lambda_function(
+            "searchMoviesLambda",
+            "search_movies.search_movies",
+            "movie_service",
+            "GET",
+            {
+                'TABLE_NAME': movie_table.table_name,
                 'BUCKET_NAME': s3_bucket.bucket_name
             },
         )
@@ -396,14 +438,21 @@ class NetflixBackendStack(Stack):
         movies_resource.add_method("GET", apigateway.LambdaIntegration(download_movie_lambda))
         movies_resource.add_method("PUT", apigateway.LambdaIntegration(update_movie_lambda))
         movies_resource.add_method("DELETE", apigateway.LambdaIntegration(delete_movie_lambda))
-
+        
+        movies_resource = api.root.add_resource("series")
+        movies_resource.add_method("GET", apigateway.LambdaIntegration(get_series_lambda))
+        
+        search_resource = api.root.add_resource("search")
+        search_resource.add_method("GET", apigateway.LambdaIntegration(search_movies_lambda))
+        
         subscribe_lambda = create_lambda_function(
             "subscribe",
             "subscribe.subscribe",
             "subscription_service",
             "POST",
             {
-                'TABLE_NAME': subscription_table.table_name
+                'TABLE_NAME': subscription_table.table_name,
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
             }
         )
 
@@ -413,7 +462,8 @@ class NetflixBackendStack(Stack):
             "subscription_service",
             "DELETE",
             {
-                'TABLE_NAME': subscription_table.table_name
+                'TABLE_NAME': subscription_table.table_name,
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
             }
         )
 
@@ -438,7 +488,8 @@ class NetflixBackendStack(Stack):
             "review_service",
             "POST",
             {
-                'TABLE_NAME': review_table.table_name
+                'TABLE_NAME': review_table.table_name,
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
             }
         )
 
@@ -467,42 +518,27 @@ class NetflixBackendStack(Stack):
             }
         )
 
-        update_users_feed_lambda = create_lambda_function(
-            "updateUsersFeed",
-            "update_users_feed.update_users_feed",
+        feed_update_lambda = create_lambda_function(
+            "FeedUpdateLambda",
+            "update_users_feed.lambda_handler",
             "feed_service",
-            "PUT",
+            "POST",
             {
-                'MOVIES_TABLE_NAME': movie_table.table_name,
+                'USER_POOL_ID': user_pool.user_pool_id,
                 'FEED_TABLE_NAME': feed_table.table_name,
+                'MOVIES_TABLE_NAME': movie_table.table_name,
                 'REVIEWS_TABLE_NAME': review_table.table_name,
                 'SUBSCRIPTIONS_TABLE_NAME': subscription_table.table_name,
-                'DOWNLOAD_HISTORY_TABLE_NAME': download_history_table.table_name,
-                'USER_POOL_ID': user_pool.user_pool_id
+                'DOWNLOAD_HISTORY_TABLE_NAME': download_history_table.table_name
             }
         )
 
-        update_all_users_feed_lambda = create_lambda_function(
-            "updateAllUsersFeed",
-            "update_users_feed.update_all_users_feed",
-            "feed_service",
-            "PUT",
-            {
-                'MOVIES_TABLE_NAME': movie_table.table_name,
-                'FEED_TABLE_NAME': feed_table.table_name,
-                'REVIEWS_TABLE_NAME': review_table.table_name,
-                'SUBSCRIPTIONS_TABLE_NAME': subscription_table.table_name,
-                'DOWNLOAD_HISTORY_TABLE_NAME': download_history_table.table_name,
-                'USER_POOL_ID': user_pool.user_pool_id
-            }
+        feed_update_lambda.add_event_source(
+            event_sources.SqsEventSource(feed_update_queue)
         )
 
         feed_resource = api.root.add_resource("feed")
         feed_resource.add_method("GET", apigateway.LambdaIntegration(get_feed_lambda))
-        feed_resource.add_method("PUT", apigateway.LambdaIntegration(update_users_feed_lambda))
-
-        all_users_feed_resource = feed_resource.add_resource("all-users")
-        all_users_feed_resource.add_method("PUT", apigateway.LambdaIntegration(update_all_users_feed_lambda))
 
         create_download_history_lambda = create_lambda_function(
             "createDownloadHistory",
@@ -511,6 +547,7 @@ class NetflixBackendStack(Stack):
             "POST",
             {
                 'DOWNLOAD_HISTORY_TABLE_NAME': download_history_table.table_name,
+                'FEED_UPDATE_QUEUE_URL': feed_update_queue.queue_url
             }
         )
 

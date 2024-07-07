@@ -29,7 +29,37 @@ def exponential_approach(date):
     result = result.quantize(Decimal('0.001'), rounding=ROUND_DOWN)
     return result
 
-def update_all_users_feed(event, context):
+
+def lambda_handler(event, context):
+    try:
+        for record in event['Records']:
+            message = json.loads(record['body'])
+            event_type = message['event']
+            username = message.get('username', '')
+
+            if event_type == 'new_movie' or event_type == 'update_movie' or event_type == 'delete_movie':
+                update_all_users_feed()
+            elif event_type in ['user_subscription', 'user_review', 'user_download_movie', 'user_unsubscribe']:
+                update_users_feed(username)
+
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
+            'body': json.dumps('Feed updated successfully.')
+        }
+    except Exception as e:
+        return {
+            'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Origin': '*',
+            },
+            'body': json.dumps({'error': str(e)})
+        }
+
+
+def update_all_users_feed():
     try:
         response = client.list_users(
             UserPoolId=user_pool_id,
@@ -53,49 +83,16 @@ def update_all_users_feed(event, context):
                         'feed': top_movie_ids
                     }
                 )
-
-        return {
-            'statusCode': 200,
-            'headers': {
-                'Access-Control-Allow-Origin': '*',
-            },
-            'body': json.dumps({'message': 'Feeds updated successfully.'})
-        }
-
     except ClientError as e:
-        return {
-            'statusCode': 500,
-            'headers': {
-                'Access-Control-Allow-Origin': '*',
-            },
-            'body': json.dumps({'error': str(e)})
-        }
+        print(f"ClientError: {e}")
     except ValueError as e:
-        return {
-            'statusCode': 400,
-            'headers': {
-                'Access-Control-Allow-Origin': '*',
-            },
-            'body': json.dumps({'error': str(e)})
-        }
+        print(f"ValueError: {e}")
     except Exception as e:
-        return {
-            'statusCode': 500,
-            'headers': {
-                'Access-Control-Allow-Origin': '*',
-            },
-            'body': json.dumps({'error': str(e)})
-        }
+        print(f"Exception: {e}")
 
 
-def update_users_feed(event, context):
+def update_users_feed(username):
     try:
-        body = json.loads(event['body'])
-        username = body.get('username')
-
-        if not username:
-            raise ValueError("Username is required")
-
         top_movie_ids = get_top_movies(username)
 
         existing_feed = feed_table.get_item(Key={'username': username})
@@ -115,38 +112,12 @@ def update_users_feed(event, context):
                 }
             )
 
-        return {
-            'statusCode': 200,
-            'headers': {
-                'Access-Control-Allow-Origin': '*',
-            },
-            'body': json.dumps({'message': 'Feed updated successfully', 'feed': top_movie_ids})
-        }
-
     except ClientError as e:
-        return {
-            'statusCode': 500,
-            'headers': {
-                'Access-Control-Allow-Origin': '*',
-            },
-            'body': json.dumps({'error': str(e)})
-        }
+        print(f"ClientError: {e}")
     except ValueError as e:
-        return {
-            'statusCode': 400,
-            'headers': {
-                'Access-Control-Allow-Origin': '*',
-            },
-            'body': json.dumps({'error': str(e)})
-        }
+        print(f"ValueError: {e}")
     except Exception as e:
-        return {
-            'statusCode': 500,
-            'headers': {
-                'Access-Control-Allow-Origin': '*',
-            },
-            'body': json.dumps({'error': str(e)})
-        }
+        print(f"Exception: {e}")
 
 def get_top_movies(username):
     genres_dict = {}
@@ -163,7 +134,7 @@ def get_top_movies(username):
                 movie_id = item['movie_id']
 
                 value = item.get('value', 1)
-                value -= 2
+                value = int(value) - 2
                 value = value / 2
 
                 response = movies_table.query(

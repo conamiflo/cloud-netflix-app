@@ -16,19 +16,28 @@ def get_feed(event, context):
         username = event['queryStringParameters']['username']
         print(f"Fetching feed for user: {username}")
 
-        # Query the table for items with the specified username
         response = feed_table.get_item(Key={'username': username})
         print(f"Feed table response: {response}")
 
         feed_item = response.get('Item')
 
         if not feed_item or 'feed' not in feed_item:
+            print(f"No feed found for user {username}. Fetching random movies instead.")
+            scan_response = movies_table.scan()
+            movie_items = scan_response.get('Items', [])
+
+            random_movies = movie_items[:9]
+
+            for movie in random_movies:
+                movie['movie_size'] = str(movie['movie_size'])
+                movie['movie_modified'] = str(movie['movie_modified'])
+
             return {
-                'statusCode': 404,
+                'statusCode': 200,
                 'headers': {
                     'Access-Control-Allow-Origin': '*',
                 },
-                'body': json.dumps({'message': f"No feed found for user {username}."})
+                'body': json.dumps({'movies': random_movies})
             }
 
         feed_movie_ids = feed_item['feed']

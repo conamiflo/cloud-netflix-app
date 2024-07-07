@@ -9,18 +9,19 @@ import {MatDialog} from "@angular/material/dialog";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MovieService} from "../../../../../core/services/movie/movie.service";
-import {NgFor} from "@angular/common";
+import {NgFor, NgIf} from "@angular/common";
 import {CognitoService} from "../../../../../core/services/cognito/cognito.service";
 import {ReviewService} from "../../../../../core/services/review/review.service";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-movie-details',
   standalone: true,
-  imports: [IonIcon, MovieReviewComponent, MovieCardComponent,MatLabel,MatFormField,NgFor],
+    imports: [IonIcon, MovieReviewComponent, MovieCardComponent, MatLabel, MatFormField, NgFor, ReactiveFormsModule,NgIf],
   templateUrl: './movie-details.component.html',
   styleUrl: './movie-details.component.css'
 })
-export class MovieDetailsComponent{
+export class MovieDetailsComponent implements OnInit{
   constructor(public dialog: MatDialog,
               private route: ActivatedRoute,
               private movieService: MovieService,
@@ -31,8 +32,41 @@ export class MovieDetailsComponent{
   }
   movie: any;
   reviews: any[] = [];
+  movies: any[] = [];
 
   ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      const movieId = params.get('id');
+      const movieTitle = params.get('title');
+      if (movieId && movieTitle) {
+        this.getMovie(movieId,movieTitle);
+        this.getReviews(movieId);
+      }
+    });
+  }
+
+  editMovie() {
+    this.router.navigate(['edit-movie', this.movie.movie_id, this.movie.title]);
+  }
+
+  getSeries(series: string, movieId : string){
+    this.movieService.getMoviesBySeries(series,movieId).subscribe(
+      (data) => {
+        if (Array.isArray(data)) {
+          this.movies = data;
+        } else if (typeof data === 'object') {
+          this.movies = [data];
+        } else {
+          this.movies = [];
+        }
+      },
+      (error) => {
+        console.error('Error fetching series', error);
+      }
+    );
+  }
+
+  getMovie(movieId: string, movieTitle : string){
     this.route.paramMap.subscribe(params => {
       const movieId = params.get('id');
       const movieTitle = params.get('title');
@@ -41,24 +75,27 @@ export class MovieDetailsComponent{
         this.movieService.getMovieByIdAndTitle(movieId, movieTitle).subscribe(
           (data) => {
             this.movie = data;
+            if (this.movie && this.movie.series) {
+              this.getSeries(this.movie.series, movieId);
+            }
           },
           (error) => {
             console.error('Error fetching movie data', error);
           }
         );
-
-        this.reviewService.getAllReviews(movieId).subscribe(
-          (data) => {
-            this.reviews = data.reviews;
-            console.log(data)
-          },
-          (error) => {
-            console.error('Error fetching reviews', error);
-          }
-        );
-
       }
     });
+  }
+
+  getReviews(movieId: string){
+    this.reviewService.getAllReviews(movieId).subscribe(
+      (data) => {
+        this.reviews = data.reviews;
+      },
+      (error) => {
+        console.error('Error fetching reviews', error);
+      }
+    );
   }
 
   deleteMovie() {
