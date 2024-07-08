@@ -85,13 +85,13 @@
                 <span>Download movie</span>
               </button>
 
-            <button class="btn btn-primary" id="edit-movie" (click)="editMovie()">
+            <button *ngIf="role?.includes('Admins')" class="btn btn-primary" id="edit-movie" (click)="editMovie()">
               <ion-icon name="play"></ion-icon>
 
               <span>Edit movie</span>
             </button>
 
-            <button class="btn btn-primary" id="delete-movie" (click)="deleteMovie()">
+            <button *ngIf="role?.includes('Admins')" class="btn btn-primary" id="delete-movie" (click)="deleteMovie()">
               <ion-icon name="play"></ion-icon>
 
               <span>Delete movie</span>

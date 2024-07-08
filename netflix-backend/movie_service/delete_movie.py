@@ -28,6 +28,10 @@ def delete_movie(event, context):
         
         s3.delete_object(Bucket=s3_bucket, Key=movie_id)
 
+        resolutions = ['360', '480', '720']
+        for res in resolutions:
+            s3.delete_object(Bucket=s3_bucket, Key=f'{res}/{movie_id}')
+
         reviews_to_delete = review_table.scan(
             FilterExpression=Attr('movie_id').eq(movie_id)
         )

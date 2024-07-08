@@ -22,6 +22,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
   styleUrl: './movie-details.component.css'
 })
 export class MovieDetailsComponent implements OnInit {
+  role:string[]|undefined|null
   constructor(public dialog: MatDialog,
               private route: ActivatedRoute,
               private movieService: MovieService,
@@ -48,7 +49,8 @@ export class MovieDetailsComponent implements OnInit {
   original_download_url: any;
   selectedQuality: string = 'original';
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.role = await this.cognitoService.getUserGroup()
     this.route.paramMap.subscribe(params => {
       const movieId = params.get('id');
       const movieTitle = params.get('title');
