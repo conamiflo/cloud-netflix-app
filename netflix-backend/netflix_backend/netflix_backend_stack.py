@@ -493,10 +493,10 @@ class NetflixBackendStack(Stack):
             },
         )
 
-        split_resolutions_lambda = _lambda.Function(
-            self, "SplitResolutionsFunction",
+        transcoding_data_lambda = _lambda.Function(
+            self, "TranscodingData",
             runtime=_lambda.Runtime.PYTHON_3_11,
-            handler="split_resolution.handler",
+            handler="transcoding_data.handler",
             code=_lambda.Code.from_asset("transcoding"),
             memory_size=128,
             timeout=Duration.seconds(10),
@@ -519,7 +519,7 @@ class NetflixBackendStack(Stack):
         # Step Function Tasks
         split_task = tasks.LambdaInvoke(
             self, "SplitResolutions",
-            lambda_function=split_resolutions_lambda,
+            lambda_function=transcoding_data_lambda,
             output_path="$.Payload"
         )
 
