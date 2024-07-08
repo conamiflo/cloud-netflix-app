@@ -57,7 +57,6 @@ export class MovieService {
     var value = await this.cognitoService.getJWT()
     const headers = new HttpHeaders()
       .append('authorizationtoken', value as string);
-    headers.append('authorizationtoken', value);
 
     const url = environment.cloudHost + 'search';
 
@@ -80,7 +79,6 @@ export class MovieService {
   async createMovie(movieData: any): Promise<Observable<any>> {
 
     var value = await this.cognitoService.getJWT()
-
 
     const url = environment.cloudHost + 'movies';
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
@@ -105,7 +103,6 @@ export class MovieService {
     var value = await this.cognitoService.getJWT()
     const headers = new HttpHeaders()
       .append('authorizationtoken', value as string);
-    headers.append('authorizationtoken', value);
 
     const url = environment.cloudHost + 'movies';
     const params = new HttpParams()
@@ -120,7 +117,6 @@ export class MovieService {
     var value = await this.cognitoService.getJWT()
     const headers = new HttpHeaders()
       .append('authorizationtoken', value as string);
-    headers.append('authorizationtoken', value);
 
     const url = environment.cloudHost + 'series';
     let params = new HttpParams()
