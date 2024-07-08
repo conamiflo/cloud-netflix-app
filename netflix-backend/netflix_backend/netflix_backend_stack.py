@@ -9,6 +9,9 @@ from aws_cdk import (
     Stack,
     Duration,
     BundlingOptions,
+    aws_stepfunctions_tasks as sfn_tasks,
+    aws_stepfunctions as sfn,
+    aws_stepfunctions_tasks as tasks,
     RemovalPolicy, custom_resources,
     aws_sns as sns
 )
@@ -110,7 +113,7 @@ class NetflixBackendStack(Stack):
         feed_update_queue = sqs.Queue(
             self, "FeedUpdateQueue",
             queue_name="FeedUpdateQueue",
-            visibility_timeout=Duration.seconds(300)  # Adjust visibility timeout as needed
+            visibility_timeout=Duration.seconds(300)
         )
 
         lambda_role = iam.Role(
@@ -490,18 +493,72 @@ class NetflixBackendStack(Stack):
             },
         )
 
+        split_resolutions_lambda = _lambda.Function(
+            self, "SplitResolutionsFunction",
+            runtime=_lambda.Runtime.PYTHON_3_11,
+            handler="split_resolution.handler",
+            code=_lambda.Code.from_asset("transcoding"),
+            memory_size=128,
+            timeout=Duration.seconds(10),
+            environment={}
+        )
+
         transcode_movie_lambda = _lambda.Function(
             self, "TranscodeLambda",
             runtime=_lambda.Runtime.PYTHON_3_11,
             handler="transcode.handler",
             code=_lambda.Code.from_asset("transcoding"),
             layers=[ffmpeg_layer],
-            timeout=Duration.minutes(5),
-            memory_size=128,
+            timeout=Duration.minutes(1),
+            memory_size=512,
             environment={
                 'BUCKET_NAME': s3_bucket.bucket_name,
             }
         )
+
+        # Step Function Tasks
+        split_task = tasks.LambdaInvoke(
+            self, "SplitResolutions",
+            lambda_function=split_resolutions_lambda,
+            output_path="$.Payload"
+        )
+
+        parallel_transcode = sfn.Parallel(self, 'parallelTranscoding')
+        for resolution in ['360', '480', '720']:
+            parallel_transcode.branch(sfn_tasks.LambdaInvoke(
+                self, f'transcoding{resolution}',
+                lambda_function=transcode_movie_lambda,
+                payload=sfn.TaskInput.from_object({
+                    "movie_id": sfn.JsonPath.string_at("$.movie_id"),
+                    "target_resolution": resolution
+                }),
+            ).add_retry(
+                max_attempts=3,
+                interval=Duration.seconds(60)
+            ))
+
+        definition = split_task.next(parallel_transcode)
+
+        state_machine = sfn.StateMachine(
+            self, "StateMachine",
+            definition_body=sfn.DefinitionBody.from_chainable(definition),
+            timeout=Duration.minutes(15)
+        )
+
+        start_transcoding_lambda = _lambda.Function(
+            self, "StartTranscoding",
+            runtime=_lambda.Runtime.PYTHON_3_11,
+            handler="start_transcoding.handler",
+            code=_lambda.Code.from_asset("transcoding"),
+            memory_size=128,
+            timeout=Duration.seconds(10),
+            environment={
+                "STATE_MACHINE_ARN": state_machine.state_machine_arn
+            }
+        )
+
+        state_machine.grant_start_execution(start_transcoding_lambda)
+
 
         movies_resource = api.root.add_resource("movies")
         movies_resource.add_method("POST", apigateway.LambdaIntegration(create_movie_lambda))
@@ -515,9 +572,11 @@ class NetflixBackendStack(Stack):
         search_resource = api.root.add_resource("search")
         search_resource.add_method("GET", apigateway.LambdaIntegration(search_movies_lambda))
 
-        transcode_resource = api.root.add_resource("transcoding")
-        transcode_resource.add_method("POST", apigateway.LambdaIntegration(transcode_movie_lambda))
-        
+        transcode_resource =  api.root.add_resource("transcode")
+        transcode_resource.add_method("PUT", apigateway.LambdaIntegration(start_transcoding_lambda))
+
+        s3_bucket.grant_read_write(transcode_movie_lambda)
+
         subscribe_lambda = create_lambda_function(
             "subscribe",
             "subscribe.subscribe",
