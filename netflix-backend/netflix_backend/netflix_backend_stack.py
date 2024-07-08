@@ -274,7 +274,8 @@ class NetflixBackendStack(Stack):
 
 
 
-        layer = _lambda.LayerVersion(self, 'layer-ffmpeg',
+
+        ffmpeg_layer = _lambda.LayerVersion(self, 'layer-ffmpeg',
                                      code= _lambda.Code.from_asset('./layer-ffmeg'),
                                      compatible_runtimes= [_lambda.Runtime.PYTHON_3_11],
                                      layer_version_name= 'ffmpeg-layer',
@@ -489,6 +490,19 @@ class NetflixBackendStack(Stack):
             },
         )
 
+        transcode_movie_lambda = _lambda.Function(
+            self, "TranscodeLambda",
+            runtime=_lambda.Runtime.PYTHON_3_11,
+            handler="transcode.handler",
+            code=_lambda.Code.from_asset("transcoding"),
+            layers=[ffmpeg_layer],
+            timeout=Duration.minutes(5),
+            memory_size=128,
+            environment={
+                'BUCKET_NAME': s3_bucket.bucket_name,
+            }
+        )
+
         movies_resource = api.root.add_resource("movies")
         movies_resource.add_method("POST", apigateway.LambdaIntegration(create_movie_lambda))
         movies_resource.add_method("GET", apigateway.LambdaIntegration(download_movie_lambda))
@@ -500,6 +514,9 @@ class NetflixBackendStack(Stack):
         
         search_resource = api.root.add_resource("search")
         search_resource.add_method("GET", apigateway.LambdaIntegration(search_movies_lambda))
+
+        transcode_resource = api.root.add_resource("transcoding")
+        transcode_resource.add_method("POST", apigateway.LambdaIntegration(transcode_movie_lambda))
         
         subscribe_lambda = create_lambda_function(
             "subscribe",

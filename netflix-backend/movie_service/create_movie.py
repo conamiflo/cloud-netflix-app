@@ -109,15 +109,24 @@ def notify_topic_subscribers(name, movie_id, title, type):
         print(f"Error publishing to {type} topic {name}: {str(e)}")
 
 def get_last_movie_id():
-    paginator = s3.get_paginator("list_objects_v2")
-    page_iterator = paginator.paginate(Bucket="movie-bucket3")
+    try:
+        response = movies_table.scan(
+            TableName='movies-dbtable2',
+            Limit=1,
+            ScanIndexForward=False,
+            Select='ALL_ATTRIBUTES',
+            ConsistentRead=True
+        )
 
-    last_movie_id = 0
-    for page in page_iterator:
-        if "Contents" in page:
-            keys = [int(obj['Key']) for obj in page['Contents']]
-            if keys:
-                last_movie_id = max(keys)
+        if 'Items' in response and len(response['Items']) > 0:
+            last_movie_id = max(int(item['movie_id']) for item in response['Items'])
+        else:
+            last_movie_id = 0
+
+        return last_movie_id
+    except Exception as e:
+        print(f"Error retrieving last movie ID: {str(e)}")
+        return 0
     
     return last_movie_id
 
