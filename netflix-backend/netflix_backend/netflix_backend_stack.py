@@ -516,7 +516,6 @@ class NetflixBackendStack(Stack):
             }
         )
 
-        # Step Function Tasks
         split_task = tasks.LambdaInvoke(
             self, "SplitResolutions",
             lambda_function=transcoding_data_lambda,
@@ -558,7 +557,20 @@ class NetflixBackendStack(Stack):
         )
 
         state_machine.grant_start_execution(start_transcoding_lambda)
-
+        
+        
+        
+        download_specific_resolution_lambda = create_lambda_function(
+            "downloadSpecificResolution",
+            "download_specific_resolution.download_specific_resolution",
+            "movie_service",
+            "GET",
+            {
+                'TABLE_NAME': movie_table.table_name,
+                'BUCKET_NAME': s3_bucket.bucket_name,
+            },
+        )
+        
 
         movies_resource = api.root.add_resource("movies")
         movies_resource.add_method("POST", apigateway.LambdaIntegration(create_movie_lambda))
@@ -574,6 +586,9 @@ class NetflixBackendStack(Stack):
 
         transcode_resource =  api.root.add_resource("transcode")
         transcode_resource.add_method("PUT", apigateway.LambdaIntegration(start_transcoding_lambda))
+        
+        download_resoluton_resource = api.root.add_resource("download")
+        download_resoluton_resource.add_method("GET", apigateway.LambdaIntegration(download_specific_resolution_lambda))
 
         s3_bucket.grant_read_write(transcode_movie_lambda)
 
