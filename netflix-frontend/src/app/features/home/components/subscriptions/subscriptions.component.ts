@@ -48,9 +48,9 @@ export class SubscriptionsComponent implements OnInit{
     });
   }
 
-  loadSubscriptions(): void {
+  async loadSubscriptions(): Promise<void> {
     if (this.username) {
-      this.subscriptionService.getSubscriptions(this.username).subscribe(
+      (await this.subscriptionService.getSubscriptions(this.username)).subscribe(
         (response) => {
           this.subscriptions = response.subscriptions;
         },
@@ -63,25 +63,25 @@ export class SubscriptionsComponent implements OnInit{
     }
   }
 
-  subscribeToGenre() {
-    if(this.subscriptionsGenreForm.valid){
+  async subscribeToGenre() {
+    if (this.subscriptionsGenreForm.valid) {
       if (this.username) {
-        this.subscriptionService.subscribe(this.username, 'Genre', this.subscriptionsGenreForm.get('genre')?.value).subscribe(response => {
+        (await this.subscriptionService.subscribe(this.username, 'Genre', this.subscriptionsGenreForm.get('genre')?.value)).subscribe(response => {
           alert(`Subscribed to genre ${this.subscriptionsGenreForm.get('genre')?.value}`)
         }, error => {
           console.error(error);
           alert('You cannot subscribe to that genre');
         });
       }
-    }else {
+    } else {
       alert('Invalid genre!')
     }
   }
 
-  subscribeToActor() {
-    if(this.subscriptionsActorForm.valid) {
+  async subscribeToActor() {
+    if (this.subscriptionsActorForm.valid) {
       if (this.username) {
-        this.subscriptionService.subscribe(this.username, 'Actor', this.subscriptionsActorForm.get('actor')?.value).subscribe(response => {
+        (await this.subscriptionService.subscribe(this.username, 'Actor', this.subscriptionsActorForm.get('actor')?.value)).subscribe(response => {
           alert(`Subscribed to actor ${this.subscriptionsActorForm.get('actor')?.value}`)
         }, error => {
           console.error(error);
@@ -90,15 +90,15 @@ export class SubscriptionsComponent implements OnInit{
       } else {
         console.error('User is not logged in.');
       }
-    }else {
+    } else {
       alert('Invalid actor!')
     }
   }
 
-  subscribeToDirector() {
-    if(this.subscriptionsDirectorForm.valid) {
+  async subscribeToDirector() {
+    if (this.subscriptionsDirectorForm.valid) {
       if (this.username) {
-        this.subscriptionService.subscribe(this.username, 'Director', this.subscriptionsDirectorForm.get('director')?.value).subscribe(response => {
+        (await this.subscriptionService.subscribe(this.username, 'Director', this.subscriptionsDirectorForm.get('director')?.value)).subscribe(response => {
           alert(`Subscribed to director ${this.subscriptionsDirectorForm.get('director')?.value}`)
         }, error => {
           console.error(error);
@@ -107,7 +107,7 @@ export class SubscriptionsComponent implements OnInit{
       } else {
         console.error('User is not logged in.');
       }
-    }else {
+    } else {
       alert('Invalid director!')
     }
   }

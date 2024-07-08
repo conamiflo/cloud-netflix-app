@@ -31,7 +31,7 @@ export class CreateMovieComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.createMovieForm.valid) {
       this.formData.title = this.createMovieForm.value.title;
       this.formData.genres = this.createMovieForm.value.genres.split(',').map((genre: string) => genre.trim());
@@ -42,7 +42,7 @@ export class CreateMovieComponent implements OnInit {
       this.formData.series = this.createMovieForm.value.series;
       this.formData.movie = this.createMovieForm.value.movie;
 
-      this.movieService.createMovie(this.formData).subscribe(
+      (await this.movieService.createMovie(this.formData)).subscribe(
         response => {
           alert('Movie created successfully!');
           this.router.navigate(['']);

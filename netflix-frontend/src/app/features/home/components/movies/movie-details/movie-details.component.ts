@@ -50,8 +50,8 @@ export class MovieDetailsComponent implements OnInit{
     this.router.navigate(['edit-movie', this.movie.movie_id, this.movie.title]);
   }
 
-  getSeries(series: string, movieId : string){
-    this.movieService.getMoviesBySeries(series,movieId).subscribe(
+  async getSeries(series: string, movieId: string) {
+    (await this.movieService.getMoviesBySeries(series, movieId)).subscribe(
       (data) => {
         if (Array.isArray(data)) {
           this.movies = data;
@@ -68,12 +68,12 @@ export class MovieDetailsComponent implements OnInit{
   }
 
   getMovie(movieId: string, movieTitle : string){
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe(async params => {
       const movieId = params.get('id');
       const movieTitle = params.get('title');
 
       if (movieId && movieTitle) {
-        this.movieService.getMovieByIdAndTitle(movieId, movieTitle).subscribe(
+        (await this.movieService.getMovieByIdAndTitle(movieId, movieTitle)).subscribe(
           (data) => {
             this.movie = data;
             if (this.movie && this.movie.series) {
@@ -88,8 +88,8 @@ export class MovieDetailsComponent implements OnInit{
     });
   }
 
-  getReviews(movieId: string){
-    this.reviewService.getAllReviews(movieId).subscribe(
+  async getReviews(movieId: string) {
+    (await this.reviewService.getAllReviews(movieId)).subscribe(
       (data) => {
         this.reviews = data.reviews;
       },
@@ -99,8 +99,8 @@ export class MovieDetailsComponent implements OnInit{
     );
   }
 
-  deleteMovie() {
-    this.movieService.deleteMovie(this.movie.movie_id, this.movie.title).subscribe(
+  async deleteMovie() {
+    (await this.movieService.deleteMovie(this.movie.movie_id, this.movie.title)).subscribe(
       (response) => {
         alert(`Successfully deleted movie with id: ${this.movie.movie_id}`);
         this.router.navigate(['']);
@@ -112,11 +112,11 @@ export class MovieDetailsComponent implements OnInit{
   }
 
   downloadFile() {
-    this.cognitoService.getUsername().then(username => {
+    this.cognitoService.getUsername().then(async username => {
       if (!username) {
         return;
       }
-      this.movieService.downloadMovie(username, this.movie.movie_id).subscribe(
+      (await this.movieService.downloadMovie(username, this.movie.movie_id)).subscribe(
         response => {
           console.log('Download history created successfully:', response);
           const link = document.createElement('a');

@@ -6,7 +6,31 @@ import cognitojwt
 mapGroupsToPaths = {
     '/testiranje': {
         'GET': 'Users'
-    }
+    },
+    '/movies':{
+        "GET":['Users','Admins'],
+        "POST":'Admins',
+        "PUT":"Admins",
+        "DELETE":"Admins"
+    },
+    '/series':{
+        "GET":['Users','Admins'],
+    },
+    '/search':{
+        "GET":['Users','Admins'],
+    },
+    '/subscription':{
+        "GET":['Users','Admins'],
+        "POST":['Users','Admins'],
+        "DELETE":['Users','Admins']
+    },'/reviews':{
+        "GET":['Users','Admins'],
+        "POST":['Users','Admins'],
+    },'/feed':{
+        "GET":['Users','Admins'],
+    },'/history':{
+        "POST":['Users','Admins'],
+    },
 }
 
 userpool_id= os.environ.get('USERPOOL_ID')
@@ -17,12 +41,17 @@ region = boto3.Session().region_name
 
 def handler(event, context):
 
-    headers = event.get('headers', {})
-    token = headers.get('authorizationToken')
-    http_method = event['httpMethod']
-    resource=event['resource']
+    try:
+
+        headers = event.get('headers', {})
+        token = headers.get('authorizationtoken')
+        http_method = event['httpMethod']
+        resource=event['resource']
+    except Exception as e:
+        raise Exception('Invalid params')
 
     try:
+
 
         claims: dict = cognitojwt.decode(
             token,
@@ -32,13 +61,20 @@ def handler(event, context):
             testmode=False  # Disable token expiration check for testing purposes
         )
 
-        user_groups = claims.get('cognito:groups', [])
+    except Exception as e:
+        raise Exception('Non valid jwt')
 
-        if mapGroupsToPaths[resource][http_method]  not in user_groups:
+    user_groups = claims.get('cognito:groups', [])
+
+    try:
+
+        if user_groups[0] not in mapGroupsToPaths[resource][http_method]:
             raise Exception('User is not authorized to perform this action')
 
     except Exception as e:
-        raise Exception('Unauthorizer')
+        raise Exception('err')
+
+
 
     response = generateAllow('me', "*")
     print('authorized')

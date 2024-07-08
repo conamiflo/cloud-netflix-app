@@ -37,7 +37,7 @@ export class MovieReviewDialogComponent {
       const userInfo = await this.cognitoService.getUser();
       const username = userInfo.username;
 
-      this.reviewService.submitReview(username, this.movieId, this.reviewValue).subscribe(
+      (await this.reviewService.submitReview(username, this.movieId, this.reviewValue)).subscribe(
           (response: any) => {
           console.log('Review submitted successfully:', response);
           alert('Review submitted successfully!');

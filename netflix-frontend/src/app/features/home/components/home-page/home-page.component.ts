@@ -25,9 +25,9 @@ export class HomePageComponent {
   ) {}
 
   ngOnInit() {
-    this.cognitoService.getUsername().then(username => {
+    this.cognitoService.getUsername().then(async username => {
       if (username) {
-        this.movieService.getFeed(username).subscribe(
+        (await this.movieService.getFeed(username)).subscribe(
           (data) => {
             this.movies = data.movies;
           },
@@ -41,12 +41,12 @@ export class HomePageComponent {
     });
   }
 
-  searchMovies() {
+  async searchMovies() {
     const actors = this.actors.split(',').map(actor => actor.trim());
     const directors = this.directors.split(',').map(director => director.trim());
     const genres = this.genres.split(',').map(genre => genre.trim());
 
-    this.movieService.searchMovies(this.title, this.description, actors, directors, genres).subscribe(
+    (await this.movieService.searchMovies(this.title, this.description, actors, directors, genres)).subscribe(
       (data) => {
         this.movies = data;
       },

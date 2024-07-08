@@ -44,8 +44,8 @@ export class MovieEditComponent {
     });
   }
 
-  getMovieDetails(movieId: string, movieTitle: string) {
-    this.movieService.getMovieByIdAndTitle(movieId, movieTitle).subscribe(
+  async getMovieDetails(movieId: string, movieTitle: string) {
+    (await this.movieService.getMovieByIdAndTitle(movieId, movieTitle)).subscribe(
       (data) => {
         this.movie = data;
         this.editMovieForm.patchValue({
@@ -63,7 +63,7 @@ export class MovieEditComponent {
     );
   }
 
-  editMovie() {
+  async editMovie() {
     if (this.editMovieForm.valid) {
       this.formData.title = this.editMovieForm.value.title;
       this.formData.genres = this.editMovieForm.value.genres.split(',').map((genre: string) => genre.trim());
@@ -73,8 +73,7 @@ export class MovieEditComponent {
       this.formData.movieFile = this.editMovieForm.value.movieFile;
       this.formData.series = this.editMovieForm.value.series;
       this.formData.movie = this.editMovieForm.value.movie;
-      console.log(this.formData)
-      this.movieService.editMovie(this.movie.movie_id,this.formData).subscribe(
+      (await this.movieService.editMovie(this.movie.movie_id, this.formData)).subscribe(
         response => {
           alert('Movie edited successfully!');
           this.router.navigate([`movies/${this.movie.movie_id}/${this.formData.title}`]);
