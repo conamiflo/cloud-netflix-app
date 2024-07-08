@@ -21,26 +21,39 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
   templateUrl: './movie-details.component.html',
   styleUrl: './movie-details.component.css'
 })
-export class MovieDetailsComponent implements OnInit{
+export class MovieDetailsComponent implements OnInit {
   constructor(public dialog: MatDialog,
               private route: ActivatedRoute,
               private movieService: MovieService,
               private cognitoService: CognitoService,
               private reviewService: ReviewService,
-              private router:Router) {
-    addIcons({ cameraOutline, playCircle, shareSocial, play, downloadOutline, chevronUp,calendarOutline,timeOutline,star,send});
+              private router: Router) {
+    addIcons({
+      cameraOutline,
+      playCircle,
+      shareSocial,
+      play,
+      downloadOutline,
+      chevronUp,
+      calendarOutline,
+      timeOutline,
+      star,
+      send
+    });
   }
+
   movie: any;
   reviews: any[] = [];
   movies: any[] = [];
-  selectedQuality: string = 'Original quality';
+  original_download_url: any;
+  selectedQuality: string = 'original';
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       const movieId = params.get('id');
       const movieTitle = params.get('title');
       if (movieId && movieTitle) {
-        this.getMovie(movieId,movieTitle);
+        this.getMovie(movieId, movieTitle);
         this.getReviews(movieId);
       }
     });
@@ -67,7 +80,7 @@ export class MovieDetailsComponent implements OnInit{
     );
   }
 
-  getMovie(movieId: string, movieTitle : string){
+  getMovie(movieId: string, movieTitle: string) {
     this.route.paramMap.subscribe(async params => {
       const movieId = params.get('id');
       const movieTitle = params.get('title');
@@ -76,6 +89,7 @@ export class MovieDetailsComponent implements OnInit{
         (await this.movieService.getMovieByIdAndTitle(movieId, movieTitle)).subscribe(
           (data) => {
             this.movie = data;
+            this.original_download_url = data.download_url;
             if (this.movie && this.movie.series) {
               this.getSeries(this.movie.series, movieId);
             }
@@ -135,24 +149,29 @@ export class MovieDetailsComponent implements OnInit{
     });
   }
 
-  openReviewDialog(): void{
+  openReviewDialog(): void {
     const dialogRef = this.dialog.open(MovieReviewDialogComponent, {
       width: '550px',
       data: {
         movieId: this.movie.movie_id
       }
-      });
+    });
   }
 
-  updateDownloadUrl(): void {
-    const selectedQualityUrl = this.movie.download_urls[this.selectedQuality];
-    if (selectedQualityUrl) {
-      this.movie.download_url = selectedQualityUrl;
-    } else {
-      console.error('Download URL not available for selected quality');
+  async updateDownloadUrl() {
+    if(this.selectedQuality !== 'original'){
+      console.log(this.movie.movie_id,this.selectedQuality);
+      (await this.movieService.downloadResolution(this.movie.movie_id, this.selectedQuality)).subscribe(
+        response => {
+          console.log(response)
+          this.movie.download_url = response;
+        },
+        error => {
+          alert('Resolution is not up yet!');
+        }
+      );
+    }else{
+      this.movie.download_url = this.original_download_url;
     }
   }
-
-
 }
-

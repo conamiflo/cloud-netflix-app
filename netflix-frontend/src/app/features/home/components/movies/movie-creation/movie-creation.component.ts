@@ -43,14 +43,32 @@ export class CreateMovieComponent implements OnInit {
       this.formData.movie = this.createMovieForm.value.movie;
 
       (await this.movieService.createMovie(this.formData)).subscribe(
-        response => {
+        async response => {
           alert('Movie created successfully!');
-          this.router.navigate(['']);
+          (await this.movieService.startTranscoding(response['movie_id'])).subscribe(
+            response => {
+              console.log('Movie transcoded successfully!');
+              this.router.navigate(['']);
+            },
+            error => {
+              alert('Failed to transcode movie.');
+            }
+          );
         },
         error => {
           alert('Failed to create movie.');
         }
       );
+
+      // (await this.movieService.startTranscoding('1')).subscribe(
+      //   response => {
+      //   },
+      //   error => {
+      //     alert('Failed to transcode movie.');
+      //   }
+      // );
+
+
     } else {
       alert('Form is not valid. All fields are required and a file must be uploaded.');
     }

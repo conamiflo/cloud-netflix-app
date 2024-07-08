@@ -30,6 +30,11 @@ mapGroupsToPaths = {
         "GET":['Users','Admins'],
     },'/history':{
         "POST":['Users','Admins'],
+    },'/transcode':{
+        "PUT":'Admins',
+    },
+    '/download':{
+        "GET":['Users','Admins'],
     },
 }
 

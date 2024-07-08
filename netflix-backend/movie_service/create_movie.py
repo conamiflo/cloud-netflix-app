@@ -65,7 +65,7 @@ def post_movie(event, context):
             'headers': {
                 'Access-Control-Allow-Origin': '*',
             },
-            'body': json.dumps({'message': f"Successfully added movie with id: {movie_id}!"})
+            'body': json.dumps({'movie_id': movie_id})
         }
     except Exception as e:
         return{
@@ -110,25 +110,16 @@ def notify_topic_subscribers(name, movie_id, title, type):
 
 def get_last_movie_id():
     try:
-        response = movies_table.scan(
-            TableName='movies-dbtable2',
-            Limit=1,
-            ScanIndexForward=False,
-            Select='ALL_ATTRIBUTES',
-            ConsistentRead=True
-        )
-
-        if 'Items' in response and len(response['Items']) > 0:
-            last_movie_id = max(int(item['movie_id']) for item in response['Items'])
-        else:
-            last_movie_id = 0
+        response = movies_table.scan(ProjectionExpression="movie_id")
+        last_movie_id = 0
+        if 'Items' in response:
+            movie_ids = [int(item['movie_id']) for item in response['Items'] if 'movie_id' in item]
+            if movie_ids:
+                last_movie_id = max(movie_ids)
 
         return last_movie_id
     except Exception as e:
         print(f"Error retrieving last movie ID: {str(e)}")
-        return 0
-    
-    return last_movie_id
 
 def generate_search_key(title, description, actors, directors, genres):
     return f"{title}_{description}_{actors}_{directors}_{genres}"

@@ -32,9 +32,16 @@ def handler(event, context):
             'body': json.dumps(f'Error downloading movie from S3: {str(e)}')
         }
 
-    output_path = f'/tmp/{movie_id}_{target_resolution}.mp4'
+    output_path = f'/tmp/{movie_id}-{target_resolution}.mp4'
 
-    ffmpeg_command = f'/opt/ffmpeg -y -i {local_movie_path} -codec:v mpeg4 -vf scale={resolution_map[target_resolution]} -c:a copy {output_path}'
+    ffmpeg_command = f'/opt/ffmpeg -y -i {local_movie_path} -vf scale={resolution_map[target_resolution]} -c:a copy {output_path}'
+    # command = [
+    #         '/opt/ffmpeg', '-y',
+    #         '-i', local_movie_path,
+    #         '-vf', f'scale={resolution_map[target_resolution]}',
+    #         '-preset', 'ultrafast', '-crf', '23', '-c:a', 'copy',
+    #         output_path
+    #     ]
     try:
         subprocess.run(ffmpeg_command, shell=True, check=True)
     except subprocess.CalledProcessError as e:

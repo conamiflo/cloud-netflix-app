@@ -141,4 +141,28 @@ export class MovieService {
     return this.httpClient.put(url, JSON.stringify(body), {headers});
   }
 
+  async startTranscoding(movieId: string): Promise<Observable<any>> {
+    // var value = await this.cognitoService.getJWT()
+    const url = environment.cloudHost + 'transcode';
+    // const headers = new HttpHeaders()
+      // .append('authorizationtoken', value as string)
+      // .append('Content-Type', 'application/json')
+    const body = { movie_id: movieId };
+    return this.httpClient.put(url, JSON.stringify(body));
+  }
+
+  async downloadResolution(movieId: string, resolution: string): Promise<Observable<any>> {
+    const value = await this.cognitoService.getJWT();
+
+    const url = environment.cloudHost + 'download';
+    const headers = new HttpHeaders()
+      .append('authorizationtoken', value as string)
+      .append('Content-Type', 'application/json')
+    let params = new HttpParams()
+      .set('movie_id', movieId)
+      .set('resolution', resolution);
+
+    return this.httpClient.get(url, { headers, params});
+  }
+
 }

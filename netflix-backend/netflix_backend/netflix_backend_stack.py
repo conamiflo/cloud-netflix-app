@@ -502,7 +502,7 @@ class NetflixBackendStack(Stack):
         search_resource.add_method("GET", apigateway.LambdaIntegration(search_movies_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
 
         download_resoluton_resource = api.root.add_resource("download")
-        download_resoluton_resource.add_method("GET", apigateway.LambdaIntegration(download_specific_resolution_lambda))
+        download_resoluton_resource.add_method("GET", apigateway.LambdaIntegration(download_specific_resolution_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
 
         subscribe_lambda = create_lambda_function(
             "subscribe",
@@ -650,8 +650,8 @@ class NetflixBackendStack(Stack):
             handler="transcode.handler",
             code=_lambda.Code.from_asset("transcoding"),
             layers=[ffmpeg_layer],
-            timeout=Duration.minutes(1),
-            memory_size=512,
+            timeout=Duration.minutes(5),
+            memory_size=2048,
             environment={
                 'BUCKET_NAME': s3_bucket.bucket_name,
             }
@@ -674,7 +674,7 @@ class NetflixBackendStack(Stack):
                 }),
             ).add_retry(
                 max_attempts=3,
-                interval=Duration.seconds(60)
+                interval=Duration.minutes(5)
             ))
 
         definition = split_task.next(parallel_transcode)
@@ -690,7 +690,7 @@ class NetflixBackendStack(Stack):
             runtime=_lambda.Runtime.PYTHON_3_11,
             handler="start_transcoding.handler",
             code=_lambda.Code.from_asset("transcoding"),
-            memory_size=128,
+            memory_size=2048,
             timeout=Duration.seconds(10),
             environment={
                 "STATE_MACHINE_ARN": state_machine.state_machine_arn

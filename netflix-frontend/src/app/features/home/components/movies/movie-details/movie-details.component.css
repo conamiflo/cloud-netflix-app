@@ -474,10 +474,9 @@ select:is(:hover, :focus) {
 .movie-detail-banner {
   position: relative;
   background: hsl(229, 15%, 21%);
-  max-width: 600px;
   margin-inline: auto;
   border-radius: 6px;
-  overflow: hidden;
+  /*overflow: hidden;*/
   margin-bottom: 50px;
 }
 

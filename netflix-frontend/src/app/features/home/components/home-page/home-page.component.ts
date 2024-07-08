@@ -30,6 +30,7 @@ export class HomePageComponent {
         (await this.movieService.getFeed(username)).subscribe(
           (data) => {
             this.movies = data.movies;
+            console.log(data);
           },
           (error) => {
             console.error('Error fetching movies', error);
