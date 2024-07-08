@@ -30,7 +30,7 @@ export const routes: Routes = [
     component: CreateMovieComponent,
     canActivate: [RoleGuard],
     data: {
-      role: 'Admins'
+      roles: 'Admins'
     }
   },
   {
@@ -38,7 +38,7 @@ export const routes: Routes = [
     component: MovieEditComponent,
     canActivate: [RoleGuard],
     data: {
-      role: 'Admins'
+      roles: 'Admins'
     }
   },
   {
