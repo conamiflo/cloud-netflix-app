@@ -381,8 +381,9 @@ class NetflixBackendStack(Stack):
 
         authorizer=apigateway.RequestAuthorizer(self,id="bla",
                                                  authorizer_name="blabla",
-                                                 identity_sources=['method.request.header.authorizationToken'],
+                                                 identity_sources=['method.request.header.authorizationtoken'],
                                                  handler=authenticate_group,
+                                                results_cache_ttl=0
                                                 )
 
 
