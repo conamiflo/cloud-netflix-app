@@ -305,7 +305,7 @@ class NetflixBackendStack(Stack):
                                 rest_api_name="netflix-api",
                                 endpoint_types=[apigateway.EndpointType.REGIONAL],
                                 default_cors_preflight_options=apigateway.CorsOptions(
-                                    allow_origins=["*"],
+                                    allow_origins=["http://localhost:4200"],
                                     allow_methods=["PUT","POST","DELETE","GET","HEAD"],
                                     allow_headers=["*"]
                                 ))
