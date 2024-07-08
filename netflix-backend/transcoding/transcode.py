@@ -8,7 +8,7 @@ bucket_name = 'movie-bucket3'
 
 def handler(event, context):
     movie_id = event['movie_id']
-    target_resolution = event['target_resolution']
+    target_resolution = event['resolution']
 
     resolution_map = {
         '360': '640:360',
@@ -28,7 +28,7 @@ def handler(event, context):
         s3.download_file(bucket_name, movie_id, local_movie_path)
     except Exception as e:
         return {
-            'statusCode': 500,
+            'statusCode': 501,
             'body': json.dumps(f'Error downloading movie from S3: {str(e)}')
         }
 
@@ -39,7 +39,7 @@ def handler(event, context):
         subprocess.run(ffmpeg_command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         return {
-            'statusCode': 500,
+            'statusCode': 502,
             'body': json.dumps(f'Error transcoding movie: {str(e)}')
         }
 
@@ -47,10 +47,9 @@ def handler(event, context):
     try:
         with open(output_path, "rb") as f:
             s3.put_object(Bucket=bucket_name, Key=output_s3_key, Body=f, ContentType='video/mp4')
-        # s3.upload_file(output_path, bucket_name, output_s3_key, ExtraArgs={'ContentType': 'video/mp4'})
     except Exception as e:
         return {
-            'statusCode': 500,
+            'statusCode': 503,
             'body': json.dumps(f'Error uploading transcoded movie to S3: {str(e)}')
         }
 
