@@ -27,11 +27,19 @@ export const routes: Routes = [
   },
   {
     path: 'create-movie',
-    component: CreateMovieComponent
+    component: CreateMovieComponent,
+    canActivate: [RoleGuard],
+    data: {
+      role: 'Admins'
+    }
   },
   {
     path: 'edit-movie/:id/:title',
-    component: MovieEditComponent
+    component: MovieEditComponent,
+    canActivate: [RoleGuard],
+    data: {
+      role: 'Admins'
+    }
   },
   {
     path: 'subscriptions',

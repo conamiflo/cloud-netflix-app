@@ -22,6 +22,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
   styleUrl: './movie-details.component.css'
 })
 export class MovieDetailsComponent implements OnInit{
+  role:string[]|undefined|null
   constructor(public dialog: MatDialog,
               private route: ActivatedRoute,
               private movieService: MovieService,
@@ -35,12 +36,13 @@ export class MovieDetailsComponent implements OnInit{
   movies: any[] = [];
   selectedQuality: string = 'Original quality';
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.role = await this.cognitoService.getUserGroup()
     this.route.paramMap.subscribe(params => {
       const movieId = params.get('id');
       const movieTitle = params.get('title');
       if (movieId && movieTitle) {
-        this.getMovie(movieId,movieTitle);
+        this.getMovie(movieId, movieTitle);
         this.getReviews(movieId);
       }
     });
