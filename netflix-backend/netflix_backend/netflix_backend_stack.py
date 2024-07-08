@@ -383,7 +383,7 @@ class NetflixBackendStack(Stack):
                                                  authorizer_name="blabla",
                                                  identity_sources=['method.request.header.authorizationtoken'],
                                                  handler=authenticate_group,
-                                                results_cache_ttl=0
+                                                results_cache_ttl=Duration.seconds(0)
                                                 )
 
 

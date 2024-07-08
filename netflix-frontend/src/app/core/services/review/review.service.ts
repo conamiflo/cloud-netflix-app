@@ -14,8 +14,9 @@ export class ReviewService {
     var valueJwt = await this.cognitoService.getJWT()
 
     const url = environment.cloudHost + 'reviews'; // Update with your actual endpoint
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    headers.append('authorizationtoken', valueJwt as string)
+    const headers = new HttpHeaders()
+      .append('authorizationtoken', valueJwt as string)
+      .append('Content-Type', 'application/json')
     const body = {
       username,
       movie_id,

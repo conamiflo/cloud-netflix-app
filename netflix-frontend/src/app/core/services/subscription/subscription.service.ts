@@ -13,8 +13,9 @@ export class SubscriptionService {
   async subscribe(username: string, type: string, value: string): Promise<Observable<any>> {
     var valueJwt = await this.cognitoService.getJWT()
     const url = environment.cloudHost + 'subscriptions';
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    headers.append('authorizationtoken', valueJwt as string);
+    const headers = new HttpHeaders()
+    .append('authorizationtoken', valueJwt as string)
+    .append('Content-Type', 'application/json')
 
     const body = {username, type, value};
     return this.httpClient.post<any>(url, body, {headers});
