@@ -127,7 +127,7 @@ def get_last_movie_id():
     except Exception as e:
         print(f"Error retrieving last movie ID: {str(e)}")
         return 0
-
+    
     return last_movie_id
 
 def generate_search_key(title, description, actors, directors, genres):

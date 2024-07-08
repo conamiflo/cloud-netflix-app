@@ -9,6 +9,9 @@ from aws_cdk import (
     Stack,
     Duration,
     BundlingOptions,
+    aws_stepfunctions_tasks as sfn_tasks,
+    aws_stepfunctions as sfn,
+    aws_stepfunctions_tasks as tasks,
     RemovalPolicy, custom_resources,
     aws_sns as sns
 )
@@ -110,7 +113,7 @@ class NetflixBackendStack(Stack):
         feed_update_queue = sqs.Queue(
             self, "FeedUpdateQueue",
             queue_name="FeedUpdateQueue",
-            visibility_timeout=Duration.seconds(300)  # Adjust visibility timeout as needed
+            visibility_timeout=Duration.seconds(300)
         )
 
         lambda_role = iam.Role(
@@ -147,11 +150,8 @@ class NetflixBackendStack(Stack):
                     "sqs:SendMessage"
                 ],
                 resources=[movie_table.table_arn,f"{s3_bucket.bucket_arn}/*",feed_update_queue.queue_arn]
-                # resources=[movie_table.table_arn,"arn:aws:s3:::<movie-bucket>/*"]
             )
         )
-
-#userpool
 
         user_pool = cognito.UserPool(
             self, "UserPool",
@@ -274,7 +274,8 @@ class NetflixBackendStack(Stack):
 
 
 
-        layer = _lambda.LayerVersion(self, 'layer-ffmpeg',
+
+        ffmpeg_layer = _lambda.LayerVersion(self, 'layer-ffmpeg',
                                      code= _lambda.Code.from_asset('./layer-ffmeg'),
                                      compatible_runtimes= [_lambda.Runtime.PYTHON_3_11],
                                      layer_version_name= 'ffmpeg-layer',
@@ -345,9 +346,6 @@ class NetflixBackendStack(Stack):
                 )
 
 
-
-
-
         hello = create_lambda_function(
             "hello",
             "test.handler",
@@ -355,7 +353,6 @@ class NetflixBackendStack(Stack):
             "POST",
             {}
         )
-
 
 
         layer = _lambda.LayerVersion(self, 'layer',
@@ -386,29 +383,20 @@ class NetflixBackendStack(Stack):
                                                 results_cache_ttl=Duration.seconds(0)
                                                 )
 
-
-
         test_resource=api.root.add_resource("testiranje")
         test_resource.add_method("GET", apigateway.LambdaIntegration(hello),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
-
-
-        # Attach GET method to /users resource
-
 
         pre_sign_up_lambda = prevent_duplicate_email_lambda
         post_sign_lambda=add_to_user_group
 
-        # Attach the Lambda function as a pre-sign-up trigger to the user pool
         user_pool.add_trigger(cognito.UserPoolOperation.PRE_SIGN_UP, pre_sign_up_lambda)
         user_pool.add_trigger(cognito.UserPoolOperation.POST_CONFIRMATION,post_sign_lambda)
 
-        # Create an inline policy statement
         pre_sign_up_policy_statement = iam.PolicyStatement(
             actions=["cognito-idp:ListUsers"],
             resources=[user_pool.user_pool_arn]
         )
 
-        # Attach the policy statement to the Lambda function's role
         pre_sign_up_lambda.role.attach_inline_policy(
             iam.Policy(self, 'PreSignUpLambdaPolicy',
                        statements=[pre_sign_up_policy_statement]
@@ -424,7 +412,6 @@ class NetflixBackendStack(Stack):
             resources=[user_pool.user_pool_arn]
         )
 
-        # Attach the policy statement to the post confirmation Lambda function's role
         post_sign_lambda.role.attach_inline_policy(
             iam.Policy(self, 'PostConfirmationLambdaPolicy',
                        statements=[post_confirmation_policy_statement]
@@ -490,6 +477,18 @@ class NetflixBackendStack(Stack):
             },
         )
 
+        download_specific_resolution_lambda = create_lambda_function(
+            "downloadSpecificResolution",
+            "download_specific_resolution.download_specific_resolution",
+            "movie_service",
+            "GET",
+            {
+                'TABLE_NAME': movie_table.table_name,
+                'BUCKET_NAME': s3_bucket.bucket_name,
+            },
+        )
+        
+
         movies_resource = api.root.add_resource("movies")
         movies_resource.add_method("POST", apigateway.LambdaIntegration(create_movie_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
         movies_resource.add_method("GET", apigateway.LambdaIntegration(download_movie_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
@@ -501,7 +500,10 @@ class NetflixBackendStack(Stack):
         
         search_resource = api.root.add_resource("search")
         search_resource.add_method("GET", apigateway.LambdaIntegration(search_movies_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
-        
+
+        download_resoluton_resource = api.root.add_resource("download")
+        download_resoluton_resource.add_method("GET", apigateway.LambdaIntegration(download_specific_resolution_lambda))
+
         subscribe_lambda = create_lambda_function(
             "subscribe",
             "subscribe.subscribe",
@@ -596,7 +598,6 @@ class NetflixBackendStack(Stack):
             }
         )
 
-
         feed_update_lambda = create_lambda_function(
             "FeedUpdateLambda",
             "update_users_feed.lambda_handler",
@@ -632,6 +633,73 @@ class NetflixBackendStack(Stack):
 
         history_resource = api.root.add_resource("history")
         history_resource.add_method("POST", apigateway.LambdaIntegration(create_download_history_lambda),authorization_type=AuthorizationType.CUSTOM,authorizer=authorizer)
-        
-            
+
+        transcoding_data_lambda = _lambda.Function(
+            self, "TranscodingData",
+            runtime=_lambda.Runtime.PYTHON_3_11,
+            handler="transcoding_data.handler",
+            code=_lambda.Code.from_asset("transcoding"),
+            memory_size=128,
+            timeout=Duration.seconds(10),
+            environment={}
+        )
+
+        transcode_movie_lambda = _lambda.Function(
+            self, "TranscodeLambda",
+            runtime=_lambda.Runtime.PYTHON_3_11,
+            handler="transcode.handler",
+            code=_lambda.Code.from_asset("transcoding"),
+            layers=[ffmpeg_layer],
+            timeout=Duration.minutes(1),
+            memory_size=512,
+            environment={
+                'BUCKET_NAME': s3_bucket.bucket_name,
+            }
+        )
+
+        split_task = tasks.LambdaInvoke(
+            self, "SplitTask",
+            lambda_function=transcoding_data_lambda,
+            output_path="$.Payload"
+        )
+
+        parallel_transcode = sfn.Parallel(self, 'parallelTranscoding')
+        for resolution in ['360', '480', '720']:
+            parallel_transcode.branch(sfn_tasks.LambdaInvoke(
+                self, f'transcoding-{resolution}',
+                lambda_function=transcode_movie_lambda,
+                payload=sfn.TaskInput.from_object({
+                    "movie_id": sfn.JsonPath.string_at("$.movie_id"),
+                    "resolution": resolution
+                }),
+            ).add_retry(
+                max_attempts=3,
+                interval=Duration.seconds(60)
+            ))
+
+        definition = split_task.next(parallel_transcode)
+
+        state_machine = sfn.StateMachine(
+            self, "StateMachine",
+            definition_body=sfn.DefinitionBody.from_chainable(definition),
+            timeout=Duration.minutes(15)
+        )
+
+        start_transcoding_lambda = _lambda.Function(
+            self, "StartTranscoding",
+            runtime=_lambda.Runtime.PYTHON_3_11,
+            handler="start_transcoding.handler",
+            code=_lambda.Code.from_asset("transcoding"),
+            memory_size=128,
+            timeout=Duration.seconds(10),
+            environment={
+                "STATE_MACHINE_ARN": state_machine.state_machine_arn
+            }
+        )
+
+        state_machine.grant_start_execution(start_transcoding_lambda)
+        s3_bucket.grant_read_write(transcode_movie_lambda)
+
+        transcode_resource = api.root.add_resource("transcode")
+        transcode_resource.add_method("PUT", apigateway.LambdaIntegration(start_transcoding_lambda))
 
