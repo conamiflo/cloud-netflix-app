@@ -88,8 +88,8 @@ export class MovieDetailsComponent implements OnInit{
     });
   }
 
-  getReviews(movieId: string){
-    this.reviewService.getAllReviews(movieId).subscribe(
+  async getReviews(movieId: string) {
+    (await this.reviewService.getAllReviews(movieId)).subscribe(
       (data) => {
         this.reviews = data.reviews;
       },

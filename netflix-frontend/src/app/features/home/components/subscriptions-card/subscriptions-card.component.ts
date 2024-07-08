@@ -24,8 +24,8 @@ export class SubscriptionsCardComponent {
     addIcons({star,send});
   }
 
-  unsubscribe() {
-    this.subscriptionService.unsubscribe(this.subscription.username, this.subscription.subscription_id).subscribe(response => {
+  async unsubscribe() {
+    (await this.subscriptionService.unsubscribe(this.subscription.username, this.subscription.subscription_id)).subscribe(response => {
       alert(`Unsubscribed from ${this.subscription.type.toLowerCase()} ${this.subscription.value}`);
     }, error => {
       console.error('Error unsubscribing:', error);
