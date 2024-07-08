@@ -15,24 +15,24 @@ export class MovieService {
 
     var value = await this.cognitoService.getJWT()
     const headers = new HttpHeaders()
-      .append('authorizationToken', value as string);
-    headers.append('authorizationToken', value);
+      .append('authorizationtoken', value as string);
+    headers.append('authorizationtoken', value);
     return this.httpClient.get(environment.cloudHost + 'movies',{ headers });
   }
 
   async getMovieById(movieId: string): Promise<Observable<any>> {
     var value = await this.cognitoService.getJWT()
     const headers = new HttpHeaders()
-      .append('authorizationToken', value as string);
-    headers.append('authorizationToken', value);
+      .append('authorizationtoken', value as string);
+    headers.append('authorizationtoken', value);
     return this.httpClient.get(environment.cloudHost + 'movies/${movieId}',{headers});
   }
 
   async getMovieByIdAndTitle(movieId: string, title: string): Promise<Observable<any>> {
     var value = await this.cognitoService.getJWT()
     const headers = new HttpHeaders()
-      .append('authorizationToken', value as string);
-    headers.append('authorizationToken', value);
+      .append('authorizationtoken', value as string);
+    headers.append('authorizationtoken', value);
 
     let params = new HttpParams()
       .set('title', title)
@@ -56,8 +56,8 @@ export class MovieService {
 
     var value = await this.cognitoService.getJWT()
     const headers = new HttpHeaders()
-      .append('authorizationToken', value as string);
-    headers.append('authorizationToken', value);
+      .append('authorizationtoken', value as string);
+    headers.append('authorizationtoken', value);
 
     const url = environment.cloudHost + 'search';
 
@@ -84,7 +84,7 @@ export class MovieService {
 
     const url = environment.cloudHost + 'movies';
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    headers.append('authorizationToken', value);
+    headers.append('authorizationtoken', value);
     return this.httpClient.post(url, JSON.stringify(movieData), {headers});
   }
 
@@ -94,7 +94,7 @@ export class MovieService {
 
     const url = environment.cloudHost + 'history';
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    headers.append('authorizationToken', value)
+    headers.append('authorizationtoken', value)
 
     const body = {username, movie_id: movieId};
     return this.httpClient.post(url, JSON.stringify(body), {headers});
@@ -104,8 +104,8 @@ export class MovieService {
 
     var value = await this.cognitoService.getJWT()
     const headers = new HttpHeaders()
-      .append('authorizationToken', value as string);
-    headers.append('authorizationToken', value);
+      .append('authorizationtoken', value as string);
+    headers.append('authorizationtoken', value);
 
     const url = environment.cloudHost + 'movies';
     const params = new HttpParams()
@@ -119,8 +119,8 @@ export class MovieService {
 
     var value = await this.cognitoService.getJWT()
     const headers = new HttpHeaders()
-      .append('authorizationToken', value as string);
-    headers.append('authorizationToken', value);
+      .append('authorizationtoken', value as string);
+    headers.append('authorizationtoken', value);
 
     const url = environment.cloudHost + 'series';
     let params = new HttpParams()
@@ -141,7 +141,7 @@ export class MovieService {
       ...movieData
     };
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    headers.append('authorizationToken', value);
+    headers.append('authorizationtoken', value);
     return this.httpClient.put(url, JSON.stringify(body), {headers});
   }
 
