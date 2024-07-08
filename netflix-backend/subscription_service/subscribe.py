@@ -77,7 +77,7 @@ def subscribe(event, context):
 
 def create_or_find_sns_topic(subscription_type, value):
     try:
-        topic_name = f"{subscription_type}-{value}"
+        topic_name = f"{subscription_type}-{value.replace(' ', '_')}"
         topic_arn = ""
 
         topics = sns.list_topics()['Topics']

@@ -82,13 +82,13 @@ def notify_subscribers(movie_id, title, actors, genres, directors):
         topics = sns.list_topics()['Topics']
 
         for actor in actors:
-            notify_topic_subscribers('Actor-'+actor.strip(), movie_id, title,  'actor')
+            notify_topic_subscribers('Actor-'+actor.replace(' ', '_').strip(), movie_id, title,  'actor')
 
         for genre in genres:
-            notify_topic_subscribers('Genre-'+genre.strip(), movie_id, title, 'genre')
+            notify_topic_subscribers('Genre-'+genre.replace(' ', '_').strip(), movie_id, title, 'genre')
 
         for director in directors:
-            notify_topic_subscribers('Director-'+director.strip(), movie_id, title, 'director')
+            notify_topic_subscribers('Director-'+director.replace(' ', '_').strip(), movie_id, title, 'director')
     except Exception as e:
         print(f"Error notifying subscribers: {str(e)}")
 
