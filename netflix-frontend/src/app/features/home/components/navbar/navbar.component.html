@@ -9,13 +9,13 @@
 <body>
 <header>
   <div class="navbar">
-    <div class="logo"><a href="#"><img src="/assets/logo.png"></a></div>
+    <div class="logo"><a routerLink="/"><img src="/assets/logo.png"></a></div>
     <ul class="links">
-      <li><a href="">Home</a></li>
-      <li><a href="/subscriptions">Subscriptions</a></li>
-      <li *ngIf="role?.includes('Admins')"><a href="/create-movie">Create movie</a></li>
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/subscriptions" >Subscriptions</a></li>
+      <li *ngIf="role?.includes('Admins')"><a routerLink="/create-movie">Create movie</a></li>
     </ul>
-    <a *ngIf="role==null" href="/login" class="action_btn">Sign in</a>
+    <a *ngIf="role==null" routerLink="/login" class="action_btn">Sign in</a>
     <a *ngIf="role!=null" class="action_btn" (click)="signOut()">Sign out</a>
 
     <div class="toggle_btn">
