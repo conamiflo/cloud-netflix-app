@@ -172,20 +172,20 @@ def get_top_movies(username):
                 type = item['type']
                 value = item['value']
 
-                if type == 'actor':
+                if type == 'Actor':
                     if value not in actors_dict:
                         actors_dict[value] = 0
-                    actors_dict[value] += 1
+                    actors_dict[value] += 10
 
-                elif type == 'genre':
+                elif type == 'Genre':
                     if value not in genres_dict:
                         genres_dict[value] = 0
-                    genres_dict[value] += 1
+                    genres_dict[value] += 10
 
-                elif type == 'director':
+                elif type == 'Director':
                     if value not in directors_dict:
                         directors_dict[value] = 0
-                    directors_dict[value] += 1
+                    directors_dict[value] += 10
 
     downloads = download_history_table.scan(
         FilterExpression=Attr('username').eq(username)
