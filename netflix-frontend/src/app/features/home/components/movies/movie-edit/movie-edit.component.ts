@@ -74,14 +74,27 @@ export class MovieEditComponent {
       this.formData.series = this.editMovieForm.value.series;
       this.formData.movie = this.editMovieForm.value.movie;
       (await this.movieService.editMovie(this.movie.movie_id, this.formData)).subscribe(
-        response => {
+        async response => {
           alert('Movie edited successfully!');
           this.router.navigate([`movies/${this.movie.movie_id}/${this.formData.title}`]);
+
+          if (this.formData.movie !== null) {
+            (await this.movieService.startTranscoding(this.movie.movie_id)).subscribe(
+              response => {
+                console.log('Edit movie transcoded successfully!');
+                this.router.navigate(['']);
+              },
+              error => {
+                alert('Failed to transcode movie.');
+              }
+            );
+          }
         },
         error => {
           alert('Failed to edit movie.');
         }
       );
+
     } else {
       alert('Form is not valid. Please fill out all required fields.');
     }

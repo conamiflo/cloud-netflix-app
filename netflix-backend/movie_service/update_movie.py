@@ -14,7 +14,7 @@ feed_update_queue_url = os.environ['FEED_UPDATE_QUEUE_URL']
 
 def update_movie(event, context):
     
-    try:
+    # try:
         body = json.loads(event['body'])
         movie_id = body['movie_id']
         new_title = body['title']
@@ -36,6 +36,7 @@ def update_movie(event, context):
                 'body': json.dumps({'message': 'Movie not found'})
             }
 
+            
         if 'movie' in body and body['movie'] is not None:
             movie = body['movie']
             encoded_movie = base64.b64decode(movie)
@@ -48,10 +49,9 @@ def update_movie(event, context):
             del body['movie']
 
         for key in item:
-            if key not in body:
+            if key not in body and key != 'movie' and key != 'movieFile':
                 body[key] = item[key]
-        del body['movie']
-        del body['movieFile']
+                
                 
         movies_table.delete_item(Key={'movie_id': movie_id, 'title': old_title})
 
@@ -73,14 +73,14 @@ def update_movie(event, context):
                 },
             'body': json.dumps({'message': "Successfully updated movie!"})
         }
-    except Exception as e:
-        return {
-            'statusCode': 500,
-            'headers': {
-                'Access-Control-Allow-Origin': '*',
-            },
-            'body': json.dumps({'error': str(e)})
-        }
+    # except Exception as e:
+    #     return {
+    #         'statusCode': 500,
+    #         'headers': {
+    #             'Access-Control-Allow-Origin': '*',
+    #         },
+    #         'body': json.dumps({'error': str(e)})
+    #     }
 
 
 def generate_search_key(title, description, actors, directors, genres):
