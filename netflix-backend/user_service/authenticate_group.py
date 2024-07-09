@@ -19,7 +19,7 @@ mapGroupsToPaths = {
     '/search':{
         "GET":['Users','Admins'],
     },
-    '/subscription':{
+    '/subscriptions':{
         "GET":['Users','Admins'],
         "POST":['Users','Admins'],
         "DELETE":['Users','Admins']
