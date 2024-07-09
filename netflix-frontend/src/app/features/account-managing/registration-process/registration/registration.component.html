@@ -1,7 +1,7 @@
 <div id="Register">
   <div class="opacity_controller">
     <header>
-      <a href=""><img src="../../../../../assets/logo.png" alt="logo" /></a>
+      <a routerLink="/login"><img src="../../../../../assets/logo.png" alt="logo" /></a>
     </header>
 
     <app-register-form *ngIf="username==null" (onSuccReg)="username=$event"/>

@@ -3,7 +3,7 @@ import {CognitoService} from "../../../../core/services/cognito/cognito.service"
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {CommonModule, NgClass, NgIf} from "@angular/common";
 import {UserDTO} from "../../../../core/models/UserDTO";
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {RegisterFormComponent} from "../register-form/register-form.component";
 import {EmailConfirmComponent} from "../email-confirm/email-confirm.component";
 
@@ -15,7 +15,8 @@ import {EmailConfirmComponent} from "../email-confirm/email-confirm.component";
     NgClass,
     NgIf,
     RegisterFormComponent,
-    EmailConfirmComponent
+    EmailConfirmComponent,
+    RouterLink
   ],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss'
