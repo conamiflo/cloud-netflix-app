@@ -49,6 +49,7 @@ export class EmailConfirmComponent {
     }
     this.form.controls['code'].setErrors(null);
     this.success=true
+    await this.router.navigate(['login'])
 
   }
 }

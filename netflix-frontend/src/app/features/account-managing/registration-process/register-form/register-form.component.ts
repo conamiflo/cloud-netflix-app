@@ -3,17 +3,18 @@ import {CognitoService} from "../../../../core/services/cognito/cognito.service"
 import {Component, EventEmitter, Output} from '@angular/core';
 import {CommonModule, NgClass, NgIf} from "@angular/common";
 import {UserDTO} from "../../../../core/models/UserDTO";
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-register-form',
   standalone: true,
-    imports: [
-        NgIf,
-      CommonModule,
-      NgClass,
-        ReactiveFormsModule
-    ],
+  imports: [
+    NgIf,
+    CommonModule,
+    NgClass,
+    ReactiveFormsModule,
+    RouterLink
+  ],
   templateUrl: './register-form.component.html',
   styleUrl: './register-form.component.scss'
 })
