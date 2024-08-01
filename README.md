@@ -1,4 +1,4 @@
-# Movie Management Web Application
+# Movie Management Application
 
 This project involves developing a web application for storing and managing film content using AWS cloud services and cloud-native architecture. The application supports various user roles and functionalities, leveraging AWS services for scalability and reliability.
 
